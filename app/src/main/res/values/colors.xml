@@ -3,7 +3,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="CardsBg">#DAD9D9</color>
+
     <color name="colorPrimary">#8446F2</color>
-    <color name="upperBoxBg">#FFF9C8</color>
+    <color name="upperBoxBg">#A6FFF9C8</color>
+
+
+    <color name="incomeGreenColor">#269F2B</color>
+    <color name="expenseRedColor">#E91E1E</color>
 
 </resources>

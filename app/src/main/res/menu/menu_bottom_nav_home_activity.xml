@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/bottomNavHome"
+        android:title="Home"/>
+
+    <item android:id="@+id/bottomNavTransactions"
+        android:title="Transactions"/>
+
+    <item android:id="@+id/bottomNavBudget"
+        android:title="Budget"/>
+
+    <item android:id="@+id/bottomNavProfile"
+        android:title="Profile"/>
+</menu>
