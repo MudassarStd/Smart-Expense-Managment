@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">SeniorsProjectUI</string>
+
     <string name="s22">of your Money</string>
     <string name="s23">Become your own money manager</string>
     <string name="s24">and make every cent count</string>
@@ -38,4 +39,5 @@ check your inbox com</string>
     <string name="chase">Chase</string>
     <string name="s10t1">You are Set!</string>
     <string name="s11t2">Recent Transaction</string>
+
 </resources>
