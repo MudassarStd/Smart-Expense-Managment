@@ -34,4 +34,6 @@ check your inbox com</string>
     <string name="balance">Balance</string>
     <string name="bal">$00.0</string>
     <string name="name">Name</string>
+    <string name="bank">Bank</string>
+    <string name="chase">Chase</string>
 </resources>
