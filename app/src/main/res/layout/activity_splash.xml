@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/blue"
     tools:layout_editor_absoluteX="14dp"
-    tools:layout_editor_absoluteY="20dp">
+    tools:layout_editor_absoluteY="20dp"
+    tools:context=".SplashActivity">
 
 
     <TextView
