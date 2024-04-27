@@ -39,5 +39,8 @@ check your inbox com</string>
     <string name="chase">Chase</string>
     <string name="s10t1">You are Set!</string>
     <string name="s11t2">Recent Transaction</string>
+    <string name="account_type">Account Type</string>
+    <string name="add_new_account">Add new Account</string>
+    <string name="add_new_wallet">Add new wallet</string>
 
 </resources>
