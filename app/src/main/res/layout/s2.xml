@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteX="-5dp"
+    tools:layout_editor_absoluteY="20dp">
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="313dp"
+        android:layout_height="267dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/hand"
+        tools:ignore="MissingConstraints,ImageContrastCheck"
+        tools:layout_editor_absoluteX="33dp"
+        tools:layout_editor_absoluteY="30dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="284dp"
+        android:layout_height="52dp"
+        android:text="@string/s21"
+        android:textColor="@color/black"
+        android:textSize="33sp"
+        tools:ignore="MissingConstraints,TextSizeCheck"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="327dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="262dp"
+        android:layout_height="39dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/s24"
+        app:layout_constraintBottom_toTopOf="@+id/radioButton1"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.864"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="81dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="281dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="44dp"
+        android:text="@string/s23"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints,TextSizeCheck"
+        tools:layout_editor_absoluteX="58dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="251dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/s22"
+        android:textColor="@color/black"
+        android:textSize="33sp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView1"
+        tools:ignore="MissingConstraints,TextSizeCheck"
+        tools:layout_editor_absoluteX="81dp" />
+
+    <RadioButton
+        android:id="@+id/radioButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/radioButton1"
+        tools:ignore="MissingConstraints,DuplicateSpeakableTextCheck"
+        tools:layout_editor_absoluteY="491dp" />
+
+    <RadioButton
+        android:id="@+id/radioButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/radioButton2"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="491dp" />
+
+    <RadioButton
+        android:id="@+id/radioButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="210dp"
+        tools:layout_editor_absoluteY="491dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="306dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/s2b1"
+        android:background="@drawable/round_corner_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioButton1" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="307dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/s2b2"
+        android:textColor="@color/black"
+        android:background="@drawable/round_corner_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="40dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

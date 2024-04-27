@@ -1,5 +1,43 @@
 <resources>
     <string name="app_name">SeniorsProjectUI</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="s22">of your Money</string>
+    <string name="s23">Become your own money manager</string>
+    <string name="s24">and make every cent count</string>
+    <string name="s21">Gain Total Control</string>
+    <string name="s2b1">Sign UP</string>
+    <string name="s2b2">Log In</string>
+    <string name="s3c">By signing up, you agree to the <u><a href="(link unavailable)">
+        Terms of Service and Privacy Policy</a></u></string>
+    <string name="s3t1">or with  </string>
+    <string name="s3t2">Already have an account? <a href="">Login</a></string>
+    <string name="s4mail">We send verification code to your\n
+email<a href=""> brajaoma*****@gmail.com.</a> You can\n
+check your inbox com</string>
+    <string name="s4t3"> <a href="">I didn’t received the code? Send again</a></string>
+    <string name="s4t2">Enter your\nVerification Code</string>
+    <string name="s4t4">04:00</string>
+    <string name="s4b1">Verify</string>
+    <string name="s4t1">Verification</string>
+    <string name="s4c1">8</string>
+    <string name="s4c2">2</string>
+    <string name="password">Password</string>
+    <string name="s5t2">Forget Password?</string>
+    <string name="s5t3">Don’t have an account yet? <a href="">Sign Up</a></string>
+    <string name="login">Login</string>
+    <string name="f_password">Forget Password</string>
+    <string name="s6t2">Don’t worry.\nEnter your email and we’ll\nsend you a link to reset your\npassword.</string>
+    <string name="s6b1">Continue</string>
+    <string name="email">Email</string>
+    <string name="s7t1">Let’s setup your\naccount!</string>
+    <string name="s7b1">Let\'s go</string>
+    <string name="s7t2">Account can be your bank, credit card or\nyour wallet.</string>
+    <string name="balance">Balance</string>
+    <string name="bal">$00.0</string>
+    <string name="name">Name</string>
+    <string name="bank">Bank</string>
+    <string name="chase">Chase</string>
+    <string name="s10t1">You are Set!</string>
+    <string name="s11t2">Recent Transaction</string>
+
 </resources>

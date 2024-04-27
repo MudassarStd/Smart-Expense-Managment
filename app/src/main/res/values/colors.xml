@@ -4,6 +4,10 @@
     <color name="blackBox">#929292</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="ofwhite">#A69C9C</color>
+    <color name="blue">#673AB7</color>
+
+
     <color name="CardsBg">#DAD9D9</color>
 
     <color name="colorPrimary">#8446F2</color>
@@ -12,5 +16,6 @@
 
     <color name="incomeGreenColor">#269F2B</color>
     <color name="expenseRedColor">#E91E1E</color>
+
 
 </resources>
