@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@color/colorPrimary"
     tools:context=".AddNewWalletActivity">
 
     <TextView
@@ -37,45 +37,40 @@
 
     <FrameLayout
         android:id="@+id/linearLayout"
-        android:layout_width="420dp"
+        android:layout_width="match_parent"
         android:layout_height="390dp"
         android:layout_marginTop="344dp"
-        android:background="@drawable/curveshape"
+        android:background="@drawable/curve_shape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
-        <TextView
+        <EditText
             android:id="@+id/enter_name"
-            android:layout_width="391dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="36dp"
-            android:layout_marginEnd="11dp"
             android:background="@drawable/rounded_edittext_bg"
-            android:borderColor="#000000"
             android:hint="@string/chase"
-            android:textColorHint="@color/black"
             android:inputType="textPersonName"
             android:padding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.476"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints,TextViewEdits" />
+            android:textColorHint="@color/black"
+            />
 
-        <TextView
+        <EditText
             android:id="@+id/enter_name2"
-            android:layout_width="391dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="100dp"
             android:background="@drawable/rounded_edittext_bg"
             android:hint="@string/bank"
-            android:textColorHint="@color/black"
             android:inputType="textPersonName"
             android:padding="10dp"
+            android:textColorHint="@color/black"
             app:circularflow_radiusInDP="20dp"
             app:drawableRightCompat="@drawable/baseline_arrow_drop_down_24"
             app:layout_constraintEnd_toEndOf="parent"
@@ -88,61 +83,65 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="145dp"
+            android:layout_marginTop="155dp"
             android:text="@string/bank" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="170dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            >
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="10dp"
-                android:drawableLeft="@drawable/chase"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="10dp"
-                android:drawableLeft="@drawable/bank"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="30dp"
-                android:paddingRight="10dp"
-                android:drawableLeft="@drawable/cit"
-                android:layout_margin="1dp"
-                />
+            android:layout_marginTop="180dp">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+                android:backgroundTint="@color/l1Purple"
+                android:drawableLeft="@drawable/chase"
+                android:paddingLeft="30dp"
+                android:paddingRight="10dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:backgroundTint="@color/l1Purple"
+                android:drawableLeft="@drawable/bank"
+                android:paddingLeft="30dp"
+                android:paddingRight="10dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/l1Purple"
+                android:layout_margin="1dp"
+                android:drawableLeft="@drawable/cit"
+                android:paddingLeft="30dp"
+                android:paddingRight="10dp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:backgroundTint="@color/l1Purple"
                 android:drawableLeft="@drawable/bank"
                 android:paddingLeft="30dp"
                 android:paddingRight="10dp" />
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="230dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            >
+            android:layout_marginTop="230dp">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+                android:backgroundTint="@color/l1Purple"
                 android:drawableLeft="@drawable/cit"
                 android:paddingLeft="30dp"
                 android:paddingRight="10dp" />
@@ -151,35 +150,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+                android:backgroundTint="@color/l1Purple"
                 android:drawableLeft="@drawable/mandr"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:paddingLeft="30dp"
-                android:paddingRight="10dp"
+                android:backgroundTint="@color/l1Purple"
                 android:drawableLeft="@drawable/bank"
-                />
+                android:paddingLeft="30dp"
+                android:paddingRight="10dp" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+                android:backgroundTint="@color/l1Purple"
+                android:textColor="@color/colorPrimary"
                 android:paddingRight="10dp"
-                android:text="See more"
-                />
+                android:text="See more" />
 
 
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnAddNewWalletContinue"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
             android:layout_marginTop="300dp"
-            android:text="Continue"
-            />
+            android:text="Continue" />
     </FrameLayout>
 
     <TextView
@@ -188,7 +191,10 @@
         android:layout_height="wrap_content"
         android:text="@string/add_new_wallet"
         android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="16dp"
+        app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

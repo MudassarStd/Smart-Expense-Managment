@@ -18,9 +18,6 @@
         android:layout_height="match_parent">
 
 
-
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
@@ -39,29 +36,37 @@
             android:id="@+id/imageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:padding="2dp"
             android:layout_gravity="start"
+            android:src="@drawable/user"
             android:background="@drawable/round_shape"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorPrimary" />
 
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:gravity="center"
             android:text="October"
+            android:textColor="@color/colorPrimary"
+            android:backgroundTint="@color/l3Light"
+            android:drawableLeft="@drawable/arrow_down"
+            android:drawableTint="@color/colorPrimary"
             app:layout_constraintEnd_toStartOf="@+id/ivNotification"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/ivNotification"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:backgroundTint="@color/colorPrimary"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:src="@drawable/notifiaction"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorPrimary" />
 
 
         <TextView
@@ -73,10 +78,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button" />
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="44dp"
             android:text="Rs.9400"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -84,7 +90,6 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivNotification" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,7 +108,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_weight="0.5"
                 android:clickable="true"
-                android:backgroundTint="@color/incomeGreenColor"
+                android:backgroundTint="@color/green"
                 app:cardCornerRadius="30dp">
 
                 <LinearLayout
@@ -116,6 +121,8 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginEnd="10dp"
+                        android:padding="5dp"
+                        android:src="@drawable/btn"
                         android:background="@drawable/income_expense_card_ivbg" />
 
                     <LinearLayout
@@ -155,6 +162,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvExpenseMain"
                 android:layout_width="70dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="5dp"
@@ -172,6 +180,8 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginEnd="10dp"
+                        android:padding="5dp"
+                        android:src="@drawable/btnn"
                         android:background="@drawable/income_expense_card_ivbg" />
 
                     <LinearLayout
@@ -233,7 +243,7 @@
         android:id="@+id/imageView7"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:background="@drawable/upper_box_bg"
+        android:src="@drawable/graph"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -257,23 +267,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
+            android:textColor="@color/Yellow"
+            android:backgroundTint="@color/l1Yellow"
             android:text="Today" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:textColor="#999999"
             android:layout_weight="0.25"
+
             android:text="Week" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:textColor="#999999"
             android:layout_weight="0.25"
             android:text="Month" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:textColor="#999999"
             android:layout_weight="0.25"
             android:text="Year" />
 
@@ -299,8 +318,11 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/btnSeeAllTransactions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:backgroundTint="@color/l1Purple"
             android:text="see all" />
 
     </LinearLayout>
@@ -321,8 +343,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:backgroundTint="@color/l3Light"
             app:cardElevation="10dp"
-            android:backgroundTint="@color/CardsBg"
             app:cardCornerRadius="10dp">
 
             <LinearLayout
@@ -334,7 +356,7 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@drawable/round_shape"/>
+                    android:src="@drawable/frame"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -352,7 +374,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="shopping"/>
+                            android:textStyle="bold"
+                            android:text="Shopping"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -394,6 +417,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:backgroundTint="@color/l3Light"
             app:cardElevation="10dp"
             app:cardCornerRadius="10dp">
 
@@ -406,7 +430,10 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@drawable/round_shape"/>
+                    android:padding="8dp"
+                    android:src="@drawable/recurring_bill"
+                    android:background="@drawable/transaction_list_box"
+                    app:tint="@color/colorPrimary" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -464,6 +491,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
             android:layout_marginHorizontal="10dp"
             app:cardElevation="10dp"
             app:cardCornerRadius="10dp">
@@ -477,7 +505,10 @@
                 <ImageView
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@drawable/round_shape"/>
+                    android:padding="8dp"
+                    android:src="@drawable/restaurant"
+                   android:background="@drawable/transaction_list_box_food"
+                    app:tint="@color/primaryRed" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -528,7 +559,6 @@
 
 
         </com.google.android.material.card.MaterialCardView>
-
 
     </LinearLayout>
 

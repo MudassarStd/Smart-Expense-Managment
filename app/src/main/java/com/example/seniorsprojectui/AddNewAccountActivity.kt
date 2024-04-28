@@ -1,5 +1,6 @@
 package com.example.seniorsprojectui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.seniorsprojectui.databinding.ActivityAddNewAccountBinding
@@ -10,5 +11,9 @@ class AddNewAccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddNewAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnAddNewAccountContinue.setOnClickListener {
+            startActivity(Intent(this, AddNewWalletActivity::class.java))
+        }
     }
 }

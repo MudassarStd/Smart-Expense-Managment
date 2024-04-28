@@ -2,14 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/bottomNavHome"
-        android:title="Home"/>
+        android:title="Home"
+        android:icon="@drawable/home"/>
 
     <item android:id="@+id/bottomNavTransactions"
-        android:title="Transactions"/>
+        android:title="Transactions"
+        android:icon="@drawable/transaction"/>
+
+
+
 
     <item android:id="@+id/bottomNavBudget"
-        android:title="Budget"/>
+        android:title="Budget"
+        android:icon="@drawable/pie_chart"/>
 
     <item android:id="@+id/bottomNavProfile"
-        android:title="Profile"/>
+        android:title="Profile"
+        android:icon="@drawable/user"/>
 </menu>

@@ -1,4 +1,4 @@
-package com.example.seniorsprojectui
+package com.example.seniorsprojectui.activities
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity

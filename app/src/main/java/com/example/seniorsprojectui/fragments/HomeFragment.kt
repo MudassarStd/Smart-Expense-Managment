@@ -1,17 +1,19 @@
 package com.example.seniorsprojectui.fragments
 
+
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import androidx.cardview.widget.CardView
+import com.example.seniorsprojectui.activities.AddIncomeActivity
+import com.example.seniorsprojectui.activities.NotificationActivity
 import com.example.seniorsprojectui.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.example.seniorsprojectui.activities.AddExpenseActivity
 
 
 class HomeFragment : Fragment() {
@@ -30,9 +32,30 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val incomeCard = view.findViewById<CardView>(R.id.cvIncomeHome)
+        val expenseCard = view.findViewById<CardView>(R.id.cvExpenseMain)
+        val ivNotify = view.findViewById<ImageView>(R.id.ivNotification)
+        val btnSeeAll = view.findViewById<Button>(R.id.btnSeeAllTransactions)
 
         incomeCard.setOnClickListener {
-            AddIncomeExpenseBSV().show(requireActivity().supportFragmentManager, AddIncomeExpenseBSV().tag)
+            startActivity(Intent(requireContext(), AddIncomeActivity::class.java))
+//          AddIncomeExpenseBSV().show(requireActivity().supportFragmentManager, AddIncomeExpenseBSV().tag)
+        }
+
+        ivNotify.setOnClickListener {
+            startActivity(Intent(requireContext(), NotificationActivity::class.java))
+
+        }
+
+        expenseCard.setOnClickListener {
+            val i = Intent(requireContext(), AddExpenseActivity::class.java)
+            startActivity(i)
+        }
+
+        btnSeeAll.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().apply {
+                replace(R.id.framelayoutHomeActivity, TransactionFragment())
+                commit()
+            }
         }
     }
 

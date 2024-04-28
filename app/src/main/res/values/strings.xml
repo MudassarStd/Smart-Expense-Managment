@@ -2,9 +2,9 @@
     <string name="app_name">SeniorsProjectUI</string>
 
     <string name="s22">of your Money</string>
-    <string name="s23">Become your own money manager</string>
+    <string name="s23">Become your own money manager\nand make every cent count</string>
     <string name="s24">and make every cent count</string>
-    <string name="s21">Gain Total Control</string>
+    <string name="s21">Gain Total Control\nof your money</string>
     <string name="s2b1">Sign UP</string>
     <string name="s2b2">Log In</string>
     <string name="s3c">By signing up, you agree to the <u><a href="(link unavailable)">
@@ -33,7 +33,7 @@ check your inbox com</string>
     <string name="s7b1">Let\'s go</string>
     <string name="s7t2">Account can be your bank, credit card or\nyour wallet.</string>
     <string name="balance">Balance</string>
-    <string name="bal">$00.0</string>
+    <string name="bal">$0.00</string>
     <string name="name">Name</string>
     <string name="bank">Bank</string>
     <string name="chase">Chase</string>
@@ -42,5 +42,7 @@ check your inbox com</string>
     <string name="account_type">Account Type</string>
     <string name="add_new_account">Add new Account</string>
     <string name="add_new_wallet">Add new wallet</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
