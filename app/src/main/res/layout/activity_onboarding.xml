@@ -46,25 +46,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:ignore="MissingConstraints,TextSizeCheck" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView2"-->
-    <!--        android:layout_width="251dp"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:layout_marginTop="64dp"-->
-    <!--        android:text="@string/s22"-->
-    <!--        android:textColor="@color/black"-->
-    <!--        android:textSize="33sp"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/imageView1"-->
-    <!--        tools:ignore="MissingConstraints,TextSizeCheck"-->
-    <!--        tools:layout_editor_absoluteX="81dp" />-->
-
-
     <Button
         android:id="@+id/btnSignUPOnBoarding"
         android:layout_width="306dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:background="@drawable/round_corner_button"
+        app:cornerRadius="10dp"
         android:text="@string/s2b1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -76,9 +63,10 @@
         android:layout_width="307dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/round_corner_button"
         android:text="@string/s2b2"
-        android:textColor="@color/white"
+        android:backgroundTint="@color/l1Purple"
+        android:textColor="@color/colorPrimary"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

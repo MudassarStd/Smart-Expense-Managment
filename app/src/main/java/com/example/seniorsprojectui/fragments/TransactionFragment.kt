@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.FinancialReport
 
@@ -26,9 +27,14 @@ class TransactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val btnFinancial = view.findViewById<Button>(R.id.btnFinancialReport)
+        val ivFilter = view.findViewById<ImageView>(R.id.ivFilterTransactions)
 
         btnFinancial.setOnClickListener {
             startActivity(Intent(requireActivity(), FinancialReport::class.java ))
+        }
+
+        ivFilter.setOnClickListener {
+            TransactionFilterBSVFragment().show(requireActivity().supportFragmentManager, TransactionFilterBSVFragment().tag)
         }
 
     }

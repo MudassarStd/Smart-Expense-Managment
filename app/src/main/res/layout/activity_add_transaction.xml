@@ -5,15 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryRed"
-    tools:context=".activities.AddExpenseActivity">
+    android:background="@color/primaryBlue"
+    tools:context=".activities.AddTransactionActivity">
 
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Expense"
+        android:text="Transaction"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp"

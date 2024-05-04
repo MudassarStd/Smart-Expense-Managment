@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="30dp">
+
+
+    <ImageView
+        android:id="@+id/ivIncomeFromDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/income_add"
+        app:layout_constraintEnd_toStartOf="@+id/ivTransactionFromDialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivTransactionFromDialog" />
+
+    <ImageView
+        android:id="@+id/ivExpenseFromDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="100dp"
+        android:src="@drawable/expense_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivTransactionFromDialog"
+        app:layout_constraintTop_toBottomOf="@+id/ivTransactionFromDialog" />
+
+    <ImageView
+        android:id="@+id/ivTransactionFromDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/transaction_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Transaction"
+        app:layout_constraintEnd_toEndOf="@+id/ivTransactionFromDialog"
+        app:layout_constraintStart_toStartOf="@+id/ivTransactionFromDialog"
+        app:layout_constraintTop_toBottomOf="@+id/ivTransactionFromDialog" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Income"
+        app:layout_constraintEnd_toEndOf="@+id/ivIncomeFromDialog"
+        app:layout_constraintStart_toStartOf="@+id/ivIncomeFromDialog"
+        app:layout_constraintTop_toBottomOf="@+id/ivIncomeFromDialog" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Expense"
+        app:layout_constraintEnd_toEndOf="@+id/ivExpenseFromDialog"
+        app:layout_constraintStart_toStartOf="@+id/ivExpenseFromDialog"
+        app:layout_constraintTop_toBottomOf="@+id/ivExpenseFromDialog" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,10 +10,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
-import com.example.seniorsprojectui.activities.AddIncomeActivity
+import com.example.seniorsprojectui.activities.AddIncomeExpenseActivity
 import com.example.seniorsprojectui.activities.NotificationActivity
 import com.example.seniorsprojectui.R
-import com.example.seniorsprojectui.activities.AddExpenseActivity
+import com.example.seniorsprojectui.activities.AddTransactionActivity
 
 
 class HomeFragment : Fragment() {
@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
         val btnSeeAll = view.findViewById<Button>(R.id.btnSeeAllTransactions)
 
         incomeCard.setOnClickListener {
-            startActivity(Intent(requireContext(), AddIncomeActivity::class.java))
+            startActivity(Intent(requireContext(), AddIncomeExpenseActivity::class.java))
 //          AddIncomeExpenseBSV().show(requireActivity().supportFragmentManager, AddIncomeExpenseBSV().tag)
         }
 
@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
         }
 
         expenseCard.setOnClickListener {
-            val i = Intent(requireContext(), AddExpenseActivity::class.java)
+            val i = Intent(requireContext(), AddTransactionActivity::class.java)
             startActivity(i)
         }
 

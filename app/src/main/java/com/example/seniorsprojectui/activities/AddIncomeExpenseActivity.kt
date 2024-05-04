@@ -7,16 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.seniorsprojectui.R
-import com.example.seniorsprojectui.databinding.ActivityAddIncomeBinding
+import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
 
 
-class AddIncomeActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityAddIncomeBinding
+class AddIncomeExpenseActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityAddIncomeExpenseBinding
+
+    var transactionType : String = "null"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityAddIncomeBinding.inflate(layoutInflater)
+        binding = ActivityAddIncomeExpenseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -24,6 +27,10 @@ class AddIncomeActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // getting transaction type
+        transactionType = intent.getStringExtra("typeTransaction").toString()
+
 
         binding.llAddAttachment.setOnClickListener {
             AddAttachmentBSV().show(supportFragmentManager, AddAttachmentBSV().tag)
@@ -47,20 +54,20 @@ class AddIncomeActivity : AppCompatActivity() {
             }
 
         }
-//            binding.btnswitchAddExpenseIncome.setOnCheckedChangeListener { buttonView, isChecked ->
 //
-//                if (isChecked)
-//                {
-//                    binding.tvTitle.text = "Expense"
-//                    binding.main.setBackgroundResource(R.color.primaryRed)
-//                }
-//                else
-//                {
-//                    binding.tvTitle.setText("Income")
-//                    binding.main.setBackgroundResource(R.color.green)
-//                }
 //
-//            }
+                if (transactionType.equals("expense"))
+                {
+                    binding.tvTitle.text = "Expense"
+                    binding.main.setBackgroundResource(R.color.primaryRed)
+                }
+                else
+                {
+                    binding.tvTitle.setText("Income")
+                    binding.main.setBackgroundResource(R.color.green)
+                }
+//
+//
 
     }
 }

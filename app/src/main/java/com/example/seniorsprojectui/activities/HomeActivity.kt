@@ -1,10 +1,14 @@
 package com.example.seniorsprojectui.activities
 
+import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -38,16 +42,24 @@ class HomeActivity : AppCompatActivity() {
                 )
             )
         )
+
+
+        val homeFrag = HomeFragment()
+        val transacFrag = TransactionFragment()
+        val budgetFrag = BudgetFragment()
+        val profileFrag = ProfileFragment()
+
+
         binding.bottomNavigationView.background = null
 
         replaceFrags(HomeFragment())
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             val frag = when(it.itemId){
-                R.id.bottomNavHome -> HomeFragment()
-                R.id.bottomNavTransactions -> TransactionFragment()
-                R.id.bottomNavBudget -> BudgetFragment()
-                R.id.bottomNavProfile -> ProfileFragment()
+                R.id.bottomNavHome -> homeFrag
+                R.id.bottomNavTransactions -> transacFrag
+                R.id.bottomNavBudget -> budgetFrag
+                R.id.bottomNavProfile -> profileFrag
                 else -> HomeFragment()
             }
 
@@ -58,10 +70,55 @@ class HomeActivity : AppCompatActivity() {
 
 
 
+        // fab button implementation
+        binding.fabHomeActivity.setOnClickListener {
+                showCustomDialog(this)
+        }
 
     }
 
+
+
+    // Private functions
+
+    fun showCustomDialog(context: Context) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.add_dialog_boom_layout, null)
+        val income = dialogView.findViewById<ImageView>(R.id.ivIncomeFromDialog)
+        val expense = dialogView.findViewById<ImageView>(R.id.ivExpenseFromDialog)
+        val transaction = dialogView.findViewById<ImageView>(R.id.ivTransactionFromDialog)
+
+        val clickListener = View.OnClickListener { view ->
+            var intent = Intent(context, AddIncomeExpenseActivity::class.java)
+            when (view) {
+                income -> intent.putExtra("typeTransaction", "income")
+                expense -> intent.putExtra("typeTransaction", "expense")
+                transaction -> intent = Intent(context, AddTransactionActivity::class.java)
+            }
+            startActivity(intent)
+        }
+
+        income.setOnClickListener(clickListener)
+        expense.setOnClickListener(clickListener)
+        transaction.setOnClickListener(clickListener)
+
+
+        val builder = AlertDialog.Builder(context)
+            .setView(dialogView)
+            .setTitle("Select Transaction Type")
+            .setPositiveButton("") { dialog, which ->
+                // Handle positive button click
+            }
+            .setNegativeButton("Cancel") { dialog, which ->
+                // Handle negative button click
+                dialog.dismiss()
+            }
+
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }
+
     fun replaceFrags(frag : Fragment) {
+
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.framelayoutHomeActivity, frag)
             commit()
