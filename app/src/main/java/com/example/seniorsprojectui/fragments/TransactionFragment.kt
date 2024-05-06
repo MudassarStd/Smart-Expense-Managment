@@ -8,12 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.FinancialReport
+import com.example.seniorsprojectui.adapters.TransactionRVAdapter
+import com.example.seniorsprojectui.backend.IncomeExpenseViewModel
 
 
 class TransactionFragment : Fragment() {
 
+    private lateinit var viewModel : IncomeExpenseViewModel
+    private lateinit var rvAdapter: TransactionRVAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +35,19 @@ class TransactionFragment : Fragment() {
 
         val btnFinancial = view.findViewById<Button>(R.id.btnFinancialReport)
         val ivFilter = view.findViewById<ImageView>(R.id.ivFilterTransactions)
+        val rv = view.findViewById<RecyclerView>(R.id.rvTransactionFragment)
+
+
+        viewModel = ViewModelProvider(this)[IncomeExpenseViewModel::class.java]
+
+
+        // setting adapter for RV
+        rvAdapter = TransactionRVAdapter(viewModel.transactions)
+        rv.adapter = rvAdapter
+        rv.layoutManager = LinearLayoutManager(requireContext())
+
+
+
 
         btnFinancial.setOnClickListener {
             startActivity(Intent(requireActivity(), FinancialReport::class.java ))

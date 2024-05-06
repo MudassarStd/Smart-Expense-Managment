@@ -6,7 +6,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.backend.IncomeExpenseViewModel
+import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
 
@@ -15,6 +18,8 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
     private lateinit var binding : ActivityAddIncomeExpenseBinding
 
     var transactionType : String = "null"
+
+    private lateinit var viewModel : IncomeExpenseViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +33,41 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
             insets
         }
 
-        // getting transaction type
+
+        viewModel = ViewModelProvider(this)[IncomeExpenseViewModel::class.java]
+
+
+        // getting transaction (income/expense) type from prev activity
         transactionType = intent.getStringExtra("typeTransaction").toString()
 
-
+        // attachment BSV
         binding.llAddAttachment.setOnClickListener {
             AddAttachmentBSV().show(supportFragmentManager, AddAttachmentBSV().tag)
         }
+
+        val category = binding.etCategory.text.toString()
+        val wallet = binding.etWallet.text.toString()
+        val amount = binding.tvAmount.text.toString()
+        val date  = binding.tvDate.text.toString()
+        val description  = binding.etDescription.text.toString()
+        val attachmentStatus = binding.tvDate.text.toString()
+
+
+        binding.btnContinueIncomeExpense.setOnClickListener {
+
+
+        if (category.isNotEmpty() && wallet.isNotEmpty() && amount.isNotEmpty())
+        {
+            val transactionObject = Transaction("current time",date,amount,category,wallet,description,attachmentStatus,transactionType)
+
+            viewModel.updateTrasactions(transactionObject)
+        }
+
+            // finishes this activity
+            finish()
+        }
+
+
 
         binding.switchButtonRepeatTransaction.setOnCheckedChangeListener { buttonView, isChecked ->
             // Handle the switch button click event
@@ -54,8 +87,10 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
             }
 
         }
-//
-//
+
+
+
+        // setting background for income/expense
                 if (transactionType.equals("expense"))
                 {
                     binding.tvTitle.text = "Expense"
@@ -66,8 +101,7 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
                     binding.tvTitle.setText("Income")
                     binding.main.setBackgroundResource(R.color.green)
                 }
-//
-//
+
 
     }
 }
