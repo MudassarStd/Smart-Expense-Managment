@@ -10,13 +10,19 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.activities.AddIncomeExpenseActivity
 import com.example.seniorsprojectui.activities.NotificationActivity
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.AddTransactionActivity
+import com.example.seniorsprojectui.adapters.TransactionRVAdapter
+import com.example.seniorsprojectui.backend.TransactionDataModel
 
 
 class HomeFragment : Fragment() {
+
+    private val adapter = TransactionRVAdapter(TransactionDataModel.transactions)
 
 
     override fun onCreateView(
@@ -35,6 +41,14 @@ class HomeFragment : Fragment() {
         val expenseCard = view.findViewById<CardView>(R.id.cvExpenseMain)
         val ivNotify = view.findViewById<ImageView>(R.id.ivNotification)
         val btnSeeAll = view.findViewById<Button>(R.id.btnSeeAllTransactions)
+        val rvHomeFrag = view.findViewById<RecyclerView>(R.id.rvHomeFragment)
+
+
+
+        rvHomeFrag.adapter = adapter
+        rvHomeFrag.layoutManager = LinearLayoutManager(requireContext())
+
+
 
         incomeCard.setOnClickListener {
             startActivity(Intent(requireContext(), AddIncomeExpenseActivity::class.java))
@@ -57,6 +71,12 @@ class HomeFragment : Fragment() {
                 commit()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
+
     }
 
 }

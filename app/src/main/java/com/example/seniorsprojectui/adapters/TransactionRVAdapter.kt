@@ -35,6 +35,7 @@ class TransactionViewHolder(view : View): RecyclerView.ViewHolder(view){
     val rvCategory = view.findViewById<TextView>(R.id.rvCategory)
     val time = view.findViewById<TextView>(R.id.rvTime)
     val description = view.findViewById<TextView>(R.id.rvDescription)
+    val amount = view.findViewById<TextView>(R.id.rvAmount)
     val icon = view.findViewById<ImageView>(R.id.rvIcon)
 
 }

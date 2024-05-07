@@ -5,16 +5,23 @@ import com.example.seniorsprojectui.adapters.TransactionRVAdapter
 
 class IncomeExpenseViewModel : ViewModel() {
 
-    private lateinit var rvAdapter: TransactionRVAdapter
+//    val transactions : MutableList<Transaction> = mutableListOf()
+//
+//    private val rvAdapter = TransactionRVAdapter(transactions)
+//
+////    fun updateTrasactions(transactionData : Transaction)
+////    {
+////        transactions.add(transactionData)
+////
+////        // updating recyclerView
+//////        rvAdapter.notifyDataSetChanged()
+////    }
 
-    val transactions : MutableList<Transaction> = mutableListOf()
-
-    fun updateTrasactions(transactionData : Transaction)
+    fun update()
     {
-        transactions.add(transactionData)
-
-        // updating recyclerView
-        rvAdapter.notifyDataSetChanged()
+//        transactions.add(Transaction("current time" ,"data","amont", "catefory", "cwalet","DES" ,"attachment","tranasction type"))
+//        transactions.add(Transaction("current time" ,"data","amont", "catefory", "cwalet","DES" ,"attachment","tranasction type"))
+//        transactions.add(Transaction("current time" ,"data","amont", "catefory", "cwalet","DES" ,"attachment","tranasction type"))
     }
 
 }

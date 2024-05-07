@@ -2,6 +2,7 @@ package com.example.seniorsprojectui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.FinancialReport
 import com.example.seniorsprojectui.adapters.TransactionRVAdapter
 import com.example.seniorsprojectui.backend.IncomeExpenseViewModel
+import com.example.seniorsprojectui.backend.TransactionDataModel
 
 
 class TransactionFragment : Fragment() {
@@ -41,22 +43,29 @@ class TransactionFragment : Fragment() {
         viewModel = ViewModelProvider(this)[IncomeExpenseViewModel::class.java]
 
 
+
+
         // setting adapter for RV
-        rvAdapter = TransactionRVAdapter(viewModel.transactions)
+        rvAdapter = TransactionRVAdapter(TransactionDataModel.transactions)
         rv.adapter = rvAdapter
         rv.layoutManager = LinearLayoutManager(requireContext())
 
 
-
-
         btnFinancial.setOnClickListener {
             startActivity(Intent(requireActivity(), FinancialReport::class.java ))
+
+            Log.d("OppList","${TransactionDataModel.transactions}")
         }
 
         ivFilter.setOnClickListener {
             TransactionFilterBSVFragment().show(requireActivity().supportFragmentManager, TransactionFilterBSVFragment().tag)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        rvAdapter.notifyDataSetChanged()
     }
 
 

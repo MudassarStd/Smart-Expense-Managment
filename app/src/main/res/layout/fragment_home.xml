@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
     android:scrollbars="none"
     android:fillViewport="true"
     tools:context=".fragments.HomeFragment">
@@ -314,31 +313,31 @@
             app:tabIndicatorFullWidth="true"
             app:tabIndicatorGravity="stretch"
             app:tabMode="fixed"
-            app:tabTextColor="@color/ofwhite"
-            app:tabSelectedTextColor="@color/Yellow" >
+            app:tabSelectedTextColor="@color/Yellow"
+            app:tabTextColor="@color/ofwhite">
 
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Daily"/>
+                android:text="Daily" />
 
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Weekly"/>
+                android:text="Weekly" />
 
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Monthly"/>
+                android:text="Monthly" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Yearly"/>
+                android:text="Yearly" />
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -372,251 +371,263 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="vertical"-->
+        <!--            android:paddingVertical="20dp"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.5"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/llrecentTransactions">-->
+
+
+        <!--            <com.google.android.material.card.MaterialCardView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="75dp"-->
+        <!--                android:layout_margin="5dp"-->
+        <!--                android:backgroundTint="@color/BaseLight"-->
+        <!--                app:cardCornerRadius="10dp"-->
+        <!--                app:cardElevation="1dp">-->
+
+        <!--                <LinearLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:orientation="horizontal"-->
+        <!--                    android:padding="10dp">-->
+
+        <!--                    <ImageView-->
+        <!--                        android:layout_width="50dp"-->
+        <!--                        android:layout_height="50dp"-->
+        <!--                        android:layout_gravity="center_vertical"-->
+        <!--                        android:src="@drawable/frame" />-->
+
+        <!--                    <LinearLayout-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="match_parent"-->
+        <!--                        android:layout_marginHorizontal="10dp"-->
+        <!--                        android:gravity="center_vertical"-->
+        <!--                        android:orientation="vertical">-->
+
+        <!--                        <LinearLayout-->
+        <!--                            android:layout_width="match_parent"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:layout_marginBottom="5dp"-->
+        <!--                            android:orientation="horizontal">-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:layout_weight="1"-->
+        <!--                                android:text="Shopping"-->
+        <!--                                android:textSize="18sp"-->
+        <!--                                android:textStyle="bold" />-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="match_parent"-->
+        <!--                                android:text="-120"-->
+        <!--                                android:textSize="18sp"-->
+        <!--                                android:textStyle="bold"-->
+        <!--                                android:textColor="@color/expenseRedColor" />-->
+        <!--                        </LinearLayout>-->
+
+        <!--                        <LinearLayout-->
+        <!--                            android:layout_width="match_parent"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:orientation="horizontal">-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:layout_weight="1"-->
+        <!--                                android:text="Buy some Grocery" />-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:text="10:00 AM" />-->
+        <!--                        </LinearLayout>-->
+
+        <!--                    </LinearLayout>-->
+
+
+        <!--                </LinearLayout>-->
+
+
+        <!--            </com.google.android.material.card.MaterialCardView>-->
+
+
+        <!--            <com.google.android.material.card.MaterialCardView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="75dp"-->
+        <!--                android:layout_margin="5dp"-->
+        <!--                android:backgroundTint="@color/l3Light"-->
+        <!--                app:cardCornerRadius="10dp"-->
+        <!--                app:cardElevation="1dp">-->
+
+        <!--                <LinearLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:orientation="horizontal"-->
+        <!--                    android:padding="10dp">-->
+
+        <!--                    <ImageView-->
+        <!--                        android:layout_width="50dp"-->
+        <!--                        android:layout_height="50dp"-->
+        <!--                        android:layout_gravity="center_vertical"-->
+        <!--                        android:background="@drawable/transaction_list_box"-->
+        <!--                        android:padding="8dp"-->
+        <!--                        android:src="@drawable/recurring_bill"-->
+        <!--                        app:tint="@color/colorPrimary" />-->
+
+        <!--                    <LinearLayout-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="match_parent"-->
+        <!--                        android:layout_marginHorizontal="10dp"-->
+        <!--                        android:gravity="center_vertical"-->
+        <!--                        android:orientation="vertical">-->
+
+        <!--                        <LinearLayout-->
+        <!--                            android:layout_width="match_parent"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:layout_marginBottom="5dp"-->
+        <!--                            android:orientation="horizontal">-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:layout_weight="1"-->
+        <!--                                android:textStyle="bold"-->
+        <!--                                android:textSize="18sp"-->
+        <!--                                android:text="Subscription" />-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:text="-$80"-->
+        <!--                                android:textStyle="bold"-->
+        <!--                                android:textSize="18sp"-->
+        <!--                                android:textColor="@color/expenseRedColor" />-->
+        <!--                        </LinearLayout>-->
+
+        <!--                        <LinearLayout-->
+        <!--                            android:layout_width="match_parent"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:orientation="horizontal">-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:layout_weight="1"-->
+        <!--                                android:text="Disney + Annual" />-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:text="10:00 AM" />-->
+        <!--                        </LinearLayout>-->
+
+        <!--                    </LinearLayout>-->
+
+
+        <!--                </LinearLayout>-->
+
+
+        <!--            </com.google.android.material.card.MaterialCardView>-->
+
+
+        <!--            <com.google.android.material.card.MaterialCardView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="75dp"-->
+        <!--                android:layout_margin="5dp"-->
+        <!--                android:backgroundTint="@color/white"-->
+        <!--                app:cardCornerRadius="10dp"-->
+        <!--                app:cardElevation="1dp">-->
+
+        <!--                <LinearLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:orientation="horizontal"-->
+        <!--                    android:padding="10dp">-->
+
+        <!--                    <ImageView-->
+        <!--                        android:layout_width="50dp"-->
+        <!--                        android:layout_height="50dp"-->
+        <!--                        android:layout_gravity="center_vertical"-->
+        <!--                        android:background="@drawable/transaction_list_box_food"-->
+        <!--                        android:padding="8dp"-->
+        <!--                        android:src="@drawable/restaurant"-->
+        <!--                        app:tint="@color/primaryRed" />-->
+
+        <!--                    <LinearLayout-->
+        <!--                        android:layout_width="match_parent"-->
+        <!--                        android:layout_height="match_parent"-->
+        <!--                        android:layout_marginHorizontal="10dp"-->
+        <!--                        android:gravity="center_vertical"-->
+        <!--                        android:orientation="vertical">-->
+
+        <!--                        <LinearLayout-->
+        <!--                            android:layout_width="match_parent"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:layout_marginBottom="5dp"-->
+        <!--                            android:orientation="horizontal">-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:layout_weight="1"-->
+        <!--                                android:textSize="18sp"-->
+        <!--                                android:textStyle="bold"-->
+        <!--                                android:text="Food" />-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:text="-$32"-->
+        <!--                                android:textSize="18sp"-->
+        <!--                                android:textStyle="bold"-->
+        <!--                                android:textColor="@color/expenseRedColor" />-->
+        <!--                        </LinearLayout>-->
+
+        <!--                        <LinearLayout-->
+        <!--                            android:layout_width="match_parent"-->
+        <!--                            android:layout_height="wrap_content"-->
+        <!--                            android:orientation="horizontal">-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:layout_weight="1"-->
+        <!--                                android:text="Buy a Ramen" />-->
+
+        <!--                            <TextView-->
+        <!--                                android:layout_width="wrap_content"-->
+        <!--                                android:layout_height="wrap_content"-->
+        <!--                                android:text="10:00 AM" />-->
+        <!--                        </LinearLayout>-->
+
+        <!--                    </LinearLayout>-->
+
+
+        <!--                </LinearLayout>-->
+
+
+        <!--            </com.google.android.material.card.MaterialCardView>-->
+
+        <!--        </LinearLayout>-->
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHomeFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingVertical="20dp"
+            android:layout_height="0dp"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llrecentTransactions">
-
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/BaseLight"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/frame" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="10dp"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Shopping"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="-120"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/expenseRedColor" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Buy some Grocery" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="10:00 AM" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-            </com.google.android.material.card.MaterialCardView>
-
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/l3Light"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/transaction_list_box"
-                        android:padding="8dp"
-                        android:src="@drawable/recurring_bill"
-                        app:tint="@color/colorPrimary" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="10dp"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textStyle="bold"
-                                android:textSize="18sp"
-                                android:text="Subscription" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="-$80"
-                                android:textStyle="bold"
-                                android:textSize="18sp"
-                                android:textColor="@color/expenseRedColor" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Disney + Annual" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="10:00 AM" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-            </com.google.android.material.card.MaterialCardView>
-
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/white"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="1dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/transaction_list_box_food"
-                        android:padding="8dp"
-                        android:src="@drawable/restaurant"
-                        app:tint="@color/primaryRed" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="10dp"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:text="Food" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="-$32"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/expenseRedColor" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Buy a Ramen" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="10:00 AM" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/llrecentTransactions" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.backend.IncomeExpenseViewModel
 import com.example.seniorsprojectui.backend.Transaction
+import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
 
@@ -45,24 +46,26 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
             AddAttachmentBSV().show(supportFragmentManager, AddAttachmentBSV().tag)
         }
 
-        val category = binding.etCategory.text.toString()
-        val wallet = binding.etWallet.text.toString()
-        val amount = binding.tvAmount.text.toString()
-        val date  = binding.tvDate.text.toString()
-        val description  = binding.etDescription.text.toString()
-        val attachmentStatus = binding.tvDate.text.toString()
+
 
 
         binding.btnContinueIncomeExpense.setOnClickListener {
+
+            val category = binding.etCategory.text.toString()
+            val wallet = binding.etWallet.text.toString()
+            val amount = binding.tvAmount.text.toString()
+            val date  = binding.tvDate.text.toString()
+            val description  = binding.etDescription.text.toString()
+            val attachmentStatus = binding.tvDate.text.toString()
+
 
 
         if (category.isNotEmpty() && wallet.isNotEmpty() && amount.isNotEmpty())
         {
             val transactionObject = Transaction("current time",date,amount,category,wallet,description,attachmentStatus,transactionType)
 
-            viewModel.updateTrasactions(transactionObject)
+            TransactionDataModel.updateTrasactions(transactionObject)
         }
-
             // finishes this activity
             finish()
         }
@@ -88,8 +91,6 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
 
         }
 
-
-
         // setting background for income/expense
                 if (transactionType.equals("expense"))
                 {
@@ -101,7 +102,6 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
                     binding.tvTitle.setText("Income")
                     binding.main.setBackgroundResource(R.color.green)
                 }
-
 
     }
 }
