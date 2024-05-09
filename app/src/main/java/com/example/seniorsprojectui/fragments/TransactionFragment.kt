@@ -39,6 +39,8 @@ class TransactionFragment : Fragment() {
         val ivFilter = view.findViewById<ImageView>(R.id.ivFilterTransactions)
         val rv = view.findViewById<RecyclerView>(R.id.rvTransactionFragment)
 
+        val btnMonth = view.findViewById<Button>(R.id.btnMonthTransacFrag)
+
 
         viewModel = ViewModelProvider(this)[IncomeExpenseViewModel::class.java]
 
@@ -59,6 +61,11 @@ class TransactionFragment : Fragment() {
 
         ivFilter.setOnClickListener {
             TransactionFilterBSVFragment().show(requireActivity().supportFragmentManager, TransactionFilterBSVFragment().tag)
+        }
+
+
+        btnMonth.setOnClickListener {
+            TransactionDataModel.showDialogList(btnMonth,requireContext(),TransactionDataModel.months)
         }
 
     }

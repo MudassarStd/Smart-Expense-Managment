@@ -23,6 +23,10 @@ import com.example.seniorsprojectui.fragments.TransactionFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
+    private lateinit var homeFrag : Fragment
+    private lateinit var transacFrag : Fragment
+    private lateinit var budgetFrag : Fragment
+    private lateinit var profileFrag : Fragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,10 +48,12 @@ class HomeActivity : AppCompatActivity() {
         )
 
 
-        val homeFrag = HomeFragment()
-        val transacFrag = TransactionFragment()
-        val budgetFrag = BudgetFragment()
-        val profileFrag = ProfileFragment()
+        val fab = binding.fabHomeActivity
+
+        homeFrag = HomeFragment()
+        transacFrag = TransactionFragment()
+        budgetFrag = BudgetFragment()
+        profileFrag = ProfileFragment()
 
 
         binding.bottomNavigationView.background = null
@@ -63,12 +69,19 @@ class HomeActivity : AppCompatActivity() {
                 else -> HomeFragment()
             }
 
+            // fab hiding logic
+            if (frag == budgetFrag || frag == profileFrag)
+            {
+                fab.visibility = View.GONE
+            }
+            else{
+                fab.visibility = View.VISIBLE
+            }
+
             replaceFrags(frag)
             true
 
         }
-
-
 
         // fab button implementation
         binding.fabHomeActivity.setOnClickListener {
@@ -76,8 +89,6 @@ class HomeActivity : AppCompatActivity() {
         }
 
     }
-
-
 
     // Private functions
 
@@ -127,21 +138,4 @@ class HomeActivity : AppCompatActivity() {
 }
 
 
-//binding.bnvMainActivity.setOnNavigationItemSelectedListener { item ->
-//
-//    val selectedFragment = when (item.itemId) {
-//
-//        R.id.bottomNavHomeTrans -> homeFrag
-//        R.id.bottomNavStats -> statsFrag
-//        R.id.bottomNavAccounts -> accountFrag
-//        R.id.bottomNavMore -> moreFrag
-//
-//        else -> throw IllegalArgumentException("Unknown menu item")
-//    }
-//
-//
-//
-//    MoveFrags.replaceFrags(R.id.frameLayoutMainActivity, supportFragmentManager, selectedFragment)
-//    true
-//}
-//
+

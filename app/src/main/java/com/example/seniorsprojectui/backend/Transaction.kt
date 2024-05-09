@@ -10,3 +10,8 @@ data class Transaction(
     val attachmentStatus : String,
     val transactionType : String
 )
+
+data class CategoryData(
+    val categoryLabel : String,
+    val categoryIcon : Int
+)

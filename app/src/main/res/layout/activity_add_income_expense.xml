@@ -15,14 +15,13 @@
         android:layout_height="wrap_content"
         android:text="5 May, 2024"
         android:gravity="center"
-        android:drawableRight="@drawable/home"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAmount" />
+        app:layout_constraintTop_toBottomOf="@+id/etAmount" />
 
 
     <TextView
@@ -55,20 +54,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/tvAmount"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="$0"
-        android:inputType="number"
         android:background="@null"
+        android:text="Rs."
+        android:layout_marginStart="20dp"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+
+    <EditText
+        android:id="@+id/etAmount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:inputType="number"
+        android:hint="0"
+        android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView32"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
 
@@ -109,6 +122,7 @@
                     android:id="@+id/etCategory"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:focusable="false"
                     android:drawableRight="@drawable/arrow_down"
                     android:hint="Category" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -156,6 +170,7 @@
                     android:id="@+id/etWallet"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:focusable="false"
                     android:drawableRight="@drawable/arrow_down"
                     android:hint="Wallet" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -304,13 +319,6 @@
 
     </ScrollView>
 
-<!--    <Switch-->
-<!--        android:id="@+id/btnswitchAddExpenseIncome"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

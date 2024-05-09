@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.seniorsprojectui.R
@@ -21,6 +22,14 @@ class TransactionRVAdapter(val transactionList : List<Transaction>) : Adapter<Tr
         holder.rvCategory.text = transactionList[position].category
         holder.description.text = transactionList[position].description
         holder.time.text = transactionList[position].time
+        holder.amount.text = transactionList[position].amount
+
+        if (transactionList[position].transactionType == "expense") {
+            holder.amount.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.primaryRed))
+        }
+        else{
+            holder.amount.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.green))
+        }
     }
 
     override fun getItemCount(): Int {

@@ -2,12 +2,20 @@ package com.example.seniorsprojectui.activities
 
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.adapters.CategoriesDialogAdapter
+import com.example.seniorsprojectui.adapters.OnCategorySelection
 import com.example.seniorsprojectui.backend.IncomeExpenseViewModel
 import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
@@ -15,10 +23,18 @@ import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
 
 
-class AddIncomeExpenseActivity : AppCompatActivity() {
+class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
     private lateinit var binding : ActivityAddIncomeExpenseBinding
+    lateinit var transactionObject : Transaction
+    private lateinit var currentDate : TextView
 
+    private  var categoryDialog : AlertDialog? = null
     var transactionType : String = "null"
+
+    private lateinit var categoryET : EditText
+
+    val categoriesAdapter = CategoriesDialogAdapter(TransactionDataModel.categoriesList)
+
 
     private lateinit var viewModel : IncomeExpenseViewModel
 
@@ -35,6 +51,8 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
         }
 
 
+        categoriesAdapter.setOnCategoryClickListenerInterface(this)
+
         viewModel = ViewModelProvider(this)[IncomeExpenseViewModel::class.java]
 
 
@@ -46,6 +64,25 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
             AddAttachmentBSV().show(supportFragmentManager, AddAttachmentBSV().tag)
         }
 
+        // setting current date
+         currentDate = binding.tvDate
+        currentDate.text = TransactionDataModel.getCurrentDate(0)
+
+        currentDate.setOnClickListener {
+            TransactionDataModel.showDatePickerDialog(this, currentDate)
+        }
+
+        // testing categories dialog
+        binding.etCategory.setOnClickListener {
+            showCategoriesDialog()
+        }
+
+        val etWallet = binding.etWallet
+
+        etWallet.setOnClickListener {
+            TransactionDataModel.showDialogList(etWallet, this, TransactionDataModel.transactionsWallets)
+        }
+
 
 
 
@@ -53,21 +90,37 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
 
             val category = binding.etCategory.text.toString()
             val wallet = binding.etWallet.text.toString()
-            val amount = binding.tvAmount.text.toString()
-            val date  = binding.tvDate.text.toString()
+            val amount = binding.etAmount.text.toString()
+            val date  = currentDate.toString()
             val description  = binding.etDescription.text.toString()
             val attachmentStatus = binding.tvDate.text.toString()
+            val currentTime : String = TransactionDataModel.getCurrentTime()
 
 
 
-        if (category.isNotEmpty() && wallet.isNotEmpty() && amount.isNotEmpty())
+        if (category.isNotEmpty() && wallet.isNotEmpty() && amount.isNotEmpty() && amount.isNotEmpty())
         {
-            val transactionObject = Transaction("current time",date,amount,category,wallet,description,attachmentStatus,transactionType)
+            // updating total income/expenses
+            if (transactionType.equals("expense"))
+            {
+                TransactionDataModel.totalExpenses += amount.toDouble()
+            }
+            else
+            {
+                TransactionDataModel.totalIncome += amount.toDouble()
+            }
+
+            TransactionDataModel.totalAmount += amount.toDouble()
+            // creating transaction object
+            transactionObject = Transaction(currentTime,date,amount,category,wallet,description,attachmentStatus,transactionType)
 
             TransactionDataModel.updateTrasactions(transactionObject)
-        }
             // finishes this activity
             finish()
+        }
+        else{
+            Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
+        }
         }
 
 
@@ -104,4 +157,39 @@ class AddIncomeExpenseActivity : AppCompatActivity() {
                 }
 
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        currentDate.text = TransactionDataModel.getCurrentDate(0)
+    }
+
+    private fun showCategoriesDialog() {
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_categories_rv_layout, null)
+
+        val rvCategories : RecyclerView = dialogView.findViewById(R.id.rvCategoriesDialog)
+
+        rvCategories.adapter = categoriesAdapter
+        rvCategories.layoutManager = GridLayoutManager(this,3)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Select a Category")
+            .setView(dialogView)
+
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+        categoryDialog = builder.create()
+        categoryDialog?.show()
+    }
+
+    // interface methods implementations
+    override fun onCategorySelected(categoryPosition: Int) {
+        binding.etCategory.setText(TransactionDataModel.categoriesList[categoryPosition].categoryLabel)
+        categoryDialog?.dismiss()
+    }
+
+
+
 }
