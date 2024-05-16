@@ -85,6 +85,7 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
 
         val intent = Intent(requireContext(), EditTransactionActivity::class.java)
         intent.apply {
+
             putExtra("time", TransactionDataModel.transactions[itemPosition].time)
             putExtra("date", TransactionDataModel.transactions[itemPosition].date)
             putExtra("amount", TransactionDataModel.transactions[itemPosition].amount)
