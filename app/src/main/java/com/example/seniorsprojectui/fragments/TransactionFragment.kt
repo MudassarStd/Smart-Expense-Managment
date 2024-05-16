@@ -1,5 +1,6 @@
 package com.example.seniorsprojectui.fragments
 
+import TransactionRVAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,17 +10,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.activities.EditTransactionActivity
 import com.example.seniorsprojectui.activities.FinancialReport
-import com.example.seniorsprojectui.adapters.TransactionRVAdapter
 import com.example.seniorsprojectui.backend.IncomeExpenseViewModel
 import com.example.seniorsprojectui.backend.TransactionDataModel
 
-
-class TransactionFragment : Fragment() {
+class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListener{
 
     private lateinit var viewModel : IncomeExpenseViewModel
     private lateinit var rvAdapter: TransactionRVAdapter
@@ -41,14 +43,17 @@ class TransactionFragment : Fragment() {
 
         val btnMonth = view.findViewById<Button>(R.id.btnMonthTransacFrag)
 
+        // setting current month on btn Month
+        btnMonth.text = TransactionDataModel.getCurrentMonth(0)
+
 
         viewModel = ViewModelProvider(this)[IncomeExpenseViewModel::class.java]
-
-
-
-
         // setting adapter for RV
         rvAdapter = TransactionRVAdapter(TransactionDataModel.transactions)
+
+        // invoking interface
+        rvAdapter.setOnItemClickListener(this)
+
         rv.adapter = rvAdapter
         rv.layoutManager = LinearLayoutManager(requireContext())
 
@@ -73,6 +78,43 @@ class TransactionFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         rvAdapter.notifyDataSetChanged()
+    }
+
+    override fun onItemClick(itemPosition: Int) {
+        Toast.makeText(requireContext(), "$itemPosition", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(requireContext(), EditTransactionActivity::class.java)
+        intent.apply {
+            putExtra("time", TransactionDataModel.transactions[itemPosition].time)
+            putExtra("date", TransactionDataModel.transactions[itemPosition].date)
+            putExtra("amount", TransactionDataModel.transactions[itemPosition].amount)
+            putExtra("category", TransactionDataModel.transactions[itemPosition].category)
+            putExtra("wallet", TransactionDataModel.transactions[itemPosition].wallet)
+            putExtra("description", TransactionDataModel.transactions[itemPosition].description)
+            putExtra("attachmentStatus", TransactionDataModel.transactions[itemPosition].attachmentStatus)
+            putExtra("transactionType", TransactionDataModel.transactions[itemPosition].transactionType)
+        }
+
+        startActivity(intent)
+    }
+
+    override fun onItemLongClick(itemPosition: Int) {
+
+
+        val dialog = AlertDialog.Builder(requireContext()).setTitle("Action")
+            .setMessage("Are you sure to delete ?")
+            .setPositiveButton("Yes") { _, _ ->
+
+//                TransactionDataModel.transactions.removeAt(itemPosition)
+//                rvAdapter.notifyItemChanged(itemPosition)
+
+            }
+            .setNegativeButton("No") { _, _ ->
+
+            }
+            .create()
+
+        dialog.show()
     }
 
 

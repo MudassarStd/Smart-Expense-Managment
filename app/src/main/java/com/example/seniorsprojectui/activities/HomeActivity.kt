@@ -14,12 +14,17 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.room.Room
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityHomeBinding
 import com.example.seniorsprojectui.fragments.BudgetFragment
 import com.example.seniorsprojectui.fragments.HomeFragment
 import com.example.seniorsprojectui.fragments.ProfileFragment
 import com.example.seniorsprojectui.fragments.TransactionFragment
+import com.example.seniorsprojectui.maindb.MainTransactionsDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
@@ -46,6 +51,12 @@ class HomeActivity : AppCompatActivity() {
                 )
             )
         )
+
+
+            // fetch data from database
+            fetchData()
+
+
 
 
         val fab = binding.fabHomeActivity
@@ -82,7 +93,6 @@ class HomeActivity : AppCompatActivity() {
             true
 
         }
-
         // fab button implementation
         binding.fabHomeActivity.setOnClickListener {
                 showCustomDialog(this)
@@ -91,6 +101,23 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // Private functions
+
+    private fun fetchData() {
+
+        val db = Room.databaseBuilder(
+            applicationContext,
+            MainTransactionsDatabase::class.java, "Main_Transaction_db"
+        ).build()
+
+        GlobalScope.launch {
+            TransactionDataModel.transactions = db.transacactionDaoConnector().getAllTransactions()
+
+            TransactionDataModel.updateHomeFragIncomeExpenseStatus()
+//            TransactionDataModel.updateDataForFinancialReport()
+            TransactionDataModel.getCategoryWiseAmountSpent()
+
+        }
+    }
 
     fun showCustomDialog(context: Context) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.add_dialog_boom_layout, null)

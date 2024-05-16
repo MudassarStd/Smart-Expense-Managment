@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:scrollbars="none"
+
     android:fillViewport="true"
     tools:context=".fragments.HomeFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +44,7 @@
 
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnMonthHomeFrag"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:backgroundTint="@color/l3Light"
@@ -74,7 +74,7 @@
                 android:text="Account Balance"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
+                app:layout_constraintTop_toBottomOf="@+id/btnMonthHomeFrag" />
 
 
             <TextView

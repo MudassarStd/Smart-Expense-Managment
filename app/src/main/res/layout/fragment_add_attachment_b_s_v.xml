@@ -8,6 +8,7 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="40dp"
@@ -59,10 +60,10 @@
             android:id="@+id/cvAttactmentImage"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:clickable="true"
             android:layout_marginEnd="10dp"
             android:layout_weight="0.3"
             android:backgroundTint="@color/l1Purple"
+            android:clickable="true"
             android:elevation="10dp"
             app:cardCornerRadius="10dp">
 
@@ -92,10 +93,10 @@
             android:id="@+id/cvAttactmentDocument"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:clickable="true"
             android:layout_marginEnd="10dp"
             android:layout_weight="0.3"
             android:backgroundTint="@color/l1Purple"
+            android:clickable="true"
             android:elevation="10dp"
             app:cardCornerRadius="10dp">
 
@@ -122,6 +123,27 @@
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tvShowSelectedDocument"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="jfkls"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+    <ImageView
+        android:id="@+id/ivShowImageSelected"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvShowSelectedDocument" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

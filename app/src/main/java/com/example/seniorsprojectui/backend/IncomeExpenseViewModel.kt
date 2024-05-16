@@ -1,7 +1,6 @@
 package com.example.seniorsprojectui.backend
 
 import androidx.lifecycle.ViewModel
-import com.example.seniorsprojectui.adapters.TransactionRVAdapter
 
 class IncomeExpenseViewModel : ViewModel() {
 

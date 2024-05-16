@@ -8,6 +8,9 @@
          <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
 
+<!--&lt;!&ndash;        changes outline color of text input layout&ndash;&gt;-->
+<!--        <item name="colorControlActivated">@color/green</item>-->
+
     </style>
 
     <style name="Theme.SeniorsProjectUI" parent="Base.Theme.SeniorsProjectUI" />

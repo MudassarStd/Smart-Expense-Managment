@@ -1,6 +1,9 @@
 package com.example.seniorsprojectui.activities
 
+
 import android.os.Bundle
+import android.provider.Settings.Global
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -10,9 +13,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.adapters.CategoriesDialogAdapter
 import com.example.seniorsprojectui.adapters.OnCategorySelection
@@ -20,12 +25,16 @@ import com.example.seniorsprojectui.backend.IncomeExpenseViewModel
 import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
+import com.example.seniorsprojectui.databinding.TransactionSampleLayoutBinding
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
+import com.example.seniorsprojectui.maindb.MainTransactionsDatabase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
     private lateinit var binding : ActivityAddIncomeExpenseBinding
-    lateinit var transactionObject : Transaction
+//    lateinit var transactionObject : Transaction
     private lateinit var currentDate : TextView
 
     private  var categoryDialog : AlertDialog? = null
@@ -68,6 +77,8 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
          currentDate = binding.tvDate
         currentDate.text = TransactionDataModel.getCurrentDate(0)
 
+
+
         currentDate.setOnClickListener {
             TransactionDataModel.showDatePickerDialog(this, currentDate)
         }
@@ -83,19 +94,27 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
             TransactionDataModel.showDialogList(etWallet, this, TransactionDataModel.transactionsWallets)
         }
 
-
-
-
         binding.btnContinueIncomeExpense.setOnClickListener {
 
             val category = binding.etCategory.text.toString()
             val wallet = binding.etWallet.text.toString()
             val amount = binding.etAmount.text.toString()
-            val date  = currentDate.toString()
+            val date  = currentDate.text.toString()
+            val month = TransactionDataModel.getCurrentMonth(0)
             val description  = binding.etDescription.text.toString()
             val attachmentStatus = binding.tvDate.text.toString()
             val currentTime : String = TransactionDataModel.getCurrentTime()
 
+
+
+            // checking whether text in category changed or NOT
+            binding.etCategory.addTextChangedListener {
+                // if count of category data becomes > 0, remove error symbol
+                if (it!!.count()>0)
+                {
+                    binding.etCategory.error = null
+                }
+            }
 
 
         if (category.isNotEmpty() && wallet.isNotEmpty() && amount.isNotEmpty() && amount.isNotEmpty())
@@ -112,14 +131,33 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
             TransactionDataModel.totalAmount += amount.toDouble()
             // creating transaction object
-            transactionObject = Transaction(currentTime,date,amount,category,wallet,description,attachmentStatus,transactionType)
+            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,attachmentStatus,transactionType)
 
-            TransactionDataModel.updateTrasactions(transactionObject)
+            // inserting data into db
+            insertTransaction(transactionObject)
+
+            // updates financial report
+//            TransactionDataModel.updateDataForFinancialReport()
+
+
             // finishes this activity
             finish()
+
+
         }
         else{
-            Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
+
+            // if any field is empty
+
+            if(category.isEmpty())
+                binding.etCategory.error = ""
+
+            if (description.isEmpty())
+                binding.etDescription.error = "Description Cannot be empty"
+
+            if (wallet.isEmpty())
+                binding.etWallet.error = ""
+
         }
         }
 
@@ -157,6 +195,20 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
                 }
 
     }
+
+    // Database functions
+    private fun insertTransaction(item : Transaction)
+    {
+        val db = Room.databaseBuilder(
+            applicationContext,
+            MainTransactionsDatabase::class.java, "Main_Transaction_db"
+        ).build()
+
+        GlobalScope.launch {
+            db.transacactionDaoConnector().insertItem(item)
+        }
+    }
+
 
     override fun onResume() {
         super.onResume()
