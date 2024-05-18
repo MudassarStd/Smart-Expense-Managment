@@ -53,6 +53,8 @@ class CategoriesDialogAdapter(val categoriesClass : List<CategoryData>)  : Recyc
     override fun getItemCount(): Int {
         return categoriesClass.size
     }
+
+
 }
 
 class CategoryListVH(itemView : View, listener : OnCategorySelection) : RecyclerView.ViewHolder(itemView)

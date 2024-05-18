@@ -62,7 +62,8 @@ class HomeFragment : Fragment() {
 //        rvHomeFrag.layoutManager = LinearLayoutManager(requireContext())
 
 
-
+        // set current Month
+        btnMonthHome.text = TransactionDataModel.getCurrentMonth(0)
 
         ivNotify.setOnClickListener {
             startActivity(Intent(requireContext(), NotificationActivity::class.java))
@@ -77,26 +78,23 @@ class HomeFragment : Fragment() {
             }
         }
 
-        btnMonthHome.setOnClickListener {
-            TransactionDataModel.showDialogList(btnMonthHome,requireContext(),TransactionDataModel.months)
-        }
+       updateHomeFragDashboard()
 
     }
 
     override fun onResume() {
         super.onResume()
 //        adapter.notifyDataSetChanged()
+        updateHomeFragDashboard()
+    }
 
+    private fun updateHomeFragDashboard()
+    {
         totalIncome.text = TransactionDataModel.totalIncome.toString()
         totalExpense.text = TransactionDataModel.totalExpenses.toString()
         totalAmount.text = TransactionDataModel.totalAmount.toString()
-
     }
 
-//    override fun onItemClick(itemPosition: Int) {
-//        Toast.makeText(requireContext(), "${TransactionDataModel.transactions[itemPosition]}", Toast.LENGTH_SHORT).show()
-//        TransactionDataModel.transactions.removeAt(itemPosition)
-//
-//    }
+
 
 }

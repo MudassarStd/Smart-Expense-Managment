@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -26,10 +27,13 @@ import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
 import com.example.seniorsprojectui.databinding.TransactionSampleLayoutBinding
+import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
 import com.example.seniorsprojectui.maindb.MainTransactionsDatabase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
@@ -45,7 +49,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
     val categoriesAdapter = CategoriesDialogAdapter(TransactionDataModel.categoriesList)
 
 
-    private lateinit var viewModel : IncomeExpenseViewModel
+    private lateinit var viewModel : ViewModelTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +66,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
         categoriesAdapter.setOnCategoryClickListenerInterface(this)
 
-        viewModel = ViewModelProvider(this)[IncomeExpenseViewModel::class.java]
+        viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
 
 
         // getting transaction (income/expense) type from prev activity
@@ -133,12 +137,10 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
             // creating transaction object
             val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,attachmentStatus,transactionType)
 
+            viewModel.insertTransaction(transactionObject)
             // inserting data into db
-            insertTransaction(transactionObject)
-
-            // updates financial report
-//            TransactionDataModel.updateDataForFinancialReport()
-
+//            insertTransaction(transactionObject)
+            // update budget map
 
             // finishes this activity
             finish()
@@ -181,7 +183,6 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
             }
 
         }
-
         // setting background for income/expense
                 if (transactionType.equals("expense"))
                 {
@@ -197,17 +198,18 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
     }
 
     // Database functions
-    private fun insertTransaction(item : Transaction)
-    {
-        val db = Room.databaseBuilder(
-            applicationContext,
-            MainTransactionsDatabase::class.java, "Main_Transaction_db"
-        ).build()
-
-        GlobalScope.launch {
-            db.transacactionDaoConnector().insertItem(item)
-        }
-    }
+//    private fun insertTransaction(item : Transaction)
+//    {
+//        val db = Room.databaseBuilder(
+//            applicationContext,
+//            MainTransactionsDatabase::class.java, "Main_Transaction_db"
+//        ).build()
+//
+//        lifecycleScope.launch {
+//            db.transacactionDaoConnector().insertItem(item)
+//            TransactionDataModel.transactions = db.transacactionDaoConnector().getAllTransactions()
+//        }
+//    }
 
 
     override fun onResume() {
@@ -241,7 +243,6 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
         binding.etCategory.setText(TransactionDataModel.categoriesList[categoryPosition].categoryLabel)
         categoryDialog?.dismiss()
     }
-
 
 
 }

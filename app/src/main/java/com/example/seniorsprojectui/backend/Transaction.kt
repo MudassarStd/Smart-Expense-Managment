@@ -28,7 +28,9 @@ data class FinancialReportCategoryData(
     val transactionType: String
 )
 
+@Entity
 data class BudgetCategory(
+    @PrimaryKey(autoGenerate = true) val Budgetid: Int,
     val category : String,
     val totalAmount : String,
     val month : String

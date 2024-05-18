@@ -14,24 +14,25 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.room.Room
+import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
-import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityHomeBinding
+import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import com.example.seniorsprojectui.fragments.BudgetFragment
 import com.example.seniorsprojectui.fragments.HomeFragment
 import com.example.seniorsprojectui.fragments.ProfileFragment
 import com.example.seniorsprojectui.fragments.TransactionFragment
-import com.example.seniorsprojectui.maindb.MainTransactionsDatabase
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+
 
 class HomeActivity : AppCompatActivity() {
+
     private lateinit var binding : ActivityHomeBinding
     private lateinit var homeFrag : Fragment
     private lateinit var transacFrag : Fragment
     private lateinit var budgetFrag : Fragment
     private lateinit var profileFrag : Fragment
+    private lateinit var viewModel : ViewModelTransaction
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -43,6 +44,11 @@ class HomeActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // update stakeholders
+        viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
+        viewModel.updateAllStakeHolders()
+
         supportActionBar?.setBackgroundDrawable(
             ColorDrawable(
                 ContextCompat.getColor(
@@ -51,13 +57,6 @@ class HomeActivity : AppCompatActivity() {
                 )
             )
         )
-
-
-            // fetch data from database
-            fetchData()
-
-
-
 
         val fab = binding.fabHomeActivity
 
@@ -69,8 +68,10 @@ class HomeActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.background = null
 
+        // setting home frag
         replaceFrags(HomeFragment())
 
+        // BNV navigation
         binding.bottomNavigationView.setOnItemSelectedListener {
             val frag = when(it.itemId){
                 R.id.bottomNavHome -> homeFrag
@@ -102,22 +103,7 @@ class HomeActivity : AppCompatActivity() {
 
     // Private functions
 
-    private fun fetchData() {
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            MainTransactionsDatabase::class.java, "Main_Transaction_db"
-        ).build()
-
-        GlobalScope.launch {
-            TransactionDataModel.transactions = db.transacactionDaoConnector().getAllTransactions()
-
-            TransactionDataModel.updateHomeFragIncomeExpenseStatus()
-//            TransactionDataModel.updateDataForFinancialReport()
-            TransactionDataModel.getCategoryWiseAmountSpent()
-
-        }
-    }
 
     fun showCustomDialog(context: Context) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.add_dialog_boom_layout, null)

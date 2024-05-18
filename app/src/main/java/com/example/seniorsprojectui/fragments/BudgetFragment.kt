@@ -9,12 +9,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.AddBudgetActivity
 import com.example.seniorsprojectui.adapters.CategoriesBudgetAdapter
+import com.example.seniorsprojectui.backend.BudgetCategory
 import com.example.seniorsprojectui.backend.TransactionDataModel
+import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 
 
 class BudgetFragment : Fragment() {
@@ -23,6 +27,18 @@ class BudgetFragment : Fragment() {
     private lateinit var rvCategoryBudget : RecyclerView
     private lateinit var noBudget : TextView
     private lateinit var monthBudget : TextView
+
+
+    private lateinit var viewModel : ViewModelTransaction
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+//        viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
+
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,24 +59,46 @@ class BudgetFragment : Fragment() {
 
         monthBudget.text = TransactionDataModel.getCurrentMonth(0)
 
+        adapter = CategoriesBudgetAdapter(TransactionDataModel.budgetCategoriesList)
+
+
         nextMonth.setOnClickListener {
             monthBudget.text = TransactionDataModel.getCurrentMonth(1)
-            adapter.notifyDataSetChanged()
+            adapter.updateAdapter(filterByMonth(monthBudget.text.toString()))
+
         }
 
         prevMonth.setOnClickListener {
             monthBudget.text = TransactionDataModel.getCurrentMonth(-1)
-            adapter.notifyDataSetChanged()
+            adapter.updateAdapter(filterByMonth(monthBudget.text.toString()))
         }
 
         btnCreateBudget.setOnClickListener {
             startActivity(Intent(requireContext(), AddBudgetActivity::class.java))
         }
-        adapter = CategoriesBudgetAdapter(TransactionDataModel.budgetCategoriesList, monthBudget.text.toString())
         rvCategoryBudget.adapter = adapter
         rvCategoryBudget.layoutManager = LinearLayoutManager(requireContext())
 
+//        observerUpdateInData()
+
     }
+
+
+
+//    private fun observerUpdateInData(){
+//        viewModel.budgets.observe(viewLifecycleOwner) { budgets ->
+//            adapter.updateData(budgets)
+//        }
+//    }
+
+
+
+    private fun filterByMonth(targetMonth: String): List<BudgetCategory> {
+        return TransactionDataModel.budgetCategoriesList.filter { list ->
+            list.month.equals(targetMonth, ignoreCase = true)
+        }
+    }
+
 
     override fun onResume() {
         super.onResume()

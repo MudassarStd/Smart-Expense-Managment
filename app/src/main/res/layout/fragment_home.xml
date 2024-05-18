@@ -48,8 +48,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:backgroundTint="@color/l3Light"
-                android:drawableLeft="@drawable/arrow_down"
-                android:drawableTint="@color/colorPrimary"
                 android:gravity="center"
                 android:text="October"
                 android:textColor="@color/colorPrimary"
@@ -71,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Account Balance"
+                android:text="Total Account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnMonthHomeFrag" />

@@ -20,11 +20,6 @@ class TransactionDataModel {
         var totalExpenses: Double = 0.0
         var totalIncome: Double = 0.0
         var totalAmount: Double = 0.0
-//        var currentMonth : String = ""
-
-
-        // main transaction list
-        var transactions: List<Transaction> = listOf()
 
 
         // financial report category list data
@@ -60,10 +55,7 @@ class TransactionDataModel {
         var calendar = Calendar.getInstance()
 
 
-//    fun updateTrasactions(transactionData : Transaction)
-//    {
-//        transactions.add(transactionData)
-//    }
+
 
         fun getCurrentDate(offset: Int): String {
             calendar.add(Calendar.DAY_OF_YEAR, offset)
@@ -142,7 +134,7 @@ class TransactionDataModel {
 
 
 
-        fun getCategoryWiseAmountSpent() {
+        fun getCategoryWiseAmountSpent(transactions : List<Transaction>) {
             for (category in categoriesSet)
             {
                 var amount = 0.0
@@ -159,7 +151,10 @@ class TransactionDataModel {
 
         fun getRemainingAmountForBudget(category : String, totalAmount : Double) : String
         {
-             val remainingAmount = totalAmount - categoryBudgetMap[category]!!
+            // update budget map
+//            getCategoryWiseAmountSpent()
+
+            val remainingAmount = totalAmount - categoryBudgetMap[category]!!
             return remainingAmount.toInt().toString()
         }
 
@@ -174,8 +169,12 @@ class TransactionDataModel {
         }
 
 
-        fun updateHomeFragIncomeExpenseStatus() {
+        fun updateHomeFragIncomeExpenseStatus(transactions : List<Transaction>) {
             // updating home fragment Data for income and expenses
+            totalIncome = 0.0
+            totalExpenses = 0.0
+            totalAmount = 0.0
+
             for (item in transactions) {
                 if (item.transactionType == "income") {
                     totalIncome += item.amount.toDouble()
@@ -188,7 +187,10 @@ class TransactionDataModel {
             }
         }
 
-        fun updateDataForFinancialReport() {
+        fun updateDataForFinancialReport(transactions: List<Transaction>) {
+
+            financialReportCategories = emptyList()
+
             financialReportCategories = transactions
                 .groupBy { it.category to it.transactionType }
                 .mapValues { (_, transactions) ->

@@ -8,13 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.backend.Transaction
 
-class TransactionRVAdapter(private val transactionList : List<Transaction>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TransactionRVAdapter(private var transactionList : List<Transaction>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     private lateinit var i_listener: onItemClickListener
-
     interface onItemClickListener {
-
         fun onItemClick(itemPosition: Int)
         fun onItemLongClick(itemPosition: Int)
 
@@ -89,6 +87,12 @@ class TransactionRVAdapter(private val transactionList : List<Transaction>) : Re
             }
         }
         return count
+    }
+
+    fun updateTransactionData(transactionList : List<Transaction>)
+    {
+        this.transactionList = transactionList
+        notifyDataSetChanged()
     }
 }
 
