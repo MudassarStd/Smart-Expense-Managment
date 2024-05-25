@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.seniorsprojectui.R
@@ -22,25 +23,29 @@ class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>) : Ada
 
     override fun onBindViewHolder(holder: BudgetVH, position: Int) {
 
-
             // get remaining amount
-            val remainingAmount = TransactionDataModel.getRemainingAmountForBudget(listData[position].category, listData[position].totalAmount.toDouble())
+//            val remainingAmount = TransactionDataModel.getRemainingAmountForBudget(listData[position].category, listData[position].totalAmount.toDouble())
             holder.budgetCategory.text = listData[position].category
-            holder.remainingAmount.text = remainingAmount
-            holder.remainingAmountFromTotal.text = remainingAmount
+            holder.remainingAmount.text = "null"
+            holder.remainingAmountFromTotal.text = "null"
             holder.totalAmount.text = listData[position].totalAmount
 
             // checking if limit exceeded or NOT
-            if(TransactionDataModel.amountExceededCheck(listData[position].category, listData[position].totalAmount.toDouble()))
-            {
-                holder.remainingAmount.text = "0"
-                holder.limitExceeded.visibility = View.VISIBLE
-                holder.ivWarning.visibility = View.VISIBLE
-            }
-            else{
-                holder.limitExceeded.visibility = View.GONE
-                holder.ivWarning.visibility = View.GONE
-            }
+//            if(TransactionDataModel.amountExceededCheck(listData[position].category, listData[position].totalAmount.toDouble()))
+//            {
+//                holder.remainingAmount.text = "0"
+//                holder.limitExceeded.visibility = View.VISIBLE
+//                holder.ivWarning.visibility = View.VISIBLE
+//            }
+//            else{
+//                holder.limitExceeded.visibility = View.GONE
+//                holder.ivWarning.visibility = View.GONE
+//            }
+
+            // assign category colors
+//        val colorId : Int = TransactionDataModel.categoryColorMap[listData[position].category]?.toInt()
+//        val color = ContextCompat.getColor(holder.itemView.context, colorId)
+//            holder.dot.setColorFilter(color)
         }
 
 
@@ -62,4 +67,6 @@ class BudgetVH(view : View) : RecyclerView.ViewHolder(view)
     val budgetCategory = view.findViewById<TextView>(R.id.tvBudgetCategory)
     val limitExceeded = view.findViewById<TextView>(R.id.tvBudgetLimitExceeded)
     val ivWarning = view.findViewById<ImageView>(R.id.ivWarningBudgetExceeded)
+
+    val dot = view.findViewById<ImageView>(R.id.ivCategoryDot)
 }

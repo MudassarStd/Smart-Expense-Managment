@@ -8,13 +8,17 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class TransactionDataModel {
     companion object {
+
+        var currentUserName : String = "null"
 
         // textview showing total
         var totalExpenses: Double = 0.0
@@ -49,6 +53,20 @@ class TransactionDataModel {
             CategoryData("Shopping", R.drawable.frame),
             CategoryData("Subscription", R.drawable.frame),
         )
+
+        // map: category -> color
+        val categoryColorMap = mapOf(
+            "Business" to R.color.amber_Business,
+            "Personal" to R.color.deepOrange_Personal,
+            "Health" to R.color.green_Health,
+            "Education" to R.color.blue_Education,
+            "Travel" to R.color.orange_Travel,
+            "Food" to R.color.deepPurple_Food,
+            "Shopping" to R.color.purple_Shopping,
+            "Subscription" to R.color.brown_Subscription
+        )
+
+
 
         val categoriesSet : Set<String> = setOf("Business","Personal","Health","Education","Travel","Food","Shopping","Subscription")
 

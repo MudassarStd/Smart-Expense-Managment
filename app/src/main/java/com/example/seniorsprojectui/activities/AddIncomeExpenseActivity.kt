@@ -2,12 +2,9 @@ package com.example.seniorsprojectui.activities
 
 
 import android.os.Bundle
-import android.provider.Settings.Global
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,25 +12,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.adapters.CategoriesDialogAdapter
 import com.example.seniorsprojectui.adapters.OnCategorySelection
-import com.example.seniorsprojectui.backend.IncomeExpenseViewModel
 import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
-import com.example.seniorsprojectui.databinding.TransactionSampleLayoutBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
-import com.example.seniorsprojectui.maindb.MainTransactionsDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
@@ -106,7 +94,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
             val date  = currentDate.text.toString()
             val month = TransactionDataModel.getCurrentMonth(0)
             val description  = binding.etDescription.text.toString()
-            val attachmentStatus = binding.tvDate.text.toString()
+            val attachment = null
             val currentTime : String = TransactionDataModel.getCurrentTime()
 
 
@@ -135,7 +123,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
             TransactionDataModel.totalAmount += amount.toDouble()
             // creating transaction object
-            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,attachmentStatus,transactionType)
+            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,"NULL",transactionType, 0)
 
             viewModel.insertTransaction(transactionObject)
             // inserting data into db

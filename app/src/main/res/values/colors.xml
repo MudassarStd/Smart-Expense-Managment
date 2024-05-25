@@ -44,5 +44,15 @@
     <color name="green">#00A86B</color>
     <color name="expenseRedColor">#E91E1E</color>
 
+<!--    category colors-->
+    <color name="amber_Business">#FFC107</color>
+    <color name="deepOrange_Personal">#FF5722</color>
+    <color name="green_Health">#4CAF50</color>
+    <color name="blue_Education">#2196F3</color>
+    <color name="orange_Travel">#FF9800</color>
+    <color name="deepPurple_Food">#673AB7</color>
+    <color name="purple_Shopping">#9C27B0</color>
+    <color name="brown_Subscription">#795548</color>
+
 
 </resources>

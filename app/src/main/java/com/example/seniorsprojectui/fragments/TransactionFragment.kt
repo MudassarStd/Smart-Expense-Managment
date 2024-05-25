@@ -1,10 +1,8 @@
 package com.example.seniorsprojectui.fragments
 
-import TransactionRVAdapter
+
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,22 +10,16 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.EditTransactionActivity
 import com.example.seniorsprojectui.activities.FinancialReport
-import com.example.seniorsprojectui.backend.IncomeExpenseViewModel
+import com.example.seniorsprojectui.adapters.TransactionRVAdapter
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
-import com.example.seniorsprojectui.maindb.MainTransactionsDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListener{
 
@@ -60,8 +52,9 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         val btnFinancial = view.findViewById<Button>(R.id.btnFinancialReport)
         val ivFilter = view.findViewById<ImageView>(R.id.ivFilterTransactions)
         val rv = view.findViewById<RecyclerView>(R.id.rvTransactionFragment)
-
         val btnMonth = view.findViewById<Button>(R.id.btnMonthTransacFrag)
+
+        val ivDelAll = view.findViewById<ImageView>(R.id.ivDelAllTransactions)
 
         // setting current month on btn Month
         btnMonth.text = TransactionDataModel.getCurrentMonth(0)
@@ -72,6 +65,10 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         rv.layoutManager = LinearLayoutManager(requireContext())
 
 
+        ivDelAll.setOnClickListener {
+            rvAdapter.updateTransactionData(viewModel.incomeCluster)
+            showConfirmationDialog()
+        }
 
         btnFinancial.setOnClickListener {
             startActivity(Intent(requireActivity(), FinancialReport::class.java ))
@@ -97,39 +94,43 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         viewModel.transactions.observe(viewLifecycleOwner) { transactions ->
             rvAdapter.updateTransactionData(transactions)
         }
-
     }
 
 
 
     override fun onItemClick(itemPosition: Int) {
-//        Toast.makeText(requireContext(), "$itemPosition", Toast.LENGTH_SHORT).show()
-//
-//        val intent = Intent(requireContext(), EditTransactionActivity::class.java)
-//        intent.apply {
-//
-//            putExtra("time", TransactionDataModel.transactions[itemPosition].time)
-//            putExtra("date", TransactionDataModel.transactions[itemPosition].date)
-//            putExtra("amount", TransactionDataModel.transactions[itemPosition].amount)
-//            putExtra("category", TransactionDataModel.transactions[itemPosition].category)
-//            putExtra("wallet", TransactionDataModel.transactions[itemPosition].wallet)
-//            putExtra("description", TransactionDataModel.transactions[itemPosition].description)
+        Toast.makeText(requireContext(), "$itemPosition", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(requireContext(), EditTransactionActivity::class.java)
+        intent.apply {
+
+
+            putExtra("Tid", viewModel.transactionsList[itemPosition].Tid)
+
+            putExtra("time", viewModel.transactionsList[itemPosition].time)
+            putExtra("date", viewModel.transactionsList[itemPosition].date)
+            putExtra("amount", viewModel.transactionsList[itemPosition].amount)
+            putExtra("category", viewModel.transactionsList[itemPosition].category)
+            putExtra("wallet", viewModel.transactionsList[itemPosition].wallet)
+            putExtra("description", viewModel.transactionsList[itemPosition].description)
 //            putExtra("attachmentStatus", TransactionDataModel.transactions[itemPosition].attachmentStatus)
-//            putExtra("transactionType", TransactionDataModel.transactions[itemPosition].transactionType)
-//        }
-//
-//        startActivity(intent)
+            putExtra("transactionType", viewModel.transactionsList[itemPosition].transactionType)
+        }
+
+        startActivity(intent)
     }
 
     override fun onItemLongClick(itemPosition: Int) {
 
+    }
 
+
+    private fun showConfirmationDialog()
+    {
         val dialog = AlertDialog.Builder(requireContext()).setTitle("Action")
-            .setMessage("Are you sure to delete ?")
+            .setMessage("Are you sure to delete all Transactions?")
             .setPositiveButton("Yes") { _, _ ->
-
-//                TransactionDataModel.transactions.removeAt(itemPosition)
-//                rvAdapter.notifyItemChanged(itemPosition)
+                viewModel.deleteAllTransactions()
             }
             .setNegativeButton("No") { _, _ ->
 

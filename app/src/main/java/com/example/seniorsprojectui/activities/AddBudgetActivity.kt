@@ -18,7 +18,6 @@ import com.example.seniorsprojectui.backend.BudgetCategory
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityAddBudgetBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
-import com.example.seniorsprojectui.maindb.MainTransactionsDatabase
 import kotlinx.coroutines.launch
 
 class AddBudgetActivity : AppCompatActivity(), OnCategorySelection {
@@ -27,7 +26,7 @@ class AddBudgetActivity : AppCompatActivity(), OnCategorySelection {
     private  var categoryDialog : AlertDialog? = null
     private val categoriesAdapter = CategoriesDialogAdapter(TransactionDataModel.categoriesList)
 
-//    val viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
+    private lateinit var viewModel : ViewModelTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +40,7 @@ class AddBudgetActivity : AppCompatActivity(), OnCategorySelection {
             insets
         }
 
+        viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
 
         // invoking interface of category selected
         categoriesAdapter.setOnCategoryClickListenerInterface(this)
@@ -57,9 +57,9 @@ class AddBudgetActivity : AppCompatActivity(), OnCategorySelection {
             val budgetAmount = binding.etBudgetAmount.text.toString()
             // adding data to list
 
-            val budgetItem = BudgetCategory(0, budgetCategory, budgetAmount, TransactionDataModel.getCurrentMonth(1))
+            val budgetItem = BudgetCategory(0, 0,budgetCategory, budgetAmount, TransactionDataModel.getCurrentMonth(0))
             TransactionDataModel.budgetCategoriesList.add(budgetItem)
-//            viewModel.insertBudget(budgetItem)
+            viewModel.insertBudget(budgetItem)
             // finish activity
             finish()
         }

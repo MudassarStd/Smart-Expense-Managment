@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.backend.FinancialReportCategoryData
 
-class FinancialReportCategoryAdapter(val data : List<FinancialReportCategoryData>) : Adapter<FinancialReportVH>() {
+class FinancialReportCategoryAdapter(var data : List<FinancialReportCategoryData>) : Adapter<FinancialReportVH>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FinancialReportVH {
         val inflate = LayoutInflater.from(parent.context)
         val view = inflate.inflate(R.layout.financial_report_rv_sample_layout, parent, false)
@@ -37,6 +37,13 @@ class FinancialReportCategoryAdapter(val data : List<FinancialReportCategoryData
     override fun getItemCount(): Int {
         return data.size
     }
+
+    fun updateFinancialAdapter(data : List<FinancialReportCategoryData>)
+    {
+        this.data = data
+        notifyDataSetChanged()
+    }
+
 }
 
 class FinancialReportVH (view : View): RecyclerView.ViewHolder(view) {

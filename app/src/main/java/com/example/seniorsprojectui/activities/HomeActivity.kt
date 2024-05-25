@@ -27,10 +27,10 @@ import com.example.seniorsprojectui.fragments.TransactionFragment
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityHomeBinding
-    private lateinit var homeFrag : Fragment
-    private lateinit var transacFrag : Fragment
-    private lateinit var budgetFrag : Fragment
-    private lateinit var profileFrag : Fragment
+    private val homeFrag : HomeFragment = HomeFragment()
+    private val transacFrag : TransactionFragment = TransactionFragment()
+    private val budgetFrag : BudgetFragment = BudgetFragment()
+    private val profileFrag : ProfileFragment = ProfileFragment()
     private lateinit var viewModel : ViewModelTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,23 +49,8 @@ class HomeActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
         viewModel.updateAllStakeHolders()
 
-        supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(
-                ContextCompat.getColor(
-                    this,
-                    R.color.colorPrimary
-                )
-            )
-        )
 
         val fab = binding.fabHomeActivity
-
-        homeFrag = HomeFragment()
-        transacFrag = TransactionFragment()
-        budgetFrag = BudgetFragment()
-        profileFrag = ProfileFragment()
-
-
         binding.bottomNavigationView.background = null
 
         // setting home frag

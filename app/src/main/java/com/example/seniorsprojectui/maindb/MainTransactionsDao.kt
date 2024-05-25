@@ -16,17 +16,14 @@ interface MainTransactionsDao {
     suspend fun getAllTransactions(): List<Transaction>
     @Delete
     suspend fun deleteItem(transacItem: Transaction)
+
+    @Query("Delete from `Transaction` where Tid = :tid")
+    suspend fun deleteById(tid : Int)
     @Update
     suspend fun updateItem(transacItem: Transaction)
     @Query("DELETE FROM `Transaction`")
     suspend fun deleteAllTransactions()
 
-    // methods for budgetCategory
 
-//    @Insert
-//    suspend  fun insertBudget(budgetItem: BudgetCategory)
-//    @Delete
-//    suspend  fun deleteBudget(budgetItem: BudgetCategory)
-//    @Query("Select * From BudgetCategory")
-//    suspend fun getAllBudgets() : List<BudgetCategory>
+
 }

@@ -27,14 +27,13 @@ class BudgetFragment : Fragment() {
     private lateinit var rvCategoryBudget : RecyclerView
     private lateinit var noBudget : TextView
     private lateinit var monthBudget : TextView
-
-
     private lateinit var viewModel : ViewModelTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
 
-//        viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
+        TransactionDataModel.budgetCategoriesList.addAll(viewModel.budget_data)
 
     }
 
@@ -51,16 +50,19 @@ class BudgetFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val btnCreateBudget = view.findViewById<Button>(R.id.btnCreateBudget)
-         rvCategoryBudget = view.findViewById(R.id.rvBudgetCategories)
+        rvCategoryBudget = view.findViewById(R.id.rvBudgetCategories)
         noBudget = view.findViewById(R.id.tvNoCategoryBudget)
+
          monthBudget = view.findViewById<TextView>(R.id.tvMonthBudget)
         val nextMonth = view.findViewById<ImageView>(R.id.ivNextMonth)
         val prevMonth = view.findViewById<ImageView>(R.id.ivPrevMonth)
 
         monthBudget.text = TransactionDataModel.getCurrentMonth(0)
 
-        adapter = CategoriesBudgetAdapter(TransactionDataModel.budgetCategoriesList)
 
+        adapter = CategoriesBudgetAdapter(viewModel.budget_data)
+        rvCategoryBudget.adapter = adapter
+        rvCategoryBudget.layoutManager = LinearLayoutManager(requireContext())
 
         nextMonth.setOnClickListener {
             monthBudget.text = TransactionDataModel.getCurrentMonth(1)
@@ -76,25 +78,20 @@ class BudgetFragment : Fragment() {
         btnCreateBudget.setOnClickListener {
             startActivity(Intent(requireContext(), AddBudgetActivity::class.java))
         }
-        rvCategoryBudget.adapter = adapter
-        rvCategoryBudget.layoutManager = LinearLayoutManager(requireContext())
 
-//        observerUpdateInData()
+
+//        observeUpdatesInDataList()
 
     }
 
-
-
-//    private fun observerUpdateInData(){
-//        viewModel.budgets.observe(viewLifecycleOwner) { budgets ->
-//            adapter.updateData(budgets)
-//        }
-//    }
-
-
+    private fun observeUpdatesInDataList() {
+        viewModel.budgets.observe(viewLifecycleOwner) { budgets ->
+            adapter.updateAdapter(budgets)
+        }
+    }
 
     private fun filterByMonth(targetMonth: String): List<BudgetCategory> {
-        return TransactionDataModel.budgetCategoriesList.filter { list ->
+        return viewModel.budget_data.filter { list ->
             list.month.equals(targetMonth, ignoreCase = true)
         }
     }
@@ -104,7 +101,6 @@ class BudgetFragment : Fragment() {
         super.onResume()
         monthBudget.text = TransactionDataModel.getCurrentMonth(0)
 
-        adapter.notifyDataSetChanged()
         if (adapter.itemCount < 1)
         {
             rvCategoryBudget.visibility = View.GONE

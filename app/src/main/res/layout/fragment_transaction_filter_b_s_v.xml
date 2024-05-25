@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/resetFilterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
@@ -54,8 +55,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView24">
 
+        <RadioGroup
+            android:id="@+id/filterButtonsRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <Button
+            <RadioButton
             android:id="@+id/btnFilterIncome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,23 +70,26 @@
             android:text="Income"
             android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/btnFilterExpense"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:backgroundTint="@color/BaseLight2"
-            android:text="Expense"
-            android:textColor="@color/black" />
+            <RadioButton
+                android:id="@+id/btnFilterExpense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:backgroundTint="@color/BaseLight2"
+                android:text="Expense"
+                android:textColor="@color/black" />
 
-        <Button
-            android:id="@+id/btnFilterTransfer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:backgroundTint="@color/BaseLight2"
-            android:text="Transfer"
-            android:textColor="@color/black" />
+            <RadioButton
+                android:id="@+id/btnFilterTransfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:backgroundTint="@color/BaseLight2"
+                android:text="Transfer"
+                android:textColor="@color/black" />
+
+        </RadioGroup>
+
 
     </LinearLayout>
 
@@ -196,6 +205,7 @@
 
 
     <Button
+        android:id="@+id/btnApplyFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
@@ -207,7 +217,7 @@
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
         app:layout_constraintVertical_bias="0.0" />

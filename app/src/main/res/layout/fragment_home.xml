@@ -31,7 +31,7 @@
 
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/ivProfile"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="start"

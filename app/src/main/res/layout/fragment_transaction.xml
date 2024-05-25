@@ -23,6 +23,18 @@
 
 
     <ImageView
+        android:id="@+id/ivDelAllTransactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_del"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivFilterTransactions"
+        app:layout_constraintEnd_toStartOf="@+id/ivFilterTransactions"
+        app:layout_constraintTop_toTopOf="@+id/ivFilterTransactions"
+        app:tint="@color/colorPrimary" />
+
+
+    <ImageView
         android:id="@+id/ivFilterTransactions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,6 +61,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnMonthTransacFrag" />
 
+
+    <TextView
+        android:id="@+id/tvTransactionDateOnTransactionFrag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="25 May, 2024 "
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFinancialReport" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTransactionFragment"
         android:layout_width="match_parent"
@@ -58,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFinancialReport" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTransactionDateOnTransactionFrag" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
