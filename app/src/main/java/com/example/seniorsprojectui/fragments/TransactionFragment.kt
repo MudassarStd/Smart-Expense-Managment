@@ -1,37 +1,53 @@
 package com.example.seniorsprojectui.fragments
 
 
+import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Transaction
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.EditTransactionActivity
 import com.example.seniorsprojectui.activities.FinancialReport
 import com.example.seniorsprojectui.adapters.TransactionRVAdapter
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
+import com.example.seniorsprojectui.dbvm.ViewModelUsers
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+
 
 class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListener{
 
     private lateinit var viewModel : ViewModelTransaction
+    private lateinit var userVM : ViewModelUsers
     private lateinit var rvAdapter: TransactionRVAdapter
     private lateinit var rv : RecyclerView
+    private lateinit var dateTransaction : TextView
+    private lateinit var allTransactions : List<com.example.seniorsprojectui.backend.Transaction>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
+        userVM = ViewModelProvider(this)[ViewModelUsers::class.java]
+
+
         // Set up the RecyclerView and Adapter
         rvAdapter = TransactionRVAdapter(viewModel.transactionsList)
         rvAdapter.setOnItemClickListener(this)
@@ -53,20 +69,37 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         val ivFilter = view.findViewById<ImageView>(R.id.ivFilterTransactions)
         val rv = view.findViewById<RecyclerView>(R.id.rvTransactionFragment)
         val btnMonth = view.findViewById<Button>(R.id.btnMonthTransacFrag)
-
+        dateTransaction = view.findViewById<TextView>(R.id.tvDateTransactionFrag)
         val ivDelAll = view.findViewById<ImageView>(R.id.ivDelAllTransactions)
+
 
         // setting current month on btn Month
         btnMonth.text = TransactionDataModel.getCurrentMonth(0)
 
 
+//        Toast.makeText(requireContext(),"${userVM.currentUserTransactionsList}, ${TransactionDataModel.currentUserId}", Toast.LENGTH_SHORT).show()
+
+        Log.d("tdataTF","${viewModel.transactionsList}")
+        Log.d("tdatausers","${userVM.registeredUsers}")
+
 //      viewModel = ViewModelProvider(this)[IncomeExpenseViewModel::class.java]
         rv.adapter = rvAdapter
-        rv.layoutManager = LinearLayoutManager(requireContext())
+        rv.layoutManager = LinearLayoutManager(requireContext()).apply {
+            reverseLayout = true
+            stackFromEnd = true
+        }
 
+
+
+        // updating date wise transaction
+        dateTransaction.setOnClickListener {
+            showDatePickerDialog(requireContext()) { selectedDate ->
+                // Handle the selected date here
+                dateTransaction.text = selectedDate
+            }
+        }
 
         ivDelAll.setOnClickListener {
-            rvAdapter.updateTransactionData(viewModel.incomeCluster)
             showConfirmationDialog()
         }
 
@@ -120,6 +153,7 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         startActivity(intent)
     }
 
+
     override fun onItemLongClick(itemPosition: Int) {
 
     }
@@ -138,6 +172,28 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
             .create()
 
         dialog.show()
+    }
+
+    fun showDatePickerDialog(context: Context, onDateSelected: (String) -> Unit) {
+        val calendar = Calendar.getInstance()
+        val datePicker = DatePickerDialog(
+            context,
+            { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+                // Update calendar with chosen date
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, monthOfYear)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                // Format the chosen date and pass it to the callback
+                val sdf = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+                val selectedDate = sdf.format(calendar.time)
+                onDateSelected(selectedDate)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePicker.show()
     }
 
 

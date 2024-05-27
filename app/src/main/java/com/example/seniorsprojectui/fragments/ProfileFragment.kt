@@ -1,5 +1,6 @@
 package com.example.seniorsprojectui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.activities.MyWalletsActivity
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.dbvm.ViewModelUsers
 
@@ -37,6 +39,7 @@ class ProfileFragment : Fragment() {
 
         val userName = view.findViewById<TextView>(R.id.tvUserNameProfile)
         val logout = view.findViewById<CardView>(R.id.cvLogout)
+        val myWallets = view.findViewById<CardView>(R.id.cvMyWalletsProfileFrag)
 
         userName.text = TransactionDataModel.currentUserName
 
@@ -44,6 +47,12 @@ class ProfileFragment : Fragment() {
         logout.setOnClickListener {
             ConfirmLogoutBSVFragment().show(requireActivity().supportFragmentManager, ConfirmLogoutBSVFragment().tag)
         }
+
+        myWallets.setOnClickListener {
+            startActivity(Intent(requireContext(), MyWalletsActivity::class.java))
+        }
+
+
 
     }
 }

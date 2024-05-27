@@ -14,6 +14,8 @@ interface MainTransactionsDao {
     suspend  fun insertItem(transacItem: Transaction)
     @Query("SELECT * FROM `Transaction`")
     suspend fun getAllTransactions(): List<Transaction>
+    @Query("SELECT * FROM `Transaction` where uid = :id")
+    suspend fun getCurrentUserTransaction(id : Int): List<Transaction>
     @Delete
     suspend fun deleteItem(transacItem: Transaction)
 

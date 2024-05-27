@@ -16,8 +16,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityHomeBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
+import com.example.seniorsprojectui.dbvm.ViewModelUsers
 import com.example.seniorsprojectui.fragments.BudgetFragment
 import com.example.seniorsprojectui.fragments.HomeFragment
 import com.example.seniorsprojectui.fragments.ProfileFragment
@@ -32,6 +34,7 @@ class HomeActivity : AppCompatActivity() {
     private val budgetFrag : BudgetFragment = BudgetFragment()
     private val profileFrag : ProfileFragment = ProfileFragment()
     private lateinit var viewModel : ViewModelTransaction
+    private lateinit var userVM : ViewModelUsers
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,7 @@ class HomeActivity : AppCompatActivity() {
 
         // update stakeholders
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
+        userVM = ViewModelProvider(this)[ViewModelUsers::class.java]
         viewModel.updateAllStakeHolders()
 
 

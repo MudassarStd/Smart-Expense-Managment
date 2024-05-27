@@ -1,27 +1,30 @@
 package com.example.seniorsprojectui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.seniorsprojectui.activities.HomeActivity
+import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityLoginBinding
-import com.example.seniorsprojectui.databinding.ActivityVerificationBinding
+import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import com.example.seniorsprojectui.dbvm.ViewModelUsers
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var viewModel: ViewModelUsers
+    private lateinit var viewModelTransaction: ViewModelTransaction
+    private lateinit var viewModelUser: ViewModelUsers
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[ViewModelUsers::class.java]
+        viewModelUser = ViewModelProvider(this)[ViewModelUsers::class.java]
+        viewModelTransaction = ViewModelProvider(this)[ViewModelTransaction::class.java]
 
         binding.btnLogin.setOnClickListener {
 
@@ -30,17 +33,14 @@ class LoginActivity : AppCompatActivity() {
 
 
             lifecycleScope.launch {
-                val allowStatus = viewModel.allowLogin(email, password)
-
+                val allowStatus = viewModelUser.allowLogin(email, password)
 
                 if (allowStatus) {
                     // Login successful, navigate to next screen
-                    startActivity(Intent(this@LoginActivity, ForgetPasswordActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, AddNewWalletActivity::class.java))
 
-
-                    viewModel.currentUserId = viewModel.getCurrentUserId(email)
-
-                    Log.d("fjksdd","${viewModel.registeredUsers}")
+                    TransactionDataModel.currentUserId = viewModelUser.getCurrentUserId(email)
+//                    viewModelTransaction.fetchCurrentUserTransactions(TransactionDataModel.currentUserId)
 
                 } else {
                     // Login failed, display error message
@@ -48,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this@LoginActivity, "Invalid email or password", Toast.LENGTH_SHORT).show()
                     }
                 }
+
             }
         }
     }

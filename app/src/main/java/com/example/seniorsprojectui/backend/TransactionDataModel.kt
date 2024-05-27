@@ -18,7 +18,9 @@ import java.util.Locale
 class TransactionDataModel {
     companion object {
 
+
         var currentUserName : String = "null"
+        var currentUserId : Int = -1
 
         // textview showing total
         var totalExpenses: Double = 0.0
@@ -106,7 +108,6 @@ class TransactionDataModel {
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
             )
-
             datePicker.show()
         }
 

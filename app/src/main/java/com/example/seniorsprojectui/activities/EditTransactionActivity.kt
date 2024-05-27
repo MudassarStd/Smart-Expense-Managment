@@ -31,6 +31,12 @@ class EditTransactionActivity : AppCompatActivity() {
             insets
         }
 
+
+        binding.ivBackArrow.setOnClickListener {
+            finish()
+        }
+
+
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
 
         Tid = intent.getIntExtra("Tid", -1)

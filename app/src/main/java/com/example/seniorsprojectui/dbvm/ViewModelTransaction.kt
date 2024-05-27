@@ -15,8 +15,11 @@ class ViewModelTransaction(application: Application) : AndroidViewModel(applicat
 
     private val db: NewMainDB = NewMainDB.getInstance(application)
 
-//    simple lists
+    var currentUserId : Int = -1
+    //    simple lists
     var transactionsList : List<Transaction> = listOf()
+    var currentUserTransactions : List<Transaction> = listOf()
+
     var budget_data : List<BudgetCategory> = listOf()
 
     var incomeCluster : List<Transaction> = listOf()
@@ -35,21 +38,34 @@ class ViewModelTransaction(application: Application) : AndroidViewModel(applicat
         fetchBudgets()
     }
 
-    private fun fetchTransactions() {
-        viewModelScope.launch(Dispatchers.IO) {
+     fun fetchTransactions() {
+         viewModelScope.launch(Dispatchers.IO) {
              transactionsList = db.transactionsDao().getAllTransactions()
-            _transactions.postValue(transactionsList)
+             _transactions.postValue(transactionsList)
 
 //            incomeExpenseWiseTransactionCluster()
+             // updating stack holders, every time we fetch data
+             updateAllStakeHolders()
+         }
+     }
 
-            // updating stack holders, every time we fetch data
-            updateAllStakeHolders()
-        }
-    }
+//     fun fetchCurrentUserTransactions(uid : Int)
+//    {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            transactionsList = db.transactionsDao().getCurrentUserTransaction(uid)
+//            _transactions.postValue(transactionsList)
+//            // incomeExpenseWiseTransactionCluster()
+//            // updating stack holders, every time we fetch data
+////            updateAllStakeHolders()
+//        }
+//    }
+
+
     fun insertTransaction(transaction: Transaction) {
         viewModelScope.launch(Dispatchers.IO) {
-            db.transactionsDao().insertItem(transaction)
-            fetchTransactions() // Refresh the list
+            db.transactionsDao().insertItem(transaction) // Refresh the list
+//            fetchCurrentUserTransactions(transaction.uid)
+            fetchTransactions()
 
         }
     }
@@ -57,14 +73,17 @@ class ViewModelTransaction(application: Application) : AndroidViewModel(applicat
     fun deleteAllTransactions() {
         viewModelScope.launch(Dispatchers.IO) {
             db.transactionsDao().deleteAllTransactions()
-            fetchTransactions() // Refresh the list
+//            fetchCurrentUserTransactions(TransactionDataModel.currentUserId) // Refresh the list
+            fetchTransactions()
+
         }
     }
 
     fun deleteTransaction(transaction : Transaction){
         viewModelScope.launch(Dispatchers.IO) {
             db.transactionsDao().deleteItem(transaction)
-            fetchTransactions() // refresh transactions
+//            fetchCurrentUserTransactions(currentUserId) // Refresh the lis
+            fetchTransactions()
         }
     }
 
@@ -73,15 +92,13 @@ class ViewModelTransaction(application: Application) : AndroidViewModel(applicat
         viewModelScope.launch {
             db.transactionsDao().deleteById(id)
             fetchTransactions()
+//            fetchCurrentUserTransactions(currentUserId) // Refresh the list
         }
     }
-
-
 
     // update transaction stackholders
     fun updateAllStakeHolders() {
         viewModelScope.launch ( Dispatchers.IO){
-
             TransactionDataModel.updateHomeFragIncomeExpenseStatus(transactionsList)
             TransactionDataModel.getCategoryWiseAmountSpent(transactionsList)
             TransactionDataModel.updateDataForFinancialReport(transactionsList)
@@ -127,14 +144,11 @@ class ViewModelTransaction(application: Application) : AndroidViewModel(applicat
 
     fun makeIncomeExpenseCluster(){
         viewModelScope.launch(Dispatchers.IO) {
-
             incomeCluster = transactionsList.filter { it.transactionType == "income" }
             expenseCluster = transactionsList.filter { it.transactionType == "expense" }
 
         }
     }
-
-
 
 
 }

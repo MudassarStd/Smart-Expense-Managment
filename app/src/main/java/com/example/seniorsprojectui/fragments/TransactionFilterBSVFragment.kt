@@ -15,6 +15,7 @@ class TransactionFilterBSVFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentTransactionFilterBSVBinding? = null
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,8 +31,7 @@ class TransactionFilterBSVFragment : BottomSheetDialogFragment() {
 
         binding.filterButtonsRadioGroup.setOnCheckedChangeListener { radioGroup, id ->
             val selectedRadioButton = binding.filterButtonsRadioGroup.findViewById<RadioButton>(id)
-            Toast.makeText(requireContext(), "${selectedRadioButton.text}", Toast.LENGTH_SHORT)
-                .show()
+            val selectedFilter = selectedRadioButton.text.toString()
         }
 
         // resets all filters
@@ -39,7 +39,6 @@ class TransactionFilterBSVFragment : BottomSheetDialogFragment() {
             binding.filterButtonsRadioGroup.clearCheck()
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

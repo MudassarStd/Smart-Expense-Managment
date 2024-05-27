@@ -21,6 +21,7 @@ import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
+import com.example.seniorsprojectui.dbvm.ViewModelUsers
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
 
 
@@ -38,6 +39,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
 
     private lateinit var viewModel : ViewModelTransaction
+    private lateinit var viewModelUser : ViewModelUsers
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +57,10 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
         categoriesAdapter.setOnCategoryClickListenerInterface(this)
 
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
+        viewModelUser = ViewModelProvider(this)[ViewModelUsers::class.java]
 
+
+        val currentUserId = TransactionDataModel.currentUserId
 
         // getting transaction (income/expense) type from prev activity
         transactionType = intent.getStringExtra("typeTransaction").toString()
@@ -123,14 +128,8 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
             TransactionDataModel.totalAmount += amount.toDouble()
             // creating transaction object
-            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,"NULL",transactionType, 0)
-
+            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,"NULL",transactionType, currentUserId)
             viewModel.insertTransaction(transactionObject)
-            // inserting data into db
-//            insertTransaction(transactionObject)
-            // update budget map
-
-            // finishes this activity
             finish()
 
 

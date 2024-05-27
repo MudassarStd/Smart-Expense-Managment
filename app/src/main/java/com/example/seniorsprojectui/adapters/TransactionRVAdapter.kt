@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.backend.Transaction
+import com.example.seniorsprojectui.backend.TransactionDataModel
 
 class TransactionRVAdapter(private var transactionList : List<Transaction>) : Adapter<TransactionViewHolder>() {
 
@@ -21,6 +22,8 @@ class TransactionRVAdapter(private var transactionList : List<Transaction>) : Ad
 
         fun onItemClick(itemPosition: Int)
         fun onItemLongClick(itemPosition: Int)
+
+
 
     }
     // this method will trigger our interface

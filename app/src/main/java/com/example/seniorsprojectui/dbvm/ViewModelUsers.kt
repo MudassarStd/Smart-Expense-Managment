@@ -3,6 +3,7 @@ package com.example.seniorsprojectui.dbvm
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.backend.UserData
 import com.example.seniorsprojectui.maindb.NewMainDB
@@ -19,12 +20,12 @@ class ViewModelUsers(application: Application) : AndroidViewModel(application) {
     // Logged In user
     var currentUserId : Int = -1
     var currentUserName : String = ""
-
+    // user transactions
+    var currentUserTransactionsList : List<Transaction> = listOf()
 
     init {
         fetchUsers()
     }
-
      suspend fun isTaken(name: String, email: String): Boolean {
         return db.userDao().isTaken(name, email)
     }
@@ -57,6 +58,7 @@ class ViewModelUsers(application: Application) : AndroidViewModel(application) {
 
     suspend fun getCurrentUserId(email: String) : Int{
         val id = db.userDao().getCurrentUserId(email)
+//        fetchCurrentUserTransactions(id)
         getCurrentUserInfo(id)
         return id
     }
@@ -68,6 +70,15 @@ class ViewModelUsers(application: Application) : AndroidViewModel(application) {
             TransactionDataModel.currentUserName = userInfo.username
         }
     }
+
+
+//     fun fetchCurrentUserTransactions(uid : Int)
+//    {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            currentUserTransactionsList = db.transactionsDao().getCurrentUserTransaction(uid)
+////            updateAllStakeHolders()
+//        }
+//    }
 
 
 }

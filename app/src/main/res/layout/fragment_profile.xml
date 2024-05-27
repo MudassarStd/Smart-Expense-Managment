@@ -54,9 +54,11 @@
 
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvMyWalletsProfileFrag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
+            android:clickable="true"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/l3Light"
             app:cardCornerRadius="10dp">
@@ -81,7 +83,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Account"
+                    android:text="My Wallets"
                     android:textStyle="bold" />
 
 

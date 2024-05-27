@@ -1,17 +1,23 @@
 package com.example.seniorsprojectui.adapters
 
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.backend.FinancialReportCategoryData
+import com.example.seniorsprojectui.backend.TransactionDataModel
 
 class FinancialReportCategoryAdapter(var data : List<FinancialReportCategoryData>) : Adapter<FinancialReportVH>() {
+
+    val colorMap = TransactionDataModel.categoryColorMap
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FinancialReportVH {
         val inflate = LayoutInflater.from(parent.context)
         val view = inflate.inflate(R.layout.financial_report_rv_sample_layout, parent, false)
@@ -19,6 +25,11 @@ class FinancialReportCategoryAdapter(var data : List<FinancialReportCategoryData
     }
 
     override fun onBindViewHolder(holder: FinancialReportVH, position: Int) {
+
+        val color = colorMap[data[position].category] ?: R.color.l1Yellow
+
+        holder.ivDot.setColorFilter(ContextCompat.getColor(holder.itemView.context, color), PorterDuff.Mode.SRC_IN)
+
         holder.category.text = data[position].category
 //        holder.amount.text = data[position].totalAmount.toString()
 
@@ -48,6 +59,7 @@ class FinancialReportCategoryAdapter(var data : List<FinancialReportCategoryData
 
 class FinancialReportVH (view : View): RecyclerView.ViewHolder(view) {
 
-    val category = view.findViewById<Button>(R.id.btnCategoryFinancialReport)
+    val category = view.findViewById<TextView>(R.id.btnCategoryFinancialReport)
     val amount = view.findViewById<TextView>(R.id.tvAmountFinancialReport)
+    val ivDot = view.findViewById<ImageView>(R.id.ivCategoryDotFinancialReport)
 }

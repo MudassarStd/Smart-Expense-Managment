@@ -47,3 +47,9 @@ data class UserData(
     val useremail : String,
     val userpassword : String
 )
+
+data class MyWalletsDC(
+    val userid : Int,
+    val walletName: String,
+    val walletAmount : String
+)
