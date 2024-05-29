@@ -1,4 +1,4 @@
-package com.example.seniorsprojectui
+package com.example.seniorsprojectui.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.example.seniorsprojectui.activities.HomeActivity
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityLoginBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction

@@ -1,4 +1,4 @@
-package com.example.seniorsprojectui
+package com.example.seniorsprojectui.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

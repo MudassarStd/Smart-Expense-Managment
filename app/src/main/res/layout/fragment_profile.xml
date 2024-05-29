@@ -131,10 +131,12 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvExportData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="5dp"
+            android:clickable="true"
             android:backgroundTint="@color/l3Light"
             app:cardCornerRadius="10dp">
 

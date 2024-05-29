@@ -1,15 +1,13 @@
-package com.example.seniorsprojectui
+package com.example.seniorsprojectui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.seniorsprojectui.backend.UserData
 import com.example.seniorsprojectui.databinding.SignUpBinding
-import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import com.example.seniorsprojectui.dbvm.ViewModelUsers
 import kotlinx.coroutines.launch
 

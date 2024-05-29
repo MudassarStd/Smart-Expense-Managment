@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashOkActivity">
+    tools:context=".activities.SplashOkActivity">
 
     <ImageView
         android:id="@+id/imageView"

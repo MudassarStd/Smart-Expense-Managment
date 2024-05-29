@@ -1,12 +1,9 @@
-package com.example.seniorsprojectui
+package com.example.seniorsprojectui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.example.seniorsprojectui.activities.HomeActivity
-import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivitySplashOkBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 
