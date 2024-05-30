@@ -27,6 +27,7 @@ class TransactionDataModel {
         var totalIncome: Double = 0.0
         var totalAmount: Double = 0.0
 
+        var transactionFromDB : List<Transaction> = emptyList()
 
         // financial report category list data
         var financialReportCategories: List<FinancialReportCategoryData> = listOf()

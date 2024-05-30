@@ -56,7 +56,7 @@ class ViewModelTransaction(application: Application) : AndroidViewModel(applicat
 //            _transactions.postValue(transactionsList)
 //            // incomeExpenseWiseTransactionCluster()
 //            // updating stack holders, every time we fetch data
-////            updateAllStakeHolders()
+//            updateAllStakeHolders()
 //        }
 //    }
 

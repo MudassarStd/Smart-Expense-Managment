@@ -53,3 +53,5 @@ data class MyWalletsDC(
     val walletName: String,
     val walletAmount : String
 )
+
+data class TransDummy(val id: Int, val type: String, val amount: Double, val date: String)

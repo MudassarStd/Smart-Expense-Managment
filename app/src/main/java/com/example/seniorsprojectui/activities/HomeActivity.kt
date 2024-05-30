@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -48,10 +49,17 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
+
         // update stakeholders
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
         userVM = ViewModelProvider(this)[ViewModelUsers::class.java]
         viewModel.updateAllStakeHolders()
+
+        Log.d("TestingDBDatasLister", "HomeActivity ${viewModel.transactionsList}")
+
+
+
+//        TransactionDataModel.transactionFromDB = viewModel.transactionsList
 
 
         val fab = binding.fabHomeActivity

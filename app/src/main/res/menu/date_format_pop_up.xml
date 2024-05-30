@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/last7days"
+        android:title="Last 7 days"/>
+
+    <item
+        android:id="@+id/last30days"
+        android:title="Last 30 days"/>
+
+    <item
+        android:id="@+id/Alldays"
+        android:title="All"/>
+</menu>
