@@ -1,31 +1,33 @@
 package com.example.seniorsprojectui.activities
 
+
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.adapters.CategoriesDialogAdapter
 import com.example.seniorsprojectui.adapters.OnCategorySelection
-import com.example.seniorsprojectui.backend.IncomeExpenseViewModel
 import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
+import com.example.seniorsprojectui.dbvm.ViewModelTransaction
+import com.example.seniorsprojectui.dbvm.ViewModelUsers
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
 
 
 class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
     private lateinit var binding : ActivityAddIncomeExpenseBinding
-    lateinit var transactionObject : Transaction
+//    lateinit var transactionObject : Transaction
     private lateinit var currentDate : TextView
 
     private  var categoryDialog : AlertDialog? = null
@@ -36,7 +38,8 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
     val categoriesAdapter = CategoriesDialogAdapter(TransactionDataModel.categoriesList)
 
 
-    private lateinit var viewModel : IncomeExpenseViewModel
+    private lateinit var viewModel : ViewModelTransaction
+    private lateinit var viewModelUser : ViewModelUsers
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +56,11 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
         categoriesAdapter.setOnCategoryClickListenerInterface(this)
 
-        viewModel = ViewModelProvider(this)[IncomeExpenseViewModel::class.java]
+        viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
+        viewModelUser = ViewModelProvider(this)[ViewModelUsers::class.java]
 
+
+        val currentUserId = TransactionDataModel.currentUserId
 
         // getting transaction (income/expense) type from prev activity
         transactionType = intent.getStringExtra("typeTransaction").toString()
@@ -67,6 +73,8 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
         // setting current date
          currentDate = binding.tvDate
         currentDate.text = TransactionDataModel.getCurrentDate(0)
+
+
 
         currentDate.setOnClickListener {
             TransactionDataModel.showDatePickerDialog(this, currentDate)
@@ -83,19 +91,27 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
             TransactionDataModel.showDialogList(etWallet, this, TransactionDataModel.transactionsWallets)
         }
 
-
-
-
         binding.btnContinueIncomeExpense.setOnClickListener {
 
             val category = binding.etCategory.text.toString()
             val wallet = binding.etWallet.text.toString()
             val amount = binding.etAmount.text.toString()
-            val date  = currentDate.toString()
+            val date  = currentDate.text.toString()
+            val month = TransactionDataModel.getCurrentMonth(0)
             val description  = binding.etDescription.text.toString()
-            val attachmentStatus = binding.tvDate.text.toString()
+            val attachment = null
             val currentTime : String = TransactionDataModel.getCurrentTime()
 
+
+
+            // checking whether text in category changed or NOT
+            binding.etCategory.addTextChangedListener {
+                // if count of category data becomes > 0, remove error symbol
+                if (it!!.count()>0)
+                {
+                    binding.etCategory.error = null
+                }
+            }
 
 
         if (category.isNotEmpty() && wallet.isNotEmpty() && amount.isNotEmpty() && amount.isNotEmpty())
@@ -112,14 +128,25 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
             TransactionDataModel.totalAmount += amount.toDouble()
             // creating transaction object
-            transactionObject = Transaction(currentTime,date,amount,category,wallet,description,attachmentStatus,transactionType)
-
-            TransactionDataModel.updateTrasactions(transactionObject)
-            // finishes this activity
+            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,"NULL",transactionType, currentUserId)
+            viewModel.insertTransaction(transactionObject)
             finish()
+
+
         }
         else{
-            Toast.makeText(this, "Fields cannot be empty", Toast.LENGTH_SHORT).show()
+
+            // if any field is empty
+
+            if(category.isEmpty())
+                binding.etCategory.error = ""
+
+            if (description.isEmpty())
+                binding.etDescription.error = "Description Cannot be empty"
+
+            if (wallet.isEmpty())
+                binding.etWallet.error = ""
+
         }
         }
 
@@ -143,7 +170,6 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
             }
 
         }
-
         // setting background for income/expense
                 if (transactionType.equals("expense"))
                 {
@@ -157,6 +183,21 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
                 }
 
     }
+
+    // Database functions
+//    private fun insertTransaction(item : Transaction)
+//    {
+//        val db = Room.databaseBuilder(
+//            applicationContext,
+//            MainTransactionsDatabase::class.java, "Main_Transaction_db"
+//        ).build()
+//
+//        lifecycleScope.launch {
+//            db.transacactionDaoConnector().insertItem(item)
+//            TransactionDataModel.transactions = db.transacactionDaoConnector().getAllTransactions()
+//        }
+//    }
+
 
     override fun onResume() {
         super.onResume()
@@ -189,7 +230,6 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
         binding.etCategory.setText(TransactionDataModel.categoriesList[categoryPosition].categoryLabel)
         categoryDialog?.dismiss()
     }
-
 
 
 }

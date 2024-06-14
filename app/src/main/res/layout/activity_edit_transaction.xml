@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="@drawable/bottom_curve_bg"
+        android:backgroundTint="@color/colorPrimary"
         android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -32,30 +33,37 @@
             app:layout_constraintTop_toTopOf="@id/constraintLayout3">
 
             <ImageView
+                android:id="@+id/ivBackArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".25" />
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/arrow_left"
+                android:layout_weight=".25"
+                app:tint="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.50"
                 android:text="Transaction Details"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/ivDelTransactionFromTDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".25" />
+                android:src="@drawable/ic_del"
+                android:layout_weight=".25"
+                app:tint="@color/white" />
 
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView28"
+            android:id="@+id/tvEditAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -71,22 +79,28 @@
 
 
         <TextView
+            android:id="@+id/tvEditDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/textView28"
-            app:layout_constraintTop_toBottomOf="@+id/textView28" />
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/tvEditAmount"
+            app:layout_constraintStart_toStartOf="@+id/tvEditAmount"
+            app:layout_constraintTop_toBottomOf="@+id/tvEditAmount" />
 
         <TextView
+            android:id="@+id/tvEditTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Time"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/textView28"
-            app:layout_constraintTop_toBottomOf="@+id/textView28" />
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@+id/tvEditDate"
+            app:layout_constraintStart_toStartOf="@+id/tvEditDate"
+            app:layout_constraintTop_toBottomOf="@+id/tvEditDate" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -107,87 +121,103 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
 
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
+
 
             <TextView
+                android:id="@+id/textView28"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight=".33"
                 android:text="Type"
-                android:textStyle="bold"
                 android:textAlignment="center"
-                android:layout_weight=".33"
                 android:textColor="@color/ofwhite"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView28"
-                app:layout_constraintTop_toBottomOf="@+id/textView28" />
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
+                android:id="@+id/textView33"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight=".33"
                 android:text="Category"
-                android:layout_weight=".33"
-                android:textColor="@color/ofwhite"
-                android:textStyle="bold"
                 android:textAlignment="center"
+                android:textColor="@color/ofwhite"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView28"
-                app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/textView34"
+                app:layout_constraintStart_toEndOf="@+id/textView28"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
+                android:id="@+id/textView34"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight=".33"
                 android:text="Wallet"
-                android:layout_weight=".33"
+                android:textAlignment="center"
                 android:textColor="@color/ofwhite"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="@+id/textView28"
-                app:layout_constraintTop_toBottomOf="@+id/textView28" />
-        </LinearLayout>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvTransactionType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time"
                 android:layout_weight=".33"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="25sp"
+                android:gravity="center"
+                android:text="Time"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/textView28"
+                app:layout_constraintStart_toStartOf="@+id/textView28"
                 app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
 
             <TextView
+                android:id="@+id/tvEditCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time"
                 android:layout_weight=".33"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView28"
-                app:layout_constraintTop_toBottomOf="@+id/textView28" />
+                android:gravity="center"
+                android:text="Time"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textView33"
+                app:layout_constraintStart_toStartOf="@+id/textView33"
+                app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
 
             <TextView
+                android:id="@+id/tvEditWallet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time"
                 android:layout_weight=".33"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView28"
-                app:layout_constraintTop_toBottomOf="@+id/textView28" />
-        </LinearLayout>
+                android:gravity="center"
+                android:text="Time"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/textView34"
+                app:layout_constraintStart_toStartOf="@+id/textView34"
+                app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
@@ -207,13 +237,13 @@
 
 
     <TextView
-        android:id="@+id/tvDescription"
+        android:id="@+id/tvEditDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:text="lorem"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -231,7 +261,7 @@
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEditDescription" />
 
 
     <ImageView

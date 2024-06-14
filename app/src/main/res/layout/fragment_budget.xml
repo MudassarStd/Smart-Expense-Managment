@@ -21,6 +21,7 @@
 
 
         <ImageView
+            android:id="@+id/ivPrevMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:rotation="180"
@@ -29,6 +30,7 @@
 
 
         <TextView
+            android:id="@+id/tvMonthBudget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -39,6 +41,7 @@
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/ivNextMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/arrow_head_right"
@@ -61,12 +64,26 @@
 
 
         <TextView
-            android:id="@+id/textView27"
+            android:id="@+id/tvNoCategoryBudget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="You don't have a Budget.\nLet's make one so you are in control"
             android:textAlignment="center"
+            android:visibility="gone"
             android:textColor="@color/ofwhite"
+            app:layout_constraintBottom_toTopOf="@+id/btnCreateBudget"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBudgetCategories"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/btnCreateBudget"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:scrollbars="none"
+
     android:fillViewport="true"
     tools:context=".fragments.HomeFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +31,7 @@
 
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/ivProfile"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="start"
@@ -44,12 +44,10 @@
 
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btnMonthHomeFrag"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:backgroundTint="@color/l3Light"
-                android:drawableLeft="@drawable/arrow_down"
-                android:drawableTint="@color/colorPrimary"
                 android:gravity="center"
                 android:text="October"
                 android:textColor="@color/colorPrimary"
@@ -71,10 +69,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Account Balance"
+                android:text="Total Account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
+                app:layout_constraintTop_toBottomOf="@+id/btnMonthHomeFrag" />
 
 
             <TextView

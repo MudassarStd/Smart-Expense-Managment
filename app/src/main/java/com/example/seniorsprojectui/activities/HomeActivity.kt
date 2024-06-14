@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -14,19 +15,28 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityHomeBinding
+import com.example.seniorsprojectui.dbvm.ViewModelTransaction
+import com.example.seniorsprojectui.dbvm.ViewModelUsers
 import com.example.seniorsprojectui.fragments.BudgetFragment
 import com.example.seniorsprojectui.fragments.HomeFragment
 import com.example.seniorsprojectui.fragments.ProfileFragment
 import com.example.seniorsprojectui.fragments.TransactionFragment
 
+
 class HomeActivity : AppCompatActivity() {
+
     private lateinit var binding : ActivityHomeBinding
-    private lateinit var homeFrag : Fragment
-    private lateinit var transacFrag : Fragment
-    private lateinit var budgetFrag : Fragment
-    private lateinit var profileFrag : Fragment
+    private val homeFrag : HomeFragment = HomeFragment()
+    private val transacFrag : TransactionFragment = TransactionFragment()
+    private val budgetFrag : BudgetFragment = BudgetFragment()
+    private val profileFrag : ProfileFragment = ProfileFragment()
+    private lateinit var viewModel : ViewModelTransaction
+    private lateinit var userVM : ViewModelUsers
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -38,28 +48,27 @@ class HomeActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(
-                ContextCompat.getColor(
-                    this,
-                    R.color.colorPrimary
-                )
-            )
-        )
+
+
+        // update stakeholders
+        viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
+        userVM = ViewModelProvider(this)[ViewModelUsers::class.java]
+        viewModel.updateAllStakeHolders()
+
+        Log.d("TestingDBDatasLister", "HomeActivity ${viewModel.transactionsList}")
+
+
+
+//        TransactionDataModel.transactionFromDB = viewModel.transactionsList
 
 
         val fab = binding.fabHomeActivity
-
-        homeFrag = HomeFragment()
-        transacFrag = TransactionFragment()
-        budgetFrag = BudgetFragment()
-        profileFrag = ProfileFragment()
-
-
         binding.bottomNavigationView.background = null
 
+        // setting home frag
         replaceFrags(HomeFragment())
 
+        // BNV navigation
         binding.bottomNavigationView.setOnItemSelectedListener {
             val frag = when(it.itemId){
                 R.id.bottomNavHome -> homeFrag
@@ -82,7 +91,6 @@ class HomeActivity : AppCompatActivity() {
             true
 
         }
-
         // fab button implementation
         binding.fabHomeActivity.setOnClickListener {
                 showCustomDialog(this)
@@ -91,6 +99,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // Private functions
+
+
 
     fun showCustomDialog(context: Context) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.add_dialog_boom_layout, null)

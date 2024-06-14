@@ -1,9 +1,8 @@
-package com.example.seniorsprojectui
+package com.example.seniorsprojectui.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.databinding.ActivityVerificationBinding
 
 class VerificationActivity : AppCompatActivity() {

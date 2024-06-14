@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp"
+    tools:context=".activities.SignUp"
     tools:layout_editor_absoluteX="-5dp"
     tools:layout_editor_absoluteY="20dp">
 
@@ -24,7 +24,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/enter_name"
+        android:id="@+id/etuserNameSignUp"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginHorizontal="20dp"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/signup_title" />
 
     <EditText
-        android:id="@+id/enter_name1"
+        android:id="@+id/etuserEmailSignUp"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginHorizontal="20dp"
@@ -52,11 +52,11 @@
         android:paddingHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_name"
+        app:layout_constraintTop_toBottomOf="@+id/etuserNameSignUp"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/enter_name2"
+        android:id="@+id/etuserPasswordSignUp"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginHorizontal="20dp"
@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_name1"
+        app:layout_constraintTop_toBottomOf="@+id/etuserEmailSignUp"
         tools:ignore="MissingConstraints,TextViewEdits" />
 
     <CheckBox
@@ -83,7 +83,7 @@
         android:text="@string/s3c"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_name2"
+        app:layout_constraintTop_toBottomOf="@+id/etuserPasswordSignUp"
         tools:ignore="MissingConstraints" />
 
     <Button
