@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.adapters.CategoriesDialogAdapter
 import com.example.seniorsprojectui.adapters.OnCategorySelection
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
@@ -59,8 +60,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
         viewModelUser = ViewModelProvider(this)[ViewModelUsers::class.java]
 
-
-        val currentUserId = TransactionDataModel.currentUserId
+        val currentUserId = CurrentUserSession.currentUserId
 
         // getting transaction (income/expense) type from prev activity
         transactionType = intent.getStringExtra("typeTransaction").toString()
@@ -183,20 +183,6 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
                 }
 
     }
-
-    // Database functions
-//    private fun insertTransaction(item : Transaction)
-//    {
-//        val db = Room.databaseBuilder(
-//            applicationContext,
-//            MainTransactionsDatabase::class.java, "Main_Transaction_db"
-//        ).build()
-//
-//        lifecycleScope.launch {
-//            db.transacactionDaoConnector().insertItem(item)
-//            TransactionDataModel.transactions = db.transacactionDaoConnector().getAllTransactions()
-//        }
-//    }
 
 
     override fun onResume() {

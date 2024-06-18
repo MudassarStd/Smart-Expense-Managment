@@ -1,6 +1,5 @@
 package com.example.seniorsprojectui.fragments
 
-
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -24,6 +23,7 @@ import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.EditTransactionActivity
 import com.example.seniorsprojectui.activities.FinancialReport
 import com.example.seniorsprojectui.adapters.TransactionRVAdapter
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import com.example.seniorsprojectui.dbvm.ViewModelUsers
@@ -39,17 +39,21 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
     private lateinit var rvAdapter: TransactionRVAdapter
     private lateinit var rv : RecyclerView
     private lateinit var dateTransaction : TextView
+    private  var currentUserId : Int = -1
     private lateinit var allTransactions : List<com.example.seniorsprojectui.backend.Transaction>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        currentUserId = CurrentUserSession.currentUserId
 
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
         userVM = ViewModelProvider(this)[ViewModelUsers::class.java]
 
+        viewModel.fetchCurrentUserTransactions(currentUserId)
+
 
         // Set up the RecyclerView and Adapter
-        rvAdapter = TransactionRVAdapter(viewModel.transactionsList)
+        rvAdapter = TransactionRVAdapter(emptyList())
         rvAdapter.setOnItemClickListener(this)
 
     }
@@ -77,7 +81,7 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         btnMonth.text = TransactionDataModel.getCurrentMonth(0)
 
 
-//        Toast.makeText(requireContext(),"${userVM.currentUserTransactionsList}, ${TransactionDataModel.currentUserId}", Toast.LENGTH_SHORT).show()
+//      Toast.makeText(requireContext(),"${userVM.currentUserTransactionsList}, ${TransactionDataModel.currentUserId}", Toast.LENGTH_SHORT).show()
 
         Log.d("tdataTF","${viewModel.transactionsList}")
         Log.d("tdatausers","${userVM.registeredUsers}")
@@ -125,10 +129,15 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
     // Observe LiveData from ViewModel to update the RV
     private fun observeUpdatesInDataList() {
         viewModel.transactions.observe(viewLifecycleOwner) { transactions ->
+            Log.d("TestingUserIdLogicToPopulateData", "Transaction Frag: ${transactions}")
             rvAdapter.updateTransactionData(transactions)
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchCurrentUserTransactions(currentUserId)
+    }
 
 
     override fun onItemClick(itemPosition: Int) {
@@ -164,7 +173,7 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         val dialog = AlertDialog.Builder(requireContext()).setTitle("Action")
             .setMessage("Are you sure to delete all Transactions?")
             .setPositiveButton("Yes") { _, _ ->
-                viewModel.deleteAllTransactions()
+                viewModel.deleteAllTransactions(CurrentUserSession.currentUserId)
             }
             .setNegativeButton("No") { _, _ ->
 

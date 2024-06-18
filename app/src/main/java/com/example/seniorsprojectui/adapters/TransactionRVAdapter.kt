@@ -68,11 +68,11 @@ class TransactionViewHolder(view : View, listener : TransactionRVAdapter.onItemC
     val amount = view.findViewById<TextView>(R.id.rvAmount)
     val icon = view.findViewById<ImageView>(R.id.rvIcon)
     init {
-        itemView.setOnClickListener {
+        view.setOnClickListener {
             listener.onItemClick(adapterPosition)
         }
 
-        itemView.setOnLongClickListener {
+        view.setOnLongClickListener {
             listener.onItemLongClick(adapterPosition)
             true
         }

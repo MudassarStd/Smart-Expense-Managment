@@ -3,6 +3,7 @@ package com.example.seniorsprojectui.dbvm
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.backend.UserData
@@ -67,7 +68,8 @@ class ViewModelUsers(application: Application) : AndroidViewModel(application) {
     {
         viewModelScope.launch(Dispatchers.IO) {
             val userInfo = db.userDao().getCurrentUserInfo(uid)
-            TransactionDataModel.currentUserName = userInfo.username
+            CurrentUserSession.currentUserName = userInfo.username
+            CurrentUserSession.currentUserData = userInfo
         }
     }
 

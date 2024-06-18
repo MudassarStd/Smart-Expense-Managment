@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.ExportDataActivity
 import com.example.seniorsprojectui.activities.MyWalletsActivity
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import com.example.seniorsprojectui.dbvm.ViewModelUsers
@@ -47,7 +48,7 @@ class ProfileFragment : Fragment() {
         val myWallets = view.findViewById<CardView>(R.id.cvMyWalletsProfileFrag)
         val cvExportData = view.findViewById<CardView>(R.id.cvExportData)
 
-        userName.text = TransactionDataModel.currentUserName
+        userName.text = CurrentUserSession.currentUserName
 
 
         Log.d("TestingDBDatasLister", "ProfileFrag ${viewModelTransactions.transactionsList}")

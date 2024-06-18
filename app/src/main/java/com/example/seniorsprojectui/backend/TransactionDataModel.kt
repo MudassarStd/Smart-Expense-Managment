@@ -33,7 +33,7 @@ class TransactionDataModel {
         var financialReportCategories: List<FinancialReportCategoryData> = listOf()
 
         // budget categories
-        var budgetCategoriesList: MutableList<BudgetCategory> = mutableListOf()
+//        var budgetCategoriesList: MutableList<BudgetCategory> = mutableListOf()
 
         // category map to amounts
         val categoryBudgetMap: MutableMap<String, Double> = mutableMapOf()
@@ -169,13 +169,32 @@ class TransactionDataModel {
             Log.d("mapMy", "$categoryBudgetMap")
         }
 
-        fun getRemainingAmountForBudget(category : String, totalAmount : Double) : String
+        fun getRemainingAmountForBudget(category : String, totalAmount : String) : List<String>
         {
             // update budget map
 //            getCategoryWiseAmountSpent()
 
-            val remainingAmount = totalAmount - categoryBudgetMap[category]!!
-            return remainingAmount.toInt().toString()
+            var remainingAmount : Double = 0.0
+            var amountSpent : Double = 0.0
+
+            val list : MutableList<String> = mutableListOf()
+            list.clear()
+
+            remainingAmount = totalAmount.toDouble() - categoryBudgetMap[category]!!
+            amountSpent = categoryBudgetMap[category]!!
+
+
+            if (remainingAmount <= 0)
+            {
+                remainingAmount = 0.0
+            }
+            list.add(remainingAmount.toInt().toString())
+            list.add(amountSpent.toString())
+
+            Log.d("lsitTEstre", "$list")
+
+
+            return list
         }
 
         fun amountExceededCheck(category: String,totalAmount: Double) : Boolean

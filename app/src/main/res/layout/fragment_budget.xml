@@ -84,6 +84,7 @@
             android:layout_height="0dp"
             android:padding="10dp"
             android:visibility="visible"
+            tools:listitem="@layout/budget_category_rv_sample_layout"
             app:layout_constraintBottom_toTopOf="@+id/btnCreateBudget"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

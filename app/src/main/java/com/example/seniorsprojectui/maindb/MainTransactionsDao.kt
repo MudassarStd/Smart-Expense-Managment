@@ -23,9 +23,6 @@ interface MainTransactionsDao {
     suspend fun deleteById(tid : Int)
     @Update
     suspend fun updateItem(transacItem: Transaction)
-    @Query("DELETE FROM `Transaction`")
-    suspend fun deleteAllTransactions()
-
-
-
+    @Query("DELETE FROM `Transaction` where uid = :uid")
+    suspend fun deleteAllTransactions(uid : Int)
 }

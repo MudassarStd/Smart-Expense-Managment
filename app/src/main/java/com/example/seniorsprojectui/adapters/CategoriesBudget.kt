@@ -1,6 +1,7 @@
 package com.example.seniorsprojectui.adapters
 
 import android.media.Image
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,21 +15,42 @@ import com.example.seniorsprojectui.backend.BudgetCategory
 import com.example.seniorsprojectui.backend.CategoryData
 import com.example.seniorsprojectui.backend.TransactionDataModel
 
-class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>) : Adapter<BudgetVH>() {
+
+
+class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>) : Adapter<CategoriesBudgetAdapter.BudgetVH>() {
+
+    private lateinit var i_listener: OnBudgetItemClick
+
+    interface OnBudgetItemClick{
+        fun onItemClick(budget : BudgetCategory)
+        fun onLongItemClick(itemPos : Int)
+    }
+    fun setOnBudgetItemClickListener(listener: OnBudgetItemClick) {
+        i_listener = listener
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetVH {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.budget_category_rv_sample_layout, parent, false)
-        return BudgetVH(view)
+        return BudgetVH(view, i_listener)
     }
 
     override fun onBindViewHolder(holder: BudgetVH, position: Int) {
 
-            // get remaining amount
-//            val remainingAmount = TransactionDataModel.getRemainingAmountForBudget(listData[position].category, listData[position].totalAmount.toDouble())
+        try {
+             val remainingAmount = TransactionDataModel.getRemainingAmountForBudget(listData[position].category, listData[position].totalAmount)
             holder.budgetCategory.text = listData[position].category
-            holder.remainingAmount.text = "null"
-            holder.remainingAmountFromTotal.text = "null"
+            holder.remainingAmount.text = remainingAmount[0]
+            holder.remainingAmountFromTotal.text = remainingAmount[1]
             holder.totalAmount.text = listData[position].totalAmount
+
+        }
+        catch (_:Exception)
+        {
+            Log.e("remainAmount", "fslkd")
+        }
+
 
             // checking if limit exceeded or NOT
 //            if(TransactionDataModel.amountExceededCheck(listData[position].category, listData[position].totalAmount.toDouble()))
@@ -57,10 +79,9 @@ class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>) : Ada
         this.listData = listData
          notifyDataSetChanged()
     }
-}
 
-class BudgetVH(view : View) : RecyclerView.ViewHolder(view)
-{
+
+inner class BudgetVH(view : View, listener : OnBudgetItemClick) : RecyclerView.ViewHolder(view) {
     val remainingAmount = view.findViewById<TextView>(R.id.tvRemainingBudgetAmount)
     val totalAmount = view.findViewById<TextView>(R.id.tvTotalBudgetAmount)
     val remainingAmountFromTotal = view.findViewById<TextView>(R.id.tvRemainingAmountFromTotal)
@@ -69,4 +90,11 @@ class BudgetVH(view : View) : RecyclerView.ViewHolder(view)
     val ivWarning = view.findViewById<ImageView>(R.id.ivWarningBudgetExceeded)
 
     val dot = view.findViewById<ImageView>(R.id.ivCategoryDot)
+
+    init {
+            view.setOnClickListener {
+                listener.onItemClick(listData[adapterPosition])
+            }
+        }
+    }
 }

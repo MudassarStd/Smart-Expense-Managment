@@ -48,9 +48,21 @@ class AddNewWalletActivity : AppCompatActivity() {
             val wName = binding.etWalletName.text.toString()
             val amount = binding.etWalletAmount.text.toString()
 
-            val obj = MyWalletsDC(TransactionDataModel.currentUserId,wName,amount)
-            FilterDataModel.myWalletsList.add(obj)
+            if (wName.isNotEmpty() && amount.isNotEmpty())
+            {
+                val obj = MyWalletsDC(TransactionDataModel.currentUserId,wName,amount)
+                FilterDataModel.myWalletsList.add(obj)
+                startActivity(Intent(this, SplashOkActivity::class.java))
+            }
 
+            else{
+
+            }
+
+
+        }
+
+        binding.btnSkip.setOnClickListener {
             startActivity(Intent(this, SplashOkActivity::class.java))
         }
 

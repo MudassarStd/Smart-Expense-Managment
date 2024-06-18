@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Remaining Rs."
-                    android:textSize="28sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:gravity="center" />
                 <TextView
@@ -85,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="28sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     android:gravity="center" />
 

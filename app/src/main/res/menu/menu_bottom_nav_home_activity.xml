@@ -18,5 +18,5 @@
 
     <item android:id="@+id/bottomNavProfile"
         android:title="Profile"
-        android:icon="@drawable/user"/>
+        android:icon="@drawable/ic_person"/>
 </menu>

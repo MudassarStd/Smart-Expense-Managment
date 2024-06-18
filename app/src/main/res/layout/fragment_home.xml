@@ -25,7 +25,7 @@
             android:paddingTop="20dp"
             android:paddingBottom="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -37,7 +37,7 @@
                 android:layout_gravity="start"
                 android:background="@drawable/round_shape"
                 android:padding="2dp"
-                android:src="@drawable/user"
+                android:src="@drawable/ic_person"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/colorPrimary" />
@@ -52,16 +52,17 @@
                 android:text="October"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toStartOf="@+id/ivNotification"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/ivProfile"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/ivNotification"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:src="@drawable/notifiaction"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_notification_bell"
+                app:layout_constraintBottom_toBottomOf="@+id/btnMonthHomeFrag"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/btnMonthHomeFrag"
                 app:tint="@color/colorPrimary" />
 
 
@@ -89,6 +90,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ivNotification" />
 
             <LinearLayout
+                android:id="@+id/linearLayout12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"

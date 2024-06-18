@@ -35,7 +35,7 @@ data class BudgetCategory(
     @PrimaryKey(autoGenerate = true) val Budgetid: Int,
     val uid : Int,
     val category : String,
-    val totalAmount : String,
+    var totalAmount : String,
     val month : String
 )
 

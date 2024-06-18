@@ -1,7 +1,9 @@
 package com.example.seniorsprojectui.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,26 +17,36 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.AddBudgetActivity
+import com.example.seniorsprojectui.activities.BudgetDetailsActivity
 import com.example.seniorsprojectui.adapters.CategoriesBudgetAdapter
 import com.example.seniorsprojectui.backend.BudgetCategory
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 
 
-class BudgetFragment : Fragment() {
+class BudgetFragment : Fragment(), CategoriesBudgetAdapter.OnBudgetItemClick {
 
     private lateinit var adapter : CategoriesBudgetAdapter
     private lateinit var rvCategoryBudget : RecyclerView
     private lateinit var noBudget : TextView
     private lateinit var monthBudget : TextView
     private lateinit var viewModel : ViewModelTransaction
+    private  var userId : Int = -1
+
+    private lateinit var bList : List<BudgetCategory>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        userId = CurrentUserSession.currentUserId
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
+        viewModel.fetchBudgetsByUserId(userId)
 
-        TransactionDataModel.budgetCategoriesList.addAll(viewModel.budget_data)
+        adapter = CategoriesBudgetAdapter(emptyList())
 
+        adapter.setOnBudgetItemClickListener(this)
+        Log.d("BudgetLifeCycleChecking", "onCreate()")
     }
 
 
@@ -60,9 +72,13 @@ class BudgetFragment : Fragment() {
         monthBudget.text = TransactionDataModel.getCurrentMonth(0)
 
 
-        adapter = CategoriesBudgetAdapter(viewModel.budget_data)
+        // experimenting with live data
+
         rvCategoryBudget.adapter = adapter
-        rvCategoryBudget.layoutManager = LinearLayoutManager(requireContext())
+        rvCategoryBudget.layoutManager = LinearLayoutManager(requireContext()).apply {
+            reverseLayout = true
+            stackFromEnd = true
+        }
 
         nextMonth.setOnClickListener {
             monthBudget.text = TransactionDataModel.getCurrentMonth(1)
@@ -75,18 +91,23 @@ class BudgetFragment : Fragment() {
             adapter.updateAdapter(filterByMonth(monthBudget.text.toString()))
         }
 
+
         btnCreateBudget.setOnClickListener {
             startActivity(Intent(requireContext(), AddBudgetActivity::class.java))
         }
 
+        observeUpdatesInDataList()
+        Log.d("BudgetLifeCycleChecking", "onViewCreated()")
 
-//        observeUpdatesInDataList()
 
     }
 
     private fun observeUpdatesInDataList() {
         viewModel.budgets.observe(viewLifecycleOwner) { budgets ->
-            adapter.updateAdapter(budgets)
+            bList = budgets
+            adapter.updateAdapter(bList)
+
+            Log.d("TestingBudgetData", "Budget Live Data $bList")
         }
     }
 
@@ -95,22 +116,39 @@ class BudgetFragment : Fragment() {
             list.month.equals(targetMonth, ignoreCase = true)
         }
     }
-
-
     override fun onResume() {
         super.onResume()
-        monthBudget.text = TransactionDataModel.getCurrentMonth(0)
+        viewModel.fetchBudgetsByUserId(userId)
 
-        if (adapter.itemCount < 1)
-        {
-            rvCategoryBudget.visibility = View.GONE
-            noBudget.visibility = View.VISIBLE
-        }
-        else
-        {
-            noBudget.visibility = View.GONE
-            rvCategoryBudget.visibility = View.VISIBLE
-        }
-
+//        adapter.notifyDataSetChanged()
+//        monthBudget.text = TransactionDataModel.getCurrentMonth(0)
+//
+//        if (adapter.itemCount < 1)
+//        {
+//            rvCategoryBudget.visibility = View.GONE
+//            noBudget.visibility = View.VISIBLE
+//        }
+//        else
+//        {
+//            noBudget.visibility = View.GONE
+//            rvCategoryBudget.visibility = View.VISIBLE
+//        }
     }
+    override fun onItemClick(budget: BudgetCategory) {
+
+        val intent = Intent(requireContext(), BudgetDetailsActivity::class.java)
+        intent.putExtra("budgetUid", budget.uid)
+        intent.putExtra("budgetid", budget.Budgetid)
+        intent.putExtra("budgetCategory", budget.category)
+        intent.putExtra("budgetMonth", budget.month)
+        intent.putExtra("budgetAmount", budget.totalAmount)
+
+        startActivity(intent)
+    }
+
+    override fun onLongItemClick(itemPos: Int) {
+        TODO("Not yet implemented")
+    }
+    // onAttach()
+    // onDetach()
 }

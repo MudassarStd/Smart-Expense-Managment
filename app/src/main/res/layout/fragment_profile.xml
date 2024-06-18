@@ -6,17 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="68dp"
         android:layout_height="68dp"
         android:layout_gravity="start"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/round_shape"
         android:padding="2dp"
-        android:src="@drawable/user"
+        android:src="@drawable/ic_person"
         app:layout_constraintBottom_toBottomOf="@+id/tvUserNameProfile"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
+        app:tint="@color/colorPrimary" />
+
+    <ImageView
+        android:id="@+id/ivEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_edit_pen"
+        app:layout_constraintBottom_toBottomOf="@+id/tvUserNameProfile"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView14"
         app:tint="@color/colorPrimary" />
 
@@ -34,10 +56,10 @@
         android:id="@+id/tvUserNameProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="Username"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginStart="10dp"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -58,9 +80,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:clickable="true"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/l3Light"
+            android:clickable="true"
             app:cardCornerRadius="10dp">
 
             <LinearLayout
@@ -73,9 +95,9 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="10dp"
-                    android:padding="7dp"
-                    android:src="@drawable/wallet_user"
                     android:background="@drawable/transaction_list_box"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_wallet"
                     app:tint="@color/colorPrimary" />
 
                 <TextView
@@ -95,9 +117,9 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="5dp"
-            android:layout_height="wrap_content"
             android:backgroundTint="@color/l3Light"
             app:cardCornerRadius="10dp">
 
@@ -111,9 +133,9 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="10dp"
-                    android:padding="7dp"
-                    android:src="@drawable/settings"
                     android:background="@drawable/transaction_list_box"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_setting"
                     app:tint="@color/colorPrimary" />
 
                 <TextView
@@ -136,8 +158,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="5dp"
-            android:clickable="true"
             android:backgroundTint="@color/l3Light"
+            android:clickable="true"
             app:cardCornerRadius="10dp">
 
             <LinearLayout
@@ -150,10 +172,9 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="10dp"
-                    android:padding="7dp"
-                    android:src="@drawable/download"
-                    android:rotation="180"
                     android:background="@drawable/transaction_list_box"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_export_data_to_folder"
                     app:tint="@color/colorPrimary" />
 
                 <TextView
@@ -176,8 +197,8 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="5dp"
-            android:clickable="true"
             android:backgroundTint="@color/l3Light"
+            android:clickable="true"
             app:cardCornerRadius="10dp">
 
             <LinearLayout
@@ -190,9 +211,9 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginEnd="10dp"
-                    android:padding="7dp"
-                    android:src="@drawable/logout"
                     android:background="@drawable/transaction_list_box_food"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_exit"
                     app:tint="@color/primaryRed" />
 
                 <TextView
@@ -210,8 +231,6 @@
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

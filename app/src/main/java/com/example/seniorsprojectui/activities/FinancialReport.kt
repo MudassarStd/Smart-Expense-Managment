@@ -32,9 +32,10 @@ class FinancialReport : AppCompatActivity() {
             insets
         }
 
-        adapterFinancialReport = FinancialReportCategoryAdapter(emptyList())
+        adapterFinancialReport = FinancialReportCategoryAdapter()
         binding.rvFinancialReportCategories.adapter = adapterFinancialReport
         binding.rvFinancialReportCategories.layoutManager = LinearLayoutManager(this)
+        filterData(0)
 
         binding.btnMonthFReport.setOnClickListener {
             Log.d("uthds","${TransactionDataModel.financialReportCategories}")

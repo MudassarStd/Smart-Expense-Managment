@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityLoginBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
@@ -38,8 +39,9 @@ class LoginActivity : AppCompatActivity() {
                     // Login successful, navigate to next screen
                     startActivity(Intent(this@LoginActivity, AddNewWalletActivity::class.java))
 
-                    TransactionDataModel.currentUserId = viewModelUser.getCurrentUserId(email)
-//                    viewModelTransaction.fetchCurrentUserTransactions(TransactionDataModel.currentUserId)
+                    CurrentUserSession.currentUserId = viewModelUser.getCurrentUserId(email)
+                    finish()
+
 
                 } else {
                     // Login failed, display error message

@@ -14,8 +14,9 @@ import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.backend.FinancialReportCategoryData
 import com.example.seniorsprojectui.backend.TransactionDataModel
 
-class FinancialReportCategoryAdapter(var data : List<FinancialReportCategoryData>) : Adapter<FinancialReportVH>() {
+class FinancialReportCategoryAdapter() : Adapter<FinancialReportVH>() {
 
+    private lateinit var data : List<FinancialReportCategoryData>
     val colorMap = TransactionDataModel.categoryColorMap
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FinancialReportVH {

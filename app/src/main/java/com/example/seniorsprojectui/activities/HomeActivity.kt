@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityHomeBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
@@ -55,10 +56,12 @@ class HomeActivity : AppCompatActivity() {
         userVM = ViewModelProvider(this)[ViewModelUsers::class.java]
         viewModel.updateAllStakeHolders()
 
-        Log.d("TestingDBDatasLister", "HomeActivity ${viewModel.transactionsList}")
+        Log.d("TestingUserIdLogicToPopulateData", "Current User Id: ${CurrentUserSession.currentUserId}")
+        viewModel.fetchCurrentUserTransactions(CurrentUserSession.currentUserId)
 
-
-
+        viewModel.transactions.observe(this){
+            Log.d("TestingUserIdLogicToPopulateData", "Current User Transactions: ${it}")
+        }
 //        TransactionDataModel.transactionFromDB = viewModel.transactionsList
 
 
