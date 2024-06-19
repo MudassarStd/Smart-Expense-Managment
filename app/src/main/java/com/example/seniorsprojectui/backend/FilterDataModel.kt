@@ -12,7 +12,7 @@ class FilterDataModel {
         var filterParameter : String = "Null"
 
 
-        val myWalletsList : MutableList<MyWalletsDC> = mutableListOf()
+        val myWalletsList : MutableList<Wallet> = mutableListOf()
 
          }
 

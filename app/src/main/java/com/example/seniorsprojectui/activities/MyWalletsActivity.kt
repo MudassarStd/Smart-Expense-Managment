@@ -10,13 +10,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.adapters.MyWalletsAdapter
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.FilterDataModel
+import com.example.seniorsprojectui.backend.Transaction
+import com.example.seniorsprojectui.backend.Wallet
 import com.example.seniorsprojectui.databinding.ActivityMyWalletsBinding
+import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 
-class MyWalletsActivity : AppCompatActivity() {
+class MyWalletsActivity : AppCompatActivity() , MyWalletsAdapter.OnWalletClickInterface{
     private lateinit var binding : ActivityMyWalletsBinding
     private lateinit var rv : RecyclerView
     private lateinit var adapter : MyWalletsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,8 +33,12 @@ class MyWalletsActivity : AppCompatActivity() {
             insets
         }
 
+
+
+
         rv = binding.rvMyWallets
         adapter = MyWalletsAdapter(FilterDataModel.myWalletsList)
+        adapter.setOnwalletClickListener(this)
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(this)
 
@@ -42,5 +51,16 @@ class MyWalletsActivity : AppCompatActivity() {
             startActivity(Intent(this, AddNewWalletActivity::class.java))
         }
 
+    }
+
+    override fun onItemClick(wallet : Wallet) {
+        val intent = Intent(this, WalletDetailsActivity::class.java)
+        intent.putExtra("wallet",wallet)
+
+        startActivity(intent)
+    }
+
+    override fun onLongitemClick(itemPos: Int) {
+        TODO("Not yet implemented")
     }
 }

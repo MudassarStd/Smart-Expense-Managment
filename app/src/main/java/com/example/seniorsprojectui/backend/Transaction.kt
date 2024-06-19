@@ -2,6 +2,8 @@ package com.example.seniorsprojectui.backend
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
+import java.io.SerializablePermission
 import java.net.URI
 
 @Entity
@@ -48,10 +50,11 @@ data class UserData(
     val userpassword : String
 )
 
-data class MyWalletsDC(
+@Entity
+data class Wallet(
     val userid : Int,
     val walletName: String,
     val walletAmount : String
-)
+) : Serializable
 
 data class TransDummy(val id: Int, val type: String, val amount: Double, val date: String)

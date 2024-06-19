@@ -8,8 +8,8 @@ import android.widget.Button
 import androidx.core.content.ContextCompat
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.backend.FilterDataModel
-import com.example.seniorsprojectui.backend.MyWalletsDC
 import com.example.seniorsprojectui.backend.TransactionDataModel
+import com.example.seniorsprojectui.backend.Wallet
 import com.example.seniorsprojectui.databinding.ActivityAddNewWalletBinding
 
 class AddNewWalletActivity : AppCompatActivity() {
@@ -50,7 +50,7 @@ class AddNewWalletActivity : AppCompatActivity() {
 
             if (wName.isNotEmpty() && amount.isNotEmpty())
             {
-                val obj = MyWalletsDC(TransactionDataModel.currentUserId,wName,amount)
+                val obj = Wallet(TransactionDataModel.currentUserId,wName,amount)
                 FilterDataModel.myWalletsList.add(obj)
                 startActivity(Intent(this, SplashOkActivity::class.java))
             }
