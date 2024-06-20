@@ -8,6 +8,7 @@
     tools:context=".activities.EditProfileActivity">
 
 
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/materialToolbar2"
         android:layout_width="match_parent"
