@@ -1,7 +1,9 @@
 package com.example.seniorsprojectui.activities
 
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -26,15 +28,18 @@ import com.example.seniorsprojectui.dbvm.ViewModelUsers
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
 
 
-class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
+class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection , AddAttachmentBSV.OnAttachmentSelected{
+
     private lateinit var binding : ActivityAddIncomeExpenseBinding
-//    lateinit var transactionObject : Transaction
     private lateinit var currentDate : TextView
+    private  var attachmentSelected : String = "null"
+    private  var TAG = "fksdjoisubdffgdsf"
 
     private  var categoryDialog : AlertDialog? = null
     var transactionType : String = "null"
 
     private lateinit var categoryET : EditText
+    private lateinit var addAttachmentBSV: AddAttachmentBSV
 
     val categoriesAdapter = CategoriesDialogAdapter(TransactionDataModel.categoriesList)
 
@@ -54,6 +59,8 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
             insets
         }
 
+        addAttachmentBSV = AddAttachmentBSV()
+        addAttachmentBSV.invokeOnAttachmentSelectedInterface(this)
 
         categoriesAdapter.setOnCategoryClickListenerInterface(this)
 
@@ -67,7 +74,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
         // attachment BSV
         binding.llAddAttachment.setOnClickListener {
-            AddAttachmentBSV().show(supportFragmentManager, AddAttachmentBSV().tag)
+            addAttachmentBSV.show(supportFragmentManager, addAttachmentBSV.tag)
         }
 
         // setting current date
@@ -128,11 +135,9 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
             TransactionDataModel.totalAmount += amount.toDouble()
             // creating transaction object
-            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,"NULL",transactionType, currentUserId)
+            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,attachmentSelected,transactionType, currentUserId)
             viewModel.insertTransaction(transactionObject)
             finish()
-
-
         }
         else{
 
@@ -146,7 +151,6 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
             if (wallet.isEmpty())
                 binding.etWallet.error = ""
-
         }
         }
 
@@ -215,6 +219,10 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
     override fun onCategorySelected(categoryPosition: Int) {
         binding.etCategory.setText(TransactionDataModel.categoriesList[categoryPosition].categoryLabel)
         categoryDialog?.dismiss()
+    }
+
+    override fun onAttachmentSelected(itemUri: String) {
+        attachmentSelected = itemUri
     }
 
 

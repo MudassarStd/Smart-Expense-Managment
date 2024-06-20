@@ -28,7 +28,7 @@ class BudgetDetailsActivity : AppCompatActivity() {
 
         viewModelTransaction =  ViewModelProvider(this)[ViewModelTransaction::class.java]
 
-
+        binding.etTotalBudgetAmount.requestFocus()
 
         budgetItem = getDataFromIntent()
         populateOldData(budgetItem)
@@ -45,7 +45,16 @@ class BudgetDetailsActivity : AppCompatActivity() {
                 finish()
             }
         }
+        binding.ivBackArrow.setOnClickListener {
+            finish()
+        }
+
+        binding.ivDelBudget.setOnClickListener {
+            viewModelTransaction.deleteBudget(budgetItem)
+        }
     }
+
+
 
     private fun populateOldData(budgetItem: BudgetCategory) {
         binding.tvBudgetCategoryDetails.setText(budgetItem.category)

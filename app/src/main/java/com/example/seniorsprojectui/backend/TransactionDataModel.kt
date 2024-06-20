@@ -17,8 +17,6 @@ import java.util.Locale
 
 class TransactionDataModel {
     companion object {
-
-
         var currentUserName : String = "null"
         var currentUserId : Int = -1
 
@@ -130,6 +128,7 @@ class TransactionDataModel {
                         is Button -> view.text = selectedCategory
                         is EditText -> view.setText(selectedCategory)
                     }
+
 
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->

@@ -21,8 +21,25 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class AddAttachmentBSV : BottomSheetDialogFragment() {
 
 
+    // interface
+    interface OnAttachmentSelected{
+        fun onAttachmentSelected(itemUri : String)
+    }
+
+    private var listener : OnAttachmentSelected?  = null
+
+    fun invokeOnAttachmentSelectedInterface(listener : OnAttachmentSelected)
+    {
+        this.listener = listener
+    }
+
+
     private lateinit var tvDocument : TextView
     private lateinit var ivDocument : ImageView
+    private lateinit var camImage : Uri
+    private lateinit var galleryImage : Uri
+    private lateinit var document : Uri
+
     companion object {
         private const val REQUEST_IMAGE_GALLERY = 2
         private const val REQUEST_PICK_DOCUMENT = 3
@@ -93,12 +110,16 @@ class AddAttachmentBSV : BottomSheetDialogFragment() {
                     data?.data?.let { imageUri ->
                         var selectedImageUri = imageUri
                         ivDocument.setImageURI(selectedImageUri)
+                        // sending ImageUri back to activity
+                        listener?.onAttachmentSelected(selectedImageUri.toString())
                     }
                 }
                 REQUEST_PICK_DOCUMENT -> {
                     data?.data?.let { documentUri ->
                         val documentName = getFileName(documentUri)
                         tvDocument.text = documentName
+                        // getting uri
+                        listener?.onAttachmentSelected(documentUri.toString())
                     }
                 }
                 REQUEST_IMAGE_CAPTURE -> {
@@ -106,6 +127,8 @@ class AddAttachmentBSV : BottomSheetDialogFragment() {
                     var selectedImageUri = imageBitmap
 //                    ivDocument.setImageURI(selectedImageUri)
                     ivDocument.setImageBitmap(imageBitmap)
+                    // getting camImage uri
+
                 }
             }
         }

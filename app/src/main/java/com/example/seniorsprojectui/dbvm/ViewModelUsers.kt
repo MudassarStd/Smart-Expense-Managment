@@ -5,15 +5,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.Transaction
+import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.backend.UserData
-import com.example.seniorsprojectui.maindb.TestDB
+import com.example.seniorsprojectui.maindb.NewMainDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ViewModelUsers(application: Application) : AndroidViewModel(application) {
 
 
-    private val db : TestDB = TestDB.getInstance(application)
+    private val db : NewMainDB = NewMainDB.getInstance(application)
 
     // users List
     var registeredUsers : List<UserData> = listOf()
@@ -39,6 +40,13 @@ class ViewModelUsers(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch (Dispatchers.IO){
             db.userDao().insertUser(user)
             fetchUsers()
+        }
+    }
+    fun updateUser(user : UserData)
+    {
+        viewModelScope.launch (Dispatchers.IO){
+            db.userDao().updateUser(user)
+            getCurrentUserInfo(user.uid)
         }
     }
 

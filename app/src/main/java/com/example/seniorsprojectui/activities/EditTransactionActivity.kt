@@ -1,7 +1,9 @@
 package com.example.seniorsprojectui.activities
 
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.databinding.ActivityEditTransactionBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
@@ -30,17 +33,13 @@ class EditTransactionActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
 
 
         binding.ivBackArrow.setOnClickListener {
             finish()
         }
-
-
-        viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
-
         Tid = intent.getIntExtra("Tid", -1)
-
 
         // recieving data from other activity
         val time = intent.getStringExtra("time")
@@ -49,8 +48,14 @@ class EditTransactionActivity : AppCompatActivity() {
         val category = intent.getStringExtra("category")
         val wallet = intent.getStringExtra("wallet")
         val description = intent.getStringExtra("description")
-        val attachmentStatus = intent.getStringExtra("attachmentStatus")
+        val attachment = intent.getStringExtra("attachment")
         val transactionType = intent.getStringExtra("transactionType")
+
+        val uriAttachment = toUri(attachment)
+
+        Log.d("fhsjkdhkfkjf","${uriAttachment}")
+        loadImageFromUri(uriAttachment)
+
 
 
         // changing color of layout bg according to transaction type
@@ -82,4 +87,18 @@ class EditTransactionActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun loadImageFromUri(uriAttachment: Uri) {
+        Glide
+            .with(this)
+            .load(uriAttachment)
+            .centerCrop()
+            .placeholder(R.drawable.ic_loading)
+            .into(binding.ivAttachment);
+    }
+
+    private fun toUri(attachment: String?) : Uri {
+        return attachment.let { Uri.parse(it)
+    }
+}
 }

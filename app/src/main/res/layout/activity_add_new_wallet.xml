@@ -23,14 +23,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="212dp"
         android:text="@string/balance"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="212dp" />
 
     <TextView
         android:id="@+id/textView32"
@@ -231,7 +230,7 @@
                 android:textSize="10sp"
                 android:backgroundTint="@color/l1Purple"
                 android:textColor="@color/colorPrimary"
-                android:text="See more" />
+                android:text="Other" />
 
 
         </LinearLayout>

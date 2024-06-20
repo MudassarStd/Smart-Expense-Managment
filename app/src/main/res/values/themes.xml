@@ -12,7 +12,6 @@
         <item name="colorControlActivated">@color/green</item>
 
     </style>
-
     <style name="Theme.SeniorsProjectUI" parent="Base.Theme.SeniorsProjectUI" />
 
 </resources>

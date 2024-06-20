@@ -3,6 +3,7 @@ package com.example.seniorsprojectui.maindb
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.Update
 import androidx.room.Query
 import com.example.seniorsprojectui.backend.UserData
 
@@ -10,6 +11,8 @@ import com.example.seniorsprojectui.backend.UserData
 interface UserDao {
     @Insert
     suspend fun insertUser(userData : UserData)
+    @Update
+    suspend fun updateUser(userData : UserData)
 
     @Query("SELECT EXISTS (SELECT 1 FROM UserData WHERE username = :name OR useremail = :email)")
     suspend fun isTaken(name: String, email: String): Boolean

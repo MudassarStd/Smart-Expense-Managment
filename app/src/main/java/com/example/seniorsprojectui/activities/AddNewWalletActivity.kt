@@ -76,14 +76,12 @@ class AddNewWalletActivity : AppCompatActivity() {
     private fun onButtonClick(clickedButton: Button) {
 
         val defaultColor = ContextCompat.getColor(this, R.color.l1Purple)
-        val selectedColor = ContextCompat.getColor(this, R.color.colorPrimary) // Assuming you have a selectedColor in your resources
+        val selectedColor = ContextCompat.getColor(this, R.color.l2Purple) // Assuming you have a selectedColor in your resources
 
         // Reset background color of all buttons
         availableBanksButtons.forEach { it.setBackgroundColor(defaultColor) }
-
         // Change background color of the clicked button
         clickedButton.setBackgroundColor(selectedColor)
-
         // Get the text of the clicked button
         val buttonText = clickedButton.text.toString()
         // Do something with the buttonText

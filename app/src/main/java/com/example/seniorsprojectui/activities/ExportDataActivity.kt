@@ -62,6 +62,10 @@ class ExportDataActivity : AppCompatActivity() {
             insets
         }
 
+        binding.ivBackArrow.setOnClickListener {
+            finish()
+        }
+
         tvDataTypeSelection = binding.tvDataTypeToExport
         tvFileFormat = binding.tvDataFormat
         tvDataRange = binding.tvDateRangeToExportData

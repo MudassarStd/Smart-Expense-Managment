@@ -1,24 +1,23 @@
 package com.example.seniorsprojectui.backend
 
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
-import java.io.SerializablePermission
-import java.net.URI
 
 @Entity
 data class Transaction(
     @PrimaryKey(autoGenerate = true) val Tid: Int,
-    val time : String,
-    val date : String,
-    val month : String,
-    val amount : String,
-    val category : String,
-    val wallet : String,
-    val description : String,
-    val attachment : String,
-    val transactionType : String,
-    val uid : Int
+    val time: String,
+    val date: String,
+    val month: String,
+    val amount: String,
+    val category: String,
+    val wallet: String,
+    val description: String,
+    val attachment: String,
+    val transactionType: String,
+    val uid: Int
  )
 
 data class CategoryData(

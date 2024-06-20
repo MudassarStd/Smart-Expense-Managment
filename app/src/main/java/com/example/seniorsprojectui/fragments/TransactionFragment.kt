@@ -18,12 +18,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Transaction
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.EditTransactionActivity
 import com.example.seniorsprojectui.activities.FinancialReport
 import com.example.seniorsprojectui.adapters.TransactionRVAdapter
 import com.example.seniorsprojectui.backend.CurrentUserSession
+import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import com.example.seniorsprojectui.dbvm.ViewModelUsers
@@ -32,7 +32,7 @@ import java.util.Calendar
 import java.util.Locale
 
 
-class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListener{
+class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListener, TransactionFilterBSVFragment.OnFilterSelection{
 
     private lateinit var viewModel : ViewModelTransaction
     private lateinit var userVM : ViewModelUsers
@@ -40,7 +40,10 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
     private lateinit var rv : RecyclerView
     private lateinit var dateTransaction : TextView
     private  var currentUserId : Int = -1
-    private lateinit var allTransactions : List<com.example.seniorsprojectui.backend.Transaction>
+    private lateinit var tempTransactions : List<Transaction>
+    private lateinit var bsvTransactionFilterBSVFragment: TransactionFilterBSVFragment
+    private var TAG : String = "fsjdkfsdfdsd"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,9 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         userVM = ViewModelProvider(this)[ViewModelUsers::class.java]
 
         viewModel.fetchCurrentUserTransactions(currentUserId)
+
+        bsvTransactionFilterBSVFragment = TransactionFilterBSVFragment()
+        bsvTransactionFilterBSVFragment.invokeOnFilterSelectionInterface(this)
 
 
         // Set up the RecyclerView and Adapter
@@ -112,12 +118,13 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         }
 
         ivFilter.setOnClickListener {
-            TransactionFilterBSVFragment().show(requireActivity().supportFragmentManager, TransactionFilterBSVFragment().tag)
+            bsvTransactionFilterBSVFragment.show(requireActivity().supportFragmentManager, bsvTransactionFilterBSVFragment.tag)
         }
 
 
         btnMonth.setOnClickListener {
-            TransactionDataModel.showDialogList(btnMonth,requireContext(),TransactionDataModel.months)
+            TransactionDataModel.showDialogList(btnMonth,requireContext(), TransactionDataModel.months)
+//            filterByMonth(btnMonth.text.toString().lowercase())
         }
 
         // Observe LiveData from ViewModel to update the RV
@@ -130,6 +137,7 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
     private fun observeUpdatesInDataList() {
         viewModel.transactions.observe(viewLifecycleOwner) { transactions ->
             Log.d("TestingUserIdLogicToPopulateData", "Transaction Frag: ${transactions}")
+            tempTransactions = transactions
             rvAdapter.updateTransactionData(transactions)
         }
     }
@@ -148,14 +156,13 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
 
 
             putExtra("Tid", viewModel.transactionsList[itemPosition].Tid)
-
             putExtra("time", viewModel.transactionsList[itemPosition].time)
             putExtra("date", viewModel.transactionsList[itemPosition].date)
             putExtra("amount", viewModel.transactionsList[itemPosition].amount)
             putExtra("category", viewModel.transactionsList[itemPosition].category)
             putExtra("wallet", viewModel.transactionsList[itemPosition].wallet)
             putExtra("description", viewModel.transactionsList[itemPosition].description)
-//            putExtra("attachmentStatus", TransactionDataModel.transactions[itemPosition].attachmentStatus)
+            putExtra("attachment", viewModel.transactionsList[itemPosition].attachment)
             putExtra("transactionType", viewModel.transactionsList[itemPosition].transactionType)
         }
 
@@ -168,8 +175,8 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
     }
 
 
-    private fun showConfirmationDialog()
-    {
+
+    private fun showConfirmationDialog() {
         val dialog = AlertDialog.Builder(requireContext()).setTitle("Action")
             .setMessage("Are you sure to delete all Transactions?")
             .setPositiveButton("Yes") { _, _ ->
@@ -205,6 +212,19 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         datePicker.show()
     }
 
+    override fun onFilterApplied(filterBy: String, sortBy: String) {
+        var list = tempTransactions.filter { it.transactionType == filterBy.lowercase() }
 
+        // check sorting criteria
+        list = list.sortedBy { it.amount }
+        rvAdapter.updateTransactionData(list)
+    }
+
+
+    private fun filterByMonth(month : String)
+    {
+        val list = tempTransactions.filter { it.month.contains(month)  }
+        rvAdapter.updateTransactionData(list)
+    }
 
 }
