@@ -33,6 +33,8 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection , AddA
     private lateinit var binding : ActivityAddIncomeExpenseBinding
     private lateinit var currentDate : TextView
     private  var attachmentSelected : String = "null"
+    private  var attachmentType : String = "null"
+
     private  var TAG = "fksdjoisubdffgdsf"
 
     private  var categoryDialog : AlertDialog? = null
@@ -221,7 +223,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection , AddA
         categoryDialog?.dismiss()
     }
 
-    override fun onAttachmentSelected(itemUri: String) {
+    override fun onAttachmentSelected(itemUri: String, attachmentType : String) {
         attachmentSelected = itemUri
     }
 

@@ -6,7 +6,9 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,16 +16,23 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.FileProvider
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.backend.MediaStorageModel
+import com.example.seniorsprojectui.backend.MediaStorageModel.Companion.saveBitmapAndGetUri
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class AddAttachmentBSV : BottomSheetDialogFragment() {
-
-
     // interface
     interface OnAttachmentSelected{
-        fun onAttachmentSelected(itemUri : String)
+        fun onAttachmentSelected(itemUri : String, attachmentType : String)
     }
 
     private var listener : OnAttachmentSelected?  = null
@@ -32,7 +41,6 @@ class AddAttachmentBSV : BottomSheetDialogFragment() {
     {
         this.listener = listener
     }
-
 
     private lateinit var tvDocument : TextView
     private lateinit var ivDocument : ImageView
@@ -110,59 +118,32 @@ class AddAttachmentBSV : BottomSheetDialogFragment() {
                     data?.data?.let { imageUri ->
                         var selectedImageUri = imageUri
                         ivDocument.setImageURI(selectedImageUri)
+                        Log.d("AddAttachmentBSV", "save Method called" )
                         // sending ImageUri back to activity
-                        listener?.onAttachmentSelected(selectedImageUri.toString())
+                        listener?.onAttachmentSelected(selectedImageUri.toString(), "img")
                     }
                 }
                 REQUEST_PICK_DOCUMENT -> {
                     data?.data?.let { documentUri ->
-                        val documentName = getFileName(documentUri)
+                        val documentName = MediaStorageModel.getFileName(documentUri, requireActivity())
                         tvDocument.text = documentName
+                        Log.d("AddAttachmentBSV", "save Method called" )
                         // getting uri
-                        listener?.onAttachmentSelected(documentUri.toString())
+                        listener?.onAttachmentSelected(documentUri.toString(), "doc")
                     }
                 }
                 REQUEST_IMAGE_CAPTURE -> {
                     val imageBitmap = data?.extras?.get("data") as Bitmap
-                    var selectedImageUri = imageBitmap
+                    Log.d("AddAttachmentBSV", "save Method called" )
+                    var selectedImageUri = saveBitmapAndGetUri(imageBitmap,requireContext())
 //                    ivDocument.setImageURI(selectedImageUri)
-                    ivDocument.setImageBitmap(imageBitmap)
+                    ivDocument.setImageURI(selectedImageUri)
+                    listener?.onAttachmentSelected(selectedImageUri.toString(), "img")
                     // getting camImage uri
 
                 }
             }
         }
-    }
-
-    private fun getFileName(uri: Uri): String {
-        var result: String? = null
-        if (uri.scheme == "content") {
-            requireActivity().contentResolver.query(uri, null, null, null, null)?.apply {
-                if (moveToFirst()) {
-                    val displayNameIndex: Int
-                    val mimeType = requireActivity().contentResolver.getType(uri)
-                    displayNameIndex = if (mimeType != null && mimeType.startsWith("image/")) {
-                        getColumnIndex(MediaStore.Images.ImageColumns.DISPLAY_NAME)
-                    } else {
-                        getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)
-                    }
-                    result = if (displayNameIndex != -1) {
-                        getString(displayNameIndex)
-                    } else {
-                        null
-                    }
-                    close()
-                }
-            }
-        }
-        if (result == null) {
-            result = uri.path
-            val cut = result?.lastIndexOf('/')
-            if (cut != null && cut != -1) {
-                result = result?.substring(cut + 1)
-            }
-        }
-        return result ?: "Unknown"
     }
 
 

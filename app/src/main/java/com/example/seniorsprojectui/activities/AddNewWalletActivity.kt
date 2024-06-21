@@ -34,7 +34,7 @@ class AddNewWalletActivity : AppCompatActivity() {
         )
 
         // toggling views on select bank click
-        binding.etSelectBank.setOnClickListener {
+        binding.etSelectedBank.setOnClickListener {
             toggleVisibility(
                 binding.tvAvailableBanks,
                 binding.ll1ForBanks,

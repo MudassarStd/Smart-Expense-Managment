@@ -1,27 +1,43 @@
 package com.example.seniorsprojectui.activities
 
+import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.databinding.ActivityEditTransactionBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import com.example.seniorsprojectui.fragments.ConfirmDeleteTransactionBSVFragment
+import java.io.InputStream
 
 class EditTransactionActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityEditTransactionBinding
-    private var Tid : Int = -1
+    private lateinit var binding: ActivityEditTransactionBinding
+    private var Tid: Int = -1
 
-    private lateinit var viewModel : ViewModelTransaction
+    private lateinit var viewModel: ViewModelTransaction
+    private var uriAttachment: Uri? = null
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            loadImageFromUri(uriAttachment!!)
+        } else {
+            Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,13 +51,12 @@ class EditTransactionActivity : AppCompatActivity() {
         }
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
 
-
         binding.ivBackArrow.setOnClickListener {
             finish()
         }
         Tid = intent.getIntExtra("Tid", -1)
 
-        // recieving data from other activity
+        // receiving data from other activity
         val time = intent.getStringExtra("time")
         val date = intent.getStringExtra("date")
         val amount = intent.getStringExtra("amount")
@@ -51,20 +66,27 @@ class EditTransactionActivity : AppCompatActivity() {
         val attachment = intent.getStringExtra("attachment")
         val transactionType = intent.getStringExtra("transactionType")
 
-        val uriAttachment = toUri(attachment)
+        uriAttachment = toUri(attachment)
 
-        Log.d("fhsjkdhkfkjf","${uriAttachment}")
-        loadImageFromUri(uriAttachment)
+        Log.d("EditTransactionActivity", "URI: ${uriAttachment}")
 
 
+        if (uriAttachment != null) {
+            if (checkPermission()) {
+                loadImageFromUri(uriAttachment!!)
+            } else {
+                requestPermissionLauncher.launch(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+        } else {
+            Log.d("EditTransactionActivity", "Invalid attachment URI")
+        }
 
         // changing color of layout bg according to transaction type
         val colorResId = if (transactionType == "income") R.color.green else R.color.primaryRed
         val colorStateList = ColorStateList.valueOf(ContextCompat.getColor(this, colorResId))
         ViewCompat.setBackgroundTintList(binding.constraintLayout3, colorStateList)
 
-
-        binding.tvEditAmount.text = "Rs."+amount
+        binding.tvEditAmount.text = "Rs." + amount
         binding.tvEditCategory.text = category
         binding.tvEditDate.text = date
         binding.tvEditDescription.text = description
@@ -74,31 +96,27 @@ class EditTransactionActivity : AppCompatActivity() {
 
         // if del is pressed
         binding.ivDelTransactionFromTDetails.setOnClickListener {
-
-
-            ConfirmDeleteTransactionBSVFragment(Tid).show(supportFragmentManager, ConfirmDeleteTransactionBSVFragment(Tid).tag )
-
-
-//            viewModel.getTransactionItemById(Tid)
-
+            ConfirmDeleteTransactionBSVFragment(Tid).show(supportFragmentManager, ConfirmDeleteTransactionBSVFragment(Tid).tag)
             Toast.makeText(this, "$Tid", Toast.LENGTH_SHORT).show()
-            // finish activity
-//            finish()
         }
+    }
 
+    private fun checkPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun loadImageFromUri(uriAttachment: Uri) {
-        Glide
-            .with(this)
-            .load(uriAttachment)
-            .centerCrop()
-            .placeholder(R.drawable.ic_loading)
-            .into(binding.ivAttachment);
+        try {
+            val inputStream: InputStream? = contentResolver.openInputStream(uriAttachment)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            binding.ivAttachment.setImageBitmap(bitmap)
+        } catch (e: Exception) {
+            Log.e("EditTransactionActivity", "Error loading image", e)
+            Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    private fun toUri(attachment: String?) : Uri {
-        return attachment.let { Uri.parse(it)
+    private fun toUri(attachment: String?): Uri? {
+        return attachment?.let { Uri.parse(it) }
     }
-}
 }

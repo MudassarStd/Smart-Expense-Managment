@@ -18,7 +18,7 @@ data class Transaction(
     val attachment: String,
     val transactionType: String,
     val uid: Int
- )
+ ) : Serializable
 
 data class CategoryData(
     val categoryLabel : String,
