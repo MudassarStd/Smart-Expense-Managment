@@ -60,4 +60,13 @@ data class Wallet(
     val walletAmount : String
 ) : Serializable
 
+
+@Entity
+data class NotificationInstance(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val title: String,
+    val message: String,
+    val timestamp: Long
+)
+
 data class TransDummy(val id: Int, val type: String, val amount: Double, val date: String)

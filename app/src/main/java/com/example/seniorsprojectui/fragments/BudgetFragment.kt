@@ -43,7 +43,7 @@ class BudgetFragment : Fragment(), CategoriesBudgetAdapter.OnBudgetItemClick {
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
         viewModel.fetchBudgetsByUserId(userId)
 
-        adapter = CategoriesBudgetAdapter(emptyList())
+        adapter = CategoriesBudgetAdapter(emptyList(), requireContext())
 
         adapter.setOnBudgetItemClickListener(this)
         Log.d("BudgetLifeCycleChecking", "onCreate()")

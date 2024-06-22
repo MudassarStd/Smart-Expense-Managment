@@ -2,6 +2,8 @@ package com.example.seniorsprojectui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModelTransaction: ViewModelTransaction
     private lateinit var viewModelUser: ViewModelUsers
+    private var progressBarVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +35,14 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.etUserPasswordLogin.text.toString()
 
 
+            showProgressBar()
+            delayLogin()
+
+
             lifecycleScope.launch {
                 val allowStatus = viewModelUser.allowLogin(email, password)
+
+                hideProgressBar()
 
                 if (allowStatus) {
                     // Login successful, navigate to next screen
@@ -46,11 +55,33 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // Login failed, display error message
                     runOnUiThread {
-                        Toast.makeText(this@LoginActivity, "Invalid email or password", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Invalid email or password",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
             }
         }
     }
-}
+
+        private fun showProgressBar() {
+            progressBarVisible = true
+            binding.progressBar.visibility = View.VISIBLE
+        }
+
+    private  fun hideProgressBar() {
+            progressBarVisible = false
+            binding.progressBar.visibility = View.GONE
+        }
+
+    private fun delayLogin() {
+
+            Handler().postDelayed({
+            }, 4000)
+        }
+    }
+
+

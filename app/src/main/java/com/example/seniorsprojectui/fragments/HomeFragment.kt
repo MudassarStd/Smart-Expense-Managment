@@ -1,10 +1,13 @@
 package com.example.seniorsprojectui.fragments
 
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,6 +19,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -125,6 +129,8 @@ class HomeFragment : Fragment() {
         totalExpense.text = TransactionDataModel.totalExpenses.toString()
         totalAmount.text = TransactionDataModel.totalAmount.toString()
     }
+
+
 
 
 

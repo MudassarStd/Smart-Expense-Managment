@@ -13,5 +13,6 @@
         <!--        changes outline switches and control items-->
 <!--        <item name="colorControlActivated">@color/green</item>-->
 
+
     </style>
 </resources>
