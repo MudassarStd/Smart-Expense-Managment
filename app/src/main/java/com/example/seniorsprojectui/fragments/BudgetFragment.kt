@@ -92,6 +92,8 @@ class BudgetFragment : Fragment(), CategoriesBudgetAdapter.OnBudgetItemClick {
         }
 
 
+
+
         btnCreateBudget.setOnClickListener {
             startActivity(Intent(requireContext(), AddBudgetActivity::class.java))
         }
