@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wallet_details_bg"
     tools:context=".activities.WalletDetailsActivity">
 
 
@@ -12,6 +13,7 @@
         android:id="@+id/materialToolbar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,14 +35,14 @@
                 android:src="@drawable/arrow_left"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="My Wallets"
+                android:text="Wallet Details"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -53,44 +55,69 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+
+
     </com.google.android.material.appbar.MaterialToolbar>
 
-
-
-    <TextView
-        android:id="@+id/tvWalletName"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Wallet Name"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="64dp" />
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar2">
 
-    <TextView
-        android:id="@+id/tvWalletAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Amount"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWalletName" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/frame"
+            android:layout_gravity="center_horizontal"/>
+
+
+        <TextView
+            android:id="@+id/tvWalletName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Wallet Name"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvWalletAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Amount"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:text="All transactions made via this wallet"
+            app:layout_constraintBottom_toTopOf="@+id/rvWalletDetails"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvWalletDetails"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        tools:listitem="@layout/transaction_sample_layout"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWalletAmount" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

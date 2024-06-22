@@ -62,15 +62,14 @@ class SignUp : AppCompatActivity() {
                     }
 
                 } else {
-                    val userDataObject = UserData(0, uName, uEmail, uPassword)
+                    val userDataObject = UserData(0, uName, uEmail, uPassword,"null")
                     viewModel.insertUser(userDataObject)
                     finish()
-                    startActivity(Intent(this@SignUp, LoginActivity::class.java))
+                    startActivity(Intent(this@SignUp, AddNewWalletActivity::class.java))
                 }
             }
         }
     }
-
     private fun isValidEmail(email: String): Boolean {
         val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
         return emailRegex.toRegex().matches(email)

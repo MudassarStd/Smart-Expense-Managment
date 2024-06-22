@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
                 if (allowStatus) {
                     // Login successful, navigate to next screen
-                    startActivity(Intent(this@LoginActivity, AddNewWalletActivity::class.java))
+                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
 
                     CurrentUserSession.currentUserId = viewModelUser.getCurrentUserId(email)
                     finish()

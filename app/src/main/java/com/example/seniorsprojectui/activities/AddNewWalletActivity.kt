@@ -3,23 +3,37 @@ package com.example.seniorsprojectui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.adapters.CategoriesDialogAdapter
+import com.example.seniorsprojectui.adapters.OnCategorySelection
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.FilterDataModel
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.backend.Wallet
 import com.example.seniorsprojectui.databinding.ActivityAddNewWalletBinding
+import com.example.seniorsprojectui.dbvm.WalletsViewModel
 
-class AddNewWalletActivity : AppCompatActivity() {
+class AddNewWalletActivity : AppCompatActivity() , OnCategorySelection{
     private lateinit var binding: ActivityAddNewWalletBinding
+    private  var categoryDialog : AlertDialog? = null
     private lateinit var availableBanksButtons : List<Button>
+    private lateinit var walletViewModel : WalletsViewModel
+    private val walletsAdapter = CategoriesDialogAdapter(TransactionDataModel.walletLists)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddNewWalletBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        walletViewModel = ViewModelProvider(this)[WalletsViewModel::class.java]
+        walletsAdapter.setOnCategoryClickListenerInterface(this)
 
         // listing all bank option buttons
         availableBanksButtons = listOf(
@@ -42,24 +56,17 @@ class AddNewWalletActivity : AppCompatActivity() {
             )
         }
 
-
-
         binding.btnAddNewWalletContinue.setOnClickListener {
+
             val wName = binding.etWalletName.text.toString()
             val amount = binding.etWalletAmount.text.toString()
 
             if (wName.isNotEmpty() && amount.isNotEmpty())
             {
-                val obj = Wallet(TransactionDataModel.currentUserId,wName,amount)
-                FilterDataModel.myWalletsList.add(obj)
-                startActivity(Intent(this, SplashOkActivity::class.java))
+                val wallet = Wallet(0,CurrentUserSession.currentUserId,wName,amount)
+                walletViewModel.insertWallet(wallet)
+                finish()
             }
-
-            else{
-
-            }
-
-
         }
 
         binding.btnSkip.setOnClickListener {
@@ -71,8 +78,11 @@ class AddNewWalletActivity : AppCompatActivity() {
             button.setOnClickListener { onButtonClick(button) }
         }
 
-    }
+        binding.etWalletName.setOnClickListener {
+            showCategoriesDialog()
+        }
 
+    }
     private fun onButtonClick(clickedButton: Button) {
 
         val defaultColor = ContextCompat.getColor(this, R.color.l1Purple)
@@ -91,4 +101,30 @@ class AddNewWalletActivity : AppCompatActivity() {
         val visibility = if (views[0].visibility == View.VISIBLE) View.GONE else View.VISIBLE
         views.forEach { it.visibility = visibility }
     }
+
+    override fun onCategorySelected(categoryPosition: Int) {
+        binding.etWalletName.setText(TransactionDataModel.walletLists[categoryPosition].categoryLabel)
+        categoryDialog?.dismiss()
+    }
+
+    private fun showCategoriesDialog() {
+
+        val dialogView = layoutInflater.inflate(R.layout.dialog_categories_rv_layout, null)
+
+        val rvCategories : RecyclerView = dialogView.findViewById(R.id.rvCategoriesDialog)
+
+        rvCategories.adapter = walletsAdapter
+        rvCategories.layoutManager = GridLayoutManager(this,3)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Select a Wallet")
+            .setView(dialogView)
+
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+        categoryDialog = builder.create()
+        categoryDialog?.show()
+    }
+
 }

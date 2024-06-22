@@ -61,7 +61,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection , AddA
             insets
         }
 
-        addAttachmentBSV = AddAttachmentBSV()
+        addAttachmentBSV = AddAttachmentBSV(true)
         addAttachmentBSV.invokeOnAttachmentSelectedInterface(this)
 
         categoriesAdapter.setOnCategoryClickListenerInterface(this)
@@ -137,7 +137,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection , AddA
 
             TransactionDataModel.totalAmount += amount.toDouble()
             // creating transaction object
-            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,attachmentSelected,transactionType, currentUserId)
+            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,attachmentSelected,attachmentType,transactionType, currentUserId)
             viewModel.insertTransaction(transactionObject)
             finish()
         }
@@ -223,9 +223,14 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection , AddA
         categoryDialog?.dismiss()
     }
 
-    override fun onAttachmentSelected(itemUri: String, attachmentType : String) {
+    override fun onAttachmentSelected(itemUri: String, type : String) {
         attachmentSelected = itemUri
+        attachmentType = type
     }
 
+    override fun onAttachmentSelected(itemUri: String, type: String, docName: String) {
+        attachmentSelected = itemUri
+        attachmentType = docName
+    }
 
 }

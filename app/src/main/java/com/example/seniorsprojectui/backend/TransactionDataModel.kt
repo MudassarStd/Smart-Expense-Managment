@@ -17,8 +17,6 @@ import java.util.Locale
 
 class TransactionDataModel {
     companion object {
-        var currentUserName : String = "null"
-        var currentUserId : Int = -1
 
         // textview showing total
         var totalExpenses: Double = 0.0
@@ -53,6 +51,11 @@ class TransactionDataModel {
             CategoryData("Food", R.drawable.frame),
             CategoryData("Shopping", R.drawable.frame),
             CategoryData("Subscription", R.drawable.frame),
+        )
+
+        val walletLists = listOf(
+            CategoryData("Chase", R.drawable.frame),
+            CategoryData("CITI", R.drawable.frame)
         )
 
         // map: category -> color

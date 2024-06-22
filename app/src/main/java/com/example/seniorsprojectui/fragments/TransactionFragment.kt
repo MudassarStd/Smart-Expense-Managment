@@ -163,6 +163,7 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
             putExtra("wallet", viewModel.transactionsList[itemPosition].wallet)
             putExtra("description", viewModel.transactionsList[itemPosition].description)
             putExtra("attachment", viewModel.transactionsList[itemPosition].attachment)
+            putExtra("attachmentType", viewModel.transactionsList[itemPosition].attachmentType)
             putExtra("transactionType", viewModel.transactionsList[itemPosition].transactionType)
         }
 

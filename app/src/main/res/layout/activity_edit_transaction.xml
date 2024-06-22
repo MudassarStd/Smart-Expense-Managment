@@ -301,12 +301,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="document"
+        android:padding="10dp"
+        android:drawableLeft="@drawable/ic_file"
         android:visibility="gone"
         android:layout_marginHorizontal="20dp"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        android:drawableTint="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
     <TextView
@@ -315,6 +318,7 @@
         android:layout_height="200dp"
         android:text="No Attachement"
         android:gravity="center"
+        android:visibility="gone"
         android:textColor="@color/ofwhite"
         android:layout_marginHorizontal="20dp"
         app:layout_constraintEnd_toEndOf="parent"

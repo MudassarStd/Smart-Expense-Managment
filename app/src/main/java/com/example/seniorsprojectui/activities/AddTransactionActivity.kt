@@ -24,7 +24,7 @@ class AddTransactionActivity : AppCompatActivity() {
         }
 
         binding.llAddAttachment.setOnClickListener {
-            AddAttachmentBSV().show(supportFragmentManager, AddAttachmentBSV().tag)
+            AddAttachmentBSV(true).show(supportFragmentManager, AddAttachmentBSV(true).tag)
         }
 
 

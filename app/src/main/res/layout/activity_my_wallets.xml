@@ -67,16 +67,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="62dp">
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar2">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="14sp"
             android:text="Account Balance" />
 
         <TextView
+            android:id="@+id/tvWalletAmountSum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"
             android:text="Rs.96000" />
 
 

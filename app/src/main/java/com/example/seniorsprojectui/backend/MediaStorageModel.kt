@@ -5,12 +5,15 @@ import android.provider.MediaStore
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Environment
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -19,7 +22,19 @@ import java.util.Locale
 class MediaStorageModel {
 
     companion object{
-        fun getFileName(uri: Uri, activity: Activity): String {
+        fun loadImageFromUri(uriAttachment: Uri, context : Context) : Bitmap? {
+                return try {
+                    val inputStream: InputStream? = context.contentResolver.openInputStream(uriAttachment)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    bitmap
+                } catch (e: Exception) {
+                    Log.e("EditTransactionActivity", "Error loading image", e)
+                    Toast.makeText(context, "Error loading image", Toast.LENGTH_SHORT).show()
+                    null
+                }
+            }
+
+            fun getFileName(uri: Uri, activity: Activity): String {
             var result: String? = null
             if (uri.scheme == "content") {
                 activity.contentResolver.query(uri, null, null, null, null)?.apply {

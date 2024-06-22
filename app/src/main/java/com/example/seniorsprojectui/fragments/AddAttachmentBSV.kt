@@ -29,10 +29,11 @@ import java.util.Date
 import java.util.Locale
 
 
-class AddAttachmentBSV : BottomSheetDialogFragment() {
+class AddAttachmentBSV(val docStatus : Boolean) : BottomSheetDialogFragment() {
     // interface
     interface OnAttachmentSelected{
         fun onAttachmentSelected(itemUri : String, attachmentType : String)
+        fun onAttachmentSelected(itemUri : String, attachmentType : String, docName : String)
     }
 
     private var listener : OnAttachmentSelected?  = null
@@ -73,6 +74,14 @@ class AddAttachmentBSV : BottomSheetDialogFragment() {
         ivDocument = view.findViewById(R.id.ivShowImageSelected)
 //        tvDocument.visibility = View.VISIBLE
 
+
+        if (docStatus)
+        {
+            document.visibility = View.VISIBLE
+        }
+        else{
+            document.visibility = View.GONE
+        }
 
         camera.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -120,7 +129,8 @@ class AddAttachmentBSV : BottomSheetDialogFragment() {
                         ivDocument.setImageURI(selectedImageUri)
                         Log.d("AddAttachmentBSV", "save Method called" )
                         // sending ImageUri back to activity
-                        listener?.onAttachmentSelected(selectedImageUri.toString(), "img")
+                        listener?.onAttachmentSelected(selectedImageUri.toString(), "imgGallery")
+                        dismiss()
                     }
                 }
                 REQUEST_PICK_DOCUMENT -> {
@@ -129,7 +139,8 @@ class AddAttachmentBSV : BottomSheetDialogFragment() {
                         tvDocument.text = documentName
                         Log.d("AddAttachmentBSV", "save Method called" )
                         // getting uri
-                        listener?.onAttachmentSelected(documentUri.toString(), "doc")
+                        listener?.onAttachmentSelected(documentUri.toString(), "doc",documentName)
+                        dismiss()
                     }
                 }
                 REQUEST_IMAGE_CAPTURE -> {
@@ -138,7 +149,7 @@ class AddAttachmentBSV : BottomSheetDialogFragment() {
                     var selectedImageUri = saveBitmapAndGetUri(imageBitmap,requireContext())
 //                    ivDocument.setImageURI(selectedImageUri)
                     ivDocument.setImageURI(selectedImageUri)
-                    listener?.onAttachmentSelected(selectedImageUri.toString(), "img")
+                    listener?.onAttachmentSelected(selectedImageUri.toString(), "imgCamera")
                     // getting camImage uri
 
                 }

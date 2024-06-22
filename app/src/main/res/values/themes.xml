@@ -7,6 +7,7 @@
          <item name="colorPrimaryVariant">@color/colorPrimary</item>
          <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
 
 <!--        changes outline color of text input layout-->
         <item name="colorControlActivated">@color/green</item>

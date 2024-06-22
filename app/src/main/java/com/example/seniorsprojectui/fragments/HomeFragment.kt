@@ -1,7 +1,10 @@
 package com.example.seniorsprojectui.fragments
 
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +16,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,9 +24,12 @@ import com.example.seniorsprojectui.activities.AddIncomeExpenseActivity
 import com.example.seniorsprojectui.activities.NotificationActivity
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.activities.AddTransactionActivity
+import com.example.seniorsprojectui.backend.CurrentUserSession
+import com.example.seniorsprojectui.backend.MediaStorageModel
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import kotlinx.coroutines.flow.combine
+import java.io.InputStream
 
 
 class HomeFragment : Fragment() {
@@ -32,6 +39,7 @@ class HomeFragment : Fragment() {
     private lateinit var totalIncome : TextView
     private lateinit var totalExpense : TextView
     private lateinit var totalAmount : TextView
+    private lateinit var ivProfileImage : ImageView
 
     private lateinit var viewModel : ViewModelTransaction
 
@@ -57,15 +65,15 @@ class HomeFragment : Fragment() {
         val rvHomeFrag = view.findViewById<RecyclerView>(R.id.rvHomeFragment)
         val btnMonthHome = view.findViewById<Button>(R.id.btnMonthHomeFrag)
 
-        val ivProfile = view.findViewById<ImageView>(R.id.ivProfile)
+        ivProfileImage = view.findViewById<ImageView>(R.id.ivProfile)
 
          totalIncome = view.findViewById<TextView>(R.id.tvIncomeFragHome)
          totalExpense = view.findViewById<TextView>(R.id.tvExpensesFragHome)
          totalAmount = view.findViewById<TextView>(R.id.tvTotalAmountFragHome)
 
 
-        ivProfile.setOnClickListener {
-            Log.d("BDdara", "${viewModel.budget_data}" )
+        ivProfileImage.setOnClickListener {
+
         }
 
         // adapting recycler view
@@ -93,7 +101,17 @@ class HomeFragment : Fragment() {
 
        updateHomeFragDashboard()
 
+        checkForUserImage()
+
     }
+
+    private fun checkForUserImage() {
+        val imgUri = CurrentUserSession.currentUserData?.userImage?.toUri()
+        val bitmap = imgUri?.let { MediaStorageModel.loadImageFromUri(it, requireContext()) }
+
+        ivProfileImage.setImageBitmap(bitmap ?: BitmapFactory.decodeResource(resources, R.drawable.ic_person))
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -107,6 +125,9 @@ class HomeFragment : Fragment() {
         totalExpense.text = TransactionDataModel.totalExpenses.toString()
         totalAmount.text = TransactionDataModel.totalAmount.toString()
     }
+
+
+
 
 
 

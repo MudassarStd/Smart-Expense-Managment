@@ -62,7 +62,7 @@ class WalletDetailsActivity : AppCompatActivity() , TransactionRVAdapter.onItemC
     }
 
     private fun getDataFromIntent() : Wallet {
-    val wallet =  intent.getSerializableExtra("wallet") as? Wallet
+        val wallet =  intent.getSerializableExtra("wallet") as? Wallet
         return wallet!!
     }
 

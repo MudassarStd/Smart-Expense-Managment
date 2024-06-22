@@ -16,6 +16,7 @@ data class Transaction(
     val wallet: String,
     val description: String,
     val attachment: String,
+    val attachmentType: String, // added in migration 1-2
     val transactionType: String,
     val uid: Int
  ) : Serializable
@@ -44,13 +45,16 @@ data class BudgetCategory(
 data class UserData(
     @PrimaryKey(autoGenerate = true)
     val uid : Int,
-    val username : String,
+    var username : String,
     val useremail : String,
-    val userpassword : String
+    var userpassword : String,
+    var userImage  : String // added
 )
 
 @Entity
 data class Wallet(
+    @PrimaryKey(autoGenerate = true)
+    val id : Int,
     val userid : Int,
     val walletName: String,
     val walletAmount : String

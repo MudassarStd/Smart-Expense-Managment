@@ -1,8 +1,14 @@
 package com.example.seniorsprojectui.activities
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -11,11 +17,16 @@ import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.UserData
 import com.example.seniorsprojectui.databinding.ActivityEditProfileBinding
 import com.example.seniorsprojectui.dbvm.ViewModelUsers
+import com.example.seniorsprojectui.fragments.AddAttachmentBSV
+import com.example.seniorsprojectui.fragments.EditProfileImageBSVFragment
+import java.io.InputStream
 
-class EditProfileActivity : AppCompatActivity() {
+class EditProfileActivity : AppCompatActivity(), AddAttachmentBSV.OnAttachmentSelected {
     private lateinit var binding : ActivityEditProfileBinding
     private lateinit var viewModelUsers: ViewModelUsers
     private lateinit var userData : UserData
+    private lateinit var addAttachmentBSV: AddAttachmentBSV
+    private  var userImage : Uri? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -27,6 +38,9 @@ class EditProfileActivity : AppCompatActivity() {
             insets
         }
 
+        addAttachmentBSV = AddAttachmentBSV(false)
+
+        addAttachmentBSV.invokeOnAttachmentSelectedInterface(this)
         viewModelUsers = ViewModelProvider(this)[ViewModelUsers::class.java]
 
 
@@ -37,31 +51,62 @@ class EditProfileActivity : AppCompatActivity() {
            if( checkUpdates(userData))
            {
                viewModelUsers.updateUser(userData)
+
+               Log.d("fhsjsdhfs843","Updated User: ${userData}")
+               populateUserData(userData)
            }
         }
 
 
+        binding.ivEditProfileImage.setOnClickListener {
+            addAttachmentBSV.show(supportFragmentManager, addAttachmentBSV.tag)
+        }
     }
 
     private fun populateUserData(user : UserData) {
         binding.etUserEmailEditProfile.setText(user.useremail)
         binding.etUserNameEditProfile.setText(user.username)
         binding.etUserPasswordEditProfile.setText(user.userpassword)
+        loadImageFromUri(user.userImage.toUri())
     }
 
     private fun checkUpdates(user : UserData) : Boolean
     {
         var updateStatus = false
+        val username = binding.etUserNameEditProfile.text.toString()
+        val userpass = binding.etUserPasswordEditProfile.text.toString()
 
-        if (user.username.equals(binding.etUserNameEditProfile.text.toString()) && user.userpassword.equals(binding.etUserPasswordEditProfile.text.toString()))
-        {
-            updateStatus = false
-        }
-        else{
+//        if (userImage != null)
+//        {
+            user.userImage = userImage.toString()
+            user.username = username
+            user.userpassword = userpass
             updateStatus = true
-        }
+//        }
 
         return updateStatus
 
+    }
+
+    private fun loadImageFromUri(uriAttachment: Uri) {
+        try {
+            val inputStream: InputStream? = contentResolver.openInputStream(uriAttachment)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+
+            binding.ivUserImage.setImageBitmap(bitmap)
+
+        } catch (e: Exception) {
+            Log.e("EditTransactionActivity", "Error loading image", e)
+            Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onAttachmentSelected(itemUri: String, attachmentType: String) {
+        userImage = itemUri.toUri()
+        loadImageFromUri(userImage!!)
+    }
+
+    override fun onAttachmentSelected(itemUri: String, attachmentType: String, docName: String) {
+        TODO("Not yet implemented")
     }
 }

@@ -11,6 +11,10 @@
     tools:context=".fragments.HomeFragment">
 
 
+
+
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -40,7 +44,7 @@
                 android:src="@drawable/ic_person"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/colorPrimary" />
+                 />
 
 
             <Button
@@ -299,50 +303,50 @@
 
         <!--    </LinearLayout>-->
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_tablayout_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7"
-            app:tabIndicator="@drawable/tab_layout_indicator"
-            app:tabIndicatorAnimationMode="elastic"
-            app:tabIndicatorColor="@null"
-            app:tabIndicatorFullWidth="true"
-            app:tabIndicatorGravity="stretch"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/Yellow"
-            app:tabTextColor="@color/ofwhite">
+<!--        <com.google.android.material.tabs.TabLayout-->
+<!--            android:id="@+id/tablayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:background="@drawable/custom_tablayout_button"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/imageView7"-->
+<!--            app:tabIndicator="@drawable/tab_layout_indicator"-->
+<!--            app:tabIndicatorAnimationMode="elastic"-->
+<!--            app:tabIndicatorColor="@null"-->
+<!--            app:tabIndicatorFullWidth="true"-->
+<!--            app:tabIndicatorGravity="stretch"-->
+<!--            app:tabMode="fixed"-->
+<!--            app:tabSelectedTextColor="@color/Yellow"-->
+<!--            app:tabTextColor="@color/ofwhite">-->
 
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Daily" />
+<!--            <com.google.android.material.tabs.TabItem-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Daily" />-->
 
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Weekly" />
+<!--            <com.google.android.material.tabs.TabItem-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Weekly" />-->
 
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monthly" />
+<!--            <com.google.android.material.tabs.TabItem-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Monthly" />-->
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Yearly" />
+<!--            <com.google.android.material.tabs.TabItem-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Yearly" />-->
 
-        </com.google.android.material.tabs.TabLayout>
+<!--        </com.google.android.material.tabs.TabLayout>-->
 
 
         <LinearLayout
@@ -354,7 +358,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tablayout">
+            app:layout_constraintTop_toBottomOf="@+id/imageView7">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -396,6 +400,9 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/llrecentTransactions" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

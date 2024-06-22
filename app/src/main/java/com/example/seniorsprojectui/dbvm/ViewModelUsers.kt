@@ -7,14 +7,14 @@ import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.backend.UserData
-import com.example.seniorsprojectui.maindb.NewMainDB
+import com.example.seniorsprojectui.maindb.MainDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class ViewModelUsers(application: Application) : AndroidViewModel(application) {
 
 
-    private val db : NewMainDB = NewMainDB.getInstance(application)
+    private val db : MainDatabase = MainDatabase.getInstance(application)
 
     // users List
     var registeredUsers : List<UserData> = listOf()
