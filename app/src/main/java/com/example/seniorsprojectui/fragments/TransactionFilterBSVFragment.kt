@@ -78,7 +78,6 @@ class TransactionFilterBSVFragment : BottomSheetDialogFragment() {
             button.setOnClickListener { onButtonClick(button) }
         }
 
-
         binding.btnApplyFilter.setOnClickListener {
             listener.onFilterApplied(filterByRadioText, sortByButtonText)
             dismiss()
@@ -95,21 +94,6 @@ class TransactionFilterBSVFragment : BottomSheetDialogFragment() {
     }
 
 
-//    private fun showfilterCategoriesDialog() {
-//
-//        val dialogView = layoutInflater.inflate(R.layout.filter_category_selection, null)
-//
-//
-//        val builder = AlertDialog.Builder(this)
-//        builder.setTitle("Select a Category")
-//            .setView(dialogView)
-//
-//            .setNegativeButton("Cancel") { dialog, _ ->
-//                dialog.dismiss()
-//            }
-//        categoryDialog = builder.create()
-//        categoryDialog?.show()
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

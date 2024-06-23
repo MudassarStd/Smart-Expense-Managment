@@ -54,14 +54,9 @@ class ProfileFragment : Fragment() {
         val myWallets = view.findViewById<CardView>(R.id.cvMyWalletsProfileFrag)
         val cvExportData = view.findViewById<CardView>(R.id.cvExportData)
         val ivEditProfile = view.findViewById<ImageView>(R.id.ivEditProfile)
-         ivUserprofile = view.findViewById<ImageView>(R.id.ivUserProfileImage)
+         ivUserprofile = view.findViewById(R.id.ivUserProfileImage)
 
         userName.text = CurrentUserSession.currentUserName
-
-
-
-        Log.d("TestingDBDatasLister", "ProfileFrag ${viewModelTransactions.transactionsList}")
-
 
         ivEditProfile.setOnClickListener {
             startActivity(Intent(requireContext(), EditProfileActivity::class.java))
@@ -89,4 +84,11 @@ class ProfileFragment : Fragment() {
 
         ivUserprofile.setImageBitmap(bitmap ?: BitmapFactory.decodeResource(resources, R.drawable.ic_person))
     }
+
+    override fun onResume() {
+        super.onResume()
+        checkForUserImage()
+    }
+
+
 }

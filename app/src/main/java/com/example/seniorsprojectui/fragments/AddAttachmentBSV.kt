@@ -76,8 +76,6 @@ class AddAttachmentBSV(val docStatus: Boolean) : BottomSheetDialogFragment() {
         val ivDel = view.findViewById<ImageView>(R.id.ivDelAttachment)
 
 
-        tvDocument = view.findViewById(R.id.tvShowSelectedDocument)
-        ivDocument = view.findViewById(R.id.ivShowImageSelected)
 
         if (docStatus) {
             document.visibility = View.VISIBLE
@@ -192,7 +190,6 @@ class AddAttachmentBSV(val docStatus: Boolean) : BottomSheetDialogFragment() {
                 REQUEST_IMAGE_GALLERY -> {
                     data?.data?.let { imageUri ->
                         var selectedImageUri = imageUri
-                        ivDocument.setImageURI(selectedImageUri)
                         Log.d("AddAttachmentBSV", "save Method called")
                         // sending ImageUri back to activity
                         listener?.onAttachmentSelected(selectedImageUri.toString(), "imgGallery")
@@ -202,7 +199,7 @@ class AddAttachmentBSV(val docStatus: Boolean) : BottomSheetDialogFragment() {
                 REQUEST_PICK_DOCUMENT -> {
                     data?.data?.let { documentUri ->
                         val documentName = MediaStorageModel.getFileName(documentUri, requireActivity())
-                        tvDocument.text = documentName
+
                         Log.d("AddAttachmentBSV", "save Method called")
                         // getting uri
                         listener?.onAttachmentSelected(documentUri.toString(), "doc", documentName)
@@ -210,7 +207,6 @@ class AddAttachmentBSV(val docStatus: Boolean) : BottomSheetDialogFragment() {
                     }
                 }
                 REQUEST_IMAGE_CAPTURE -> {
-                    ivDocument.setImageURI(camImage)
                     listener?.onAttachmentSelected(camImage.toString(), "imgCamera")
                     Log.d("fjskladjfoiasdfsdf", "camImage: ${camImage}")
 
@@ -220,8 +216,8 @@ class AddAttachmentBSV(val docStatus: Boolean) : BottomSheetDialogFragment() {
     }
 
     private fun showConfirmationDialog() {
-        val dialog = AlertDialog.Builder(requireContext()).setTitle("Action")
-            .setMessage("Are you sure to delete all Transactions?")
+        val dialog = AlertDialog.Builder(requireContext()).setTitle("Delete Photo")
+
             .setPositiveButton("Yes") { _, _ ->
                 listener?.onDeleteSignal(true)
             }

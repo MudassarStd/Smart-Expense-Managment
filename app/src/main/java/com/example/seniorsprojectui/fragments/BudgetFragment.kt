@@ -136,7 +136,7 @@ class BudgetFragment : Fragment(), CategoriesBudgetAdapter.OnBudgetItemClick {
 //            rvCategoryBudget.visibility = View.VISIBLE
 //        }
     }
-    override fun onItemClick(budget: BudgetCategory) {
+    override fun onItemClick(budget: BudgetCategory ) {
 
         val intent = Intent(requireContext(), BudgetDetailsActivity::class.java)
         intent.putExtra("budgetUid", budget.uid)

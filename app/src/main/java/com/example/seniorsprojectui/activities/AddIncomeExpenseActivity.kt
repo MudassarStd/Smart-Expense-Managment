@@ -234,7 +234,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection , AddA
     }
 
     override fun onDeleteSignal(flag: Boolean) {
-        TODO("Not yet implemented")
+        attachmentSelected = null.toString()
     }
 
 }

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
@@ -51,11 +52,8 @@ class EditProfileActivity : AppCompatActivity(), AddAttachmentBSV.OnAttachmentSe
            if( checkUpdates(userData))
            {
                viewModelUsers.updateUser(userData)
-
-               Log.d("fhsjsdhfs843","Updated User: ${userData}")
                populateUserData(userData)
-
-               Toast.makeText(this, "Profile Updated successfully", Toast.LENGTH_SHORT).show()
+               showDoneDialog()
            }
         }
 
@@ -118,5 +116,16 @@ class EditProfileActivity : AppCompatActivity(), AddAttachmentBSV.OnAttachmentSe
             binding.ivUserImage.setImageResource(R.drawable.ic_person)
             userImage = null
         }
+    }
+    private fun showDoneDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.done_dialog, null)
+        val dialog = AlertDialog.Builder(this).setTitle("Profile Update")
+            .setView(dialogView)
+            .setPositiveButton("OK") { _, _ ->
+
+            }
+            .create()
+
+        dialog.show()
     }
 }

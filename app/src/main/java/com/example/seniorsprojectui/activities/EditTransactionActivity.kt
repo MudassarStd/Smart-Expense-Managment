@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -21,10 +22,16 @@ import com.example.seniorsprojectui.backend.MediaStorageModel
 import com.example.seniorsprojectui.databinding.ActivityEditTransactionBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
 import com.example.seniorsprojectui.fragments.ConfirmDeleteTransactionBSVFragment
+import com.example.seniorsprojectui.fragments.EditTransactionBSVFragment
 import java.io.InputStream
 
-class EditTransactionActivity : AppCompatActivity() {
+class EditTransactionActivity : AppCompatActivity(),
+    ConfirmDeleteTransactionBSVFragment.OnConfirmBSVDeleteInterface {
+
     private lateinit var binding: ActivityEditTransactionBinding
+    private lateinit var confirmDeleteBSV : ConfirmDeleteTransactionBSVFragment
+    private lateinit var editTransactionBSVFragment: EditTransactionBSVFragment
+
     private var Tid: Int = -1
 
     private lateinit var viewModel: ViewModelTransaction
@@ -70,12 +77,19 @@ class EditTransactionActivity : AppCompatActivity() {
         val attachmentType = intent.getStringExtra("attachmentType")
         val transactionType = intent.getStringExtra("transactionType")
 
+        confirmDeleteBSV = ConfirmDeleteTransactionBSVFragment(Tid)
+        confirmDeleteBSV.invokeOnConfirmDeleteInterface(this)
+
+        editTransactionBSVFragment = EditTransactionBSVFragment(Tid)
 
 
         uriAttachment = toUri(attachment)
 
-        Log.d("EditTransactionActivity", "URI: ${uriAttachment}")
-        Log.d("EditTransactionActivity", "Attach Type: ${attachmentType}")
+        // edit transaction
+        binding.btnEditTransaction.setOnClickListener {
+            editTransactionBSVFragment.show(supportFragmentManager, editTransactionBSVFragment.tag)
+        }
+
 
 
         if (attachment!!.contains("document")  && uriAttachment != null)
@@ -117,7 +131,7 @@ class EditTransactionActivity : AppCompatActivity() {
 
         // if del is pressed
         binding.ivDelTransactionFromTDetails.setOnClickListener {
-            ConfirmDeleteTransactionBSVFragment(Tid).show(supportFragmentManager, ConfirmDeleteTransactionBSVFragment(Tid).tag)
+            confirmDeleteBSV.show(supportFragmentManager, confirmDeleteBSV.tag)
             Toast.makeText(this, "$Tid", Toast.LENGTH_SHORT).show()
         }
 
@@ -176,4 +190,19 @@ class EditTransactionActivity : AppCompatActivity() {
 
         }
     }
+
+    private fun showDoneDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.done_dialog, null)
+        val dialog = AlertDialog.Builder(this).setTitle("Delete Transaction")
+            .setView(dialogView)
+            .create()
+
+        dialog.show()
+    }
+
+    override fun onDeleteSignal(flag: Boolean) {
+        if (flag)
+            showDoneDialog()
+    }
+
 }

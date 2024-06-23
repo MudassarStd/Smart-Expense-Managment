@@ -134,10 +134,12 @@
 
 
     <TextView
+        android:id="@+id/tvBudgetWarningMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@color/l1Red"
+        android:visibility="gone"
         android:drawableLeft="@drawable/ic_warning"
         android:gravity="center"
         android:paddingHorizontal="10dp"
@@ -146,5 +148,17 @@
         app:layout_constraintStart_toStartOf="@+id/textView40"
         app:layout_constraintTop_toBottomOf="@+id/etTotalBudgetAmount" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:textColor="@color/ofwhite"
+        android:text="Note: Only amount can be edited. \nYou can edit it by clicking on it."
+        app:layout_constraintBottom_toTopOf="@+id/btnUpdateBudget"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvBudgetWarningMessage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

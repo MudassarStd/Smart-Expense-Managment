@@ -288,6 +288,7 @@
         android:layout_height="200dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/attachment_image_bg"
         android:scaleType="centerCrop"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -300,31 +301,44 @@
         android:id="@+id/tvDocumentAttachment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="document"
-        android:padding="10dp"
-        android:drawableLeft="@drawable/ic_file"
-        android:visibility="gone"
         android:layout_marginHorizontal="20dp"
+        android:drawableLeft="@drawable/ic_file"
+        android:drawableTint="@color/colorPrimary"
+        android:padding="10dp"
+        android:text="document"
         android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        android:drawableTint="@color/colorPrimary"
         app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
     <TextView
         android:id="@+id/tvNoAttachment"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:text="No Attachement"
-        android:gravity="center"
-        android:visibility="gone"
-        android:textColor="@color/ofwhite"
         android:layout_marginHorizontal="20dp"
+        android:gravity="center"
+        android:text="No Attachement"
+        android:textColor="@color/ofwhite"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
+
+    <Button
+        android:id="@+id/btnEditTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:layout_marginHorizontal="20dp"
+        app:cornerRadius= "10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

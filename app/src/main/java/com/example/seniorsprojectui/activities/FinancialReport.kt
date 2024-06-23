@@ -1,9 +1,14 @@
 package com.example.seniorsprojectui.activities
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +19,8 @@ import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.backend.TransactionDataModel.Companion.updateDataForFinancialReport
 import com.example.seniorsprojectui.databinding.ActivityFinancialReportBinding
 import com.google.android.material.tabs.TabLayout
+import java.io.File
+import java.io.FileOutputStream
 
 class FinancialReport : AppCompatActivity() {
     private lateinit var binding : ActivityFinancialReportBinding
@@ -59,7 +66,14 @@ class FinancialReport : AppCompatActivity() {
                 // No action needed when tab is reselected
             }
         })
-    }
+
+        binding.ivShareFinanceReport.setOnClickListener {
+                val rootView = window.decorView.rootView
+                val screenshotFile = takeScreenshot(rootView)
+                shareScreenshot(screenshotFile)
+            }
+        }
+
         private fun filterData(indicator: Int) {
             val filteredList = list.filter { item ->
                 indicator == 0 && item.transactionType == "expense" ||
@@ -68,4 +82,31 @@ class FinancialReport : AppCompatActivity() {
             adapterFinancialReport.updateFinancialAdapter(filteredList)
         }
 
+    private fun takeScreenshot(view: View): File {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+
+        val filename = "screenshot_${System.currentTimeMillis()}.png"
+        val file = File(getExternalFilesDir(null), filename)
+        val outputStream = FileOutputStream(file)
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        outputStream.flush()
+        outputStream.close()
+
+        return file
     }
+
+    private fun shareScreenshot(file: File) {
+        val uri = FileProvider.getUriForFile(this, "${packageName}.fileprovider", file)
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "image/png"
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        startActivity(Intent.createChooser(intent, "Share Screenshot"))
+    }
+
+
+}

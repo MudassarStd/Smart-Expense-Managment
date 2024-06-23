@@ -24,6 +24,8 @@ class WalletDetailsActivity : AppCompatActivity() , TransactionRVAdapter.onItemC
     private lateinit var rawList : List<Transaction>
     private lateinit var adapter : TransactionRVAdapter
     private val TAG = "tesstingdutoanfd"
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,6 +42,7 @@ class WalletDetailsActivity : AppCompatActivity() , TransactionRVAdapter.onItemC
 
         adapter = TransactionRVAdapter(emptyList())
         adapter.setOnItemClickListener(this)
+
         binding.rvWalletDetails.adapter = adapter
         binding.rvWalletDetails.layoutManager = LinearLayoutManager(this)
 

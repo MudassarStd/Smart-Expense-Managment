@@ -29,6 +29,7 @@ import com.example.seniorsprojectui.backend.TransactionDataModel
 class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>, val context : Context) : Adapter<CategoriesBudgetAdapter.BudgetVH>() {
 
     private lateinit var i_listener: OnBudgetItemClick
+    private  val budgetExceeded : MutableList<Boolean> = mutableListOf()
 
     interface OnBudgetItemClick{
         fun onItemClick(budget : BudgetCategory)
@@ -70,6 +71,7 @@ class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>, val c
             {
                 holder.ivWarning.visibility = View.VISIBLE
 
+
                 val notification = NotificationInstance(
                     title = "Budget Alert",
                     message = holder.budgetCategory.text.toString() + " budget has exceeded the limit!",
@@ -109,22 +111,6 @@ class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>, val c
         }
 
 
-            // checking if limit exceeded or NOT
-//            if(TransactionDataModel.amountExceededCheck(listData[position].category, listData[position].totalAmount.toDouble()))
-//            {
-//                holder.remainingAmount.text = "0"
-//                holder.limitExceeded.visibility = View.VISIBLE
-//                holder.ivWarning.visibility = View.VISIBLE
-//            }
-//            else{
-//                holder.limitExceeded.visibility = View.GONE
-//                holder.ivWarning.visibility = View.GONE
-//            }
-
-            // assign category colors
-//        val colorId : Int = TransactionDataModel.categoryColorMap[listData[position].category]?.toInt()
-//        val color = ContextCompat.getColor(holder.itemView.context, colorId)
-//            holder.dot.setColorFilter(color)
         }
 
 

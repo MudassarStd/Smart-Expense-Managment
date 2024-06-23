@@ -1,7 +1,9 @@
 package com.example.seniorsprojectui.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -28,7 +30,6 @@ class BudgetDetailsActivity : AppCompatActivity() {
 
         viewModelTransaction =  ViewModelProvider(this)[ViewModelTransaction::class.java]
 
-        binding.etTotalBudgetAmount.requestFocus()
 
         budgetItem = getDataFromIntent()
         populateOldData(budgetItem)
@@ -50,7 +51,7 @@ class BudgetDetailsActivity : AppCompatActivity() {
         }
 
         binding.ivDelBudget.setOnClickListener {
-            viewModelTransaction.deleteBudget(budgetItem)
+            showConfirmationDialog()
         }
     }
 
@@ -69,7 +70,32 @@ class BudgetDetailsActivity : AppCompatActivity() {
         val bMonth = intent.getStringExtra("budgetMonth")
         val bAmount = intent.getStringExtra("budgetAmount")
 
+
         return BudgetCategory(bid,uid , bCategory!!,bAmount!!, bMonth!!)
     }
+
+    private fun showConfirmationDialog() {
+        val dialog = AlertDialog.Builder(this).setTitle("Delete Budget")
+            .setMessage("Are you sure?")
+            .setPositiveButton("Yes") { _, _ ->
+                viewModelTransaction.deleteBudget(budgetItem)
+                showDoneDialog()
+            }
+            .setNegativeButton("No") { _, _ ->
+
+            }
+            .create()
+        dialog.show()
+    }
+
+    private fun showDoneDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.done_dialog, null)
+        val dialog = AlertDialog.Builder(this).setTitle("Delete Budget")
+            .setView(dialogView)
+            .create()
+
+        dialog.show()
+    }
+
 
 }
