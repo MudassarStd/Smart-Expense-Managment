@@ -5,11 +5,14 @@ import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.graphics.pdf.PdfDocument
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.OutputStreamWriter
 
 
@@ -20,6 +23,29 @@ import java.io.OutputStreamWriter
 
 class UtilityFunctionsModel {
     companion object{
+
+        fun copyFileToExternalStorage(context: Context) {
+            val sourceFile = File(context.filesDir, "transactions.csv")
+            val externalDir = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+            val destinationFile = File(externalDir, "transactions.csv")
+
+            try {
+                FileInputStream(sourceFile).use { input ->
+                    FileOutputStream(destinationFile).use { output ->
+                        val buffer = ByteArray(1024)
+                        var length: Int
+                        while (input.read(buffer).also { length = it } > 0) {
+                            output.write(buffer, 0, length)
+                        }
+                    }
+                }
+                Toast.makeText(context,"File copied to: ${destinationFile.absolutePath}", Toast.LENGTH_SHORT).show()
+                Log.d("saveTransactionsToCSV", "Saving CSV to ${destinationFile.absolutePath}")
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
         fun saveTransactionsToCSV(transactions: List<Transaction>, context: Context) {
             val csvHeader = "Tid,Time,Date,Month,Amount,Category,Wallet,Description,Attachment,TransactionType \n"
             val csvData = StringBuilder(csvHeader)
@@ -45,6 +71,8 @@ class UtilityFunctionsModel {
                 outputStreamWriter.write(csvData.toString())
                 outputStreamWriter.close()
                 fileOutputStream.close()
+
+                copyFileToExternalStorage(context)
 
                 Toast.makeText(context, "CSV file saved to ${file.absolutePath}", Toast.LENGTH_LONG).show()
                 Log.d("saveTransactionsToCSV", "CSV file successfully saved")

@@ -214,11 +214,28 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
     }
 
     override fun onFilterApplied(filterBy: String, sortBy: String) {
-        var list = tempTransactions.filter { it.transactionType == filterBy.lowercase() }
+        var list = tempTransactions.filter { it.transactionType.equals(filterBy, ignoreCase = true) }
 
-        // check sorting criteria
-        list = list.sortedBy { it.amount }
+
+        Log.d("TestingUserIdLogicToPopulateData", "Transaction SortBy: $sortBy")
+
+        list.sortedBy { it.amount }
+        // Check sorting criteria
+        list = when (sortBy.lowercase()) {
+            "Highest" -> list.sortedByDescending { it.amount.toDouble() }
+            "Lowest" -> list.sortedBy { it.amount.toDouble() }
+            "Newest" -> list.sortedByDescending { it.Tid }
+            else -> list // If the sortBy criteria does not match any case, return the unsorted list
+        }
+
+        Log.d("TestingUserIdLogicToPopulateData", "Transaction List SOrted: $list")
+
+
         rvAdapter.updateTransactionData(list)
+    }
+
+    override fun onFilterReset() {
+        rvAdapter.updateTransactionData(tempTransactions)
     }
 
 

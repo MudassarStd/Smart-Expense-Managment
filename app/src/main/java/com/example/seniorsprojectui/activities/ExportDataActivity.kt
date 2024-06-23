@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.FilterDataModel
 import com.example.seniorsprojectui.backend.TransDummy
 import com.example.seniorsprojectui.backend.Transaction
@@ -45,13 +46,15 @@ class ExportDataActivity : AppCompatActivity() {
         binding = ActivityExportDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        transactionListToFeed = listOf()
         transactionsVM = ViewModelProvider(this)[ViewModelTransaction::class.java]
+        transactionsVM.getTransactionItemById(CurrentUserSession.currentUserId)
 //        transactionListFromVM = transactionsVM.transactionsList
 
         transactionsVM.transactions.observe(this) { transactions ->
             // Update UI or perform actions with transactions
             transactionListToFeed = transactions
-            Log.d("TestingDBDatasLister", "Export Data $transactionListToFeed")
+            Log.d("saveTransactionsToCSV", "Export Data $transactionListToFeed")
             // You can update UI or perform actions here
         }
 

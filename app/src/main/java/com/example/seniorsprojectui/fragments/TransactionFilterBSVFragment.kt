@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.databinding.FragmentTransactionFilterBSVBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -26,6 +29,7 @@ class TransactionFilterBSVFragment : BottomSheetDialogFragment() {
 
     interface OnFilterSelection{
         fun onFilterApplied(filterBy: String, sortBy : String)
+        fun onFilterReset()
     }
 
     fun invokeOnFilterSelectionInterface(listener : OnFilterSelection)
@@ -60,7 +64,8 @@ class TransactionFilterBSVFragment : BottomSheetDialogFragment() {
 
         // resets all filters
         binding.resetFilterButton.setOnClickListener {
-            binding.filterButtonsRadioGroup.clearCheck()
+            listener.onFilterReset()
+            dismiss()
         }
 
         listOfSortButtons = listOf(
@@ -89,6 +94,22 @@ class TransactionFilterBSVFragment : BottomSheetDialogFragment() {
         sortByButtonText = clickedButton.text.toString()
     }
 
+
+//    private fun showfilterCategoriesDialog() {
+//
+//        val dialogView = layoutInflater.inflate(R.layout.filter_category_selection, null)
+//
+//
+//        val builder = AlertDialog.Builder(this)
+//        builder.setTitle("Select a Category")
+//            .setView(dialogView)
+//
+//            .setNegativeButton("Cancel") { dialog, _ ->
+//                dialog.dismiss()
+//            }
+//        categoryDialog = builder.create()
+//        categoryDialog?.show()
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

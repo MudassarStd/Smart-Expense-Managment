@@ -15,9 +15,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.MediaStorageModel
 import com.example.seniorsprojectui.backend.MediaStorageModel.Companion.saveBitmapAndGetUri
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -28,31 +32,31 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-
-class AddAttachmentBSV(val docStatus : Boolean) : BottomSheetDialogFragment() {
+class AddAttachmentBSV(val docStatus: Boolean) : BottomSheetDialogFragment() {
     // interface
-    interface OnAttachmentSelected{
-        fun onAttachmentSelected(itemUri : String, attachmentType : String)
-        fun onAttachmentSelected(itemUri : String, attachmentType : String, docName : String)
+    interface OnAttachmentSelected {
+        fun onAttachmentSelected(itemUri: String, attachmentType: String)
+        fun onAttachmentSelected(itemUri: String, attachmentType: String, docName: String)
+        fun onDeleteSignal(flag :Boolean)
     }
 
-    private var listener : OnAttachmentSelected?  = null
+    private var listener: OnAttachmentSelected? = null
 
-    fun invokeOnAttachmentSelectedInterface(listener : OnAttachmentSelected)
-    {
+    fun invokeOnAttachmentSelectedInterface(listener: OnAttachmentSelected) {
         this.listener = listener
     }
 
-    private lateinit var tvDocument : TextView
-    private lateinit var ivDocument : ImageView
-    private lateinit var camImage : Uri
-    private lateinit var galleryImage : Uri
-    private lateinit var document : Uri
+    private lateinit var tvDocument: TextView
+    private lateinit var ivDocument: ImageView
+    private lateinit var camImage: Uri
+    private lateinit var galleryImage: Uri
+    private lateinit var document: Uri
 
     companion object {
         private const val REQUEST_IMAGE_GALLERY = 2
         private const val REQUEST_PICK_DOCUMENT = 3
         private const val REQUEST_IMAGE_CAPTURE = 4
+        private const val REQUEST_CAMERA_PERMISSION = 5
     }
 
     override fun onCreateView(
@@ -69,28 +73,39 @@ class AddAttachmentBSV(val docStatus : Boolean) : BottomSheetDialogFragment() {
         val camera = view.findViewById<CardView>(R.id.cvAttactmentCamera)
         val imageGallery = view.findViewById<CardView>(R.id.cvAttactmentImage)
         val document = view.findViewById<CardView>(R.id.cvAttactmentDocument)
+        val ivDel = view.findViewById<ImageView>(R.id.ivDelAttachment)
+
 
         tvDocument = view.findViewById(R.id.tvShowSelectedDocument)
         ivDocument = view.findViewById(R.id.ivShowImageSelected)
-//        tvDocument.visibility = View.VISIBLE
 
-
-        if (docStatus)
-        {
+        if (docStatus) {
             document.visibility = View.VISIBLE
-        }
-        else{
+            ivDel.visibility = View.GONE
+        } else {
             document.visibility = View.GONE
+            ivDel.visibility = View.VISIBLE
+        }
+
+
+        ivDel.setOnClickListener {
+            showConfirmationDialog()
         }
 
         camera.setOnClickListener {
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
-                startActivity(takePictureIntent)
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    android.Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(android.Manifest.permission.CAMERA),
+                    REQUEST_CAMERA_PERMISSION
+                )
             } else {
-                // Handle the case where the camera app is not installed
+                dispatchTakePictureIntent()
             }
-
         }
 
         imageGallery.setOnClickListener {
@@ -101,7 +116,6 @@ class AddAttachmentBSV(val docStatus : Boolean) : BottomSheetDialogFragment() {
             } else {
                 // Handle the case where the image gallery app is not installed
             }
-
         }
 
         document.setOnClickListener {
@@ -117,8 +131,60 @@ class AddAttachmentBSV(val docStatus : Boolean) : BottomSheetDialogFragment() {
                 // Handle the case where the document picker app is not installed
             }
         }
-
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                dispatchTakePictureIntent()
+            } else {
+                // Handle permission denial
+            }
+        }
+    }
+
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
+            val photoFile: File? = try {
+                createImageFile()
+            } catch (ex: IOException) {
+                // Handle the error
+                null
+            }
+            photoFile?.also {
+                camImage = FileProvider.getUriForFile(
+                    requireContext(),
+                    "${requireContext().packageName}.fileprovider",
+                    it
+                )
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, camImage)
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+            }
+        } else {
+            // Handle the case where the camera app is not installed
+        }
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val storageDir: File = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!
+        return File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            var currentPhotoPath = absolutePath
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -127,34 +193,44 @@ class AddAttachmentBSV(val docStatus : Boolean) : BottomSheetDialogFragment() {
                     data?.data?.let { imageUri ->
                         var selectedImageUri = imageUri
                         ivDocument.setImageURI(selectedImageUri)
-                        Log.d("AddAttachmentBSV", "save Method called" )
+                        Log.d("AddAttachmentBSV", "save Method called")
                         // sending ImageUri back to activity
                         listener?.onAttachmentSelected(selectedImageUri.toString(), "imgGallery")
-                        dismiss()
+
                     }
                 }
                 REQUEST_PICK_DOCUMENT -> {
                     data?.data?.let { documentUri ->
                         val documentName = MediaStorageModel.getFileName(documentUri, requireActivity())
                         tvDocument.text = documentName
-                        Log.d("AddAttachmentBSV", "save Method called" )
+                        Log.d("AddAttachmentBSV", "save Method called")
                         // getting uri
-                        listener?.onAttachmentSelected(documentUri.toString(), "doc",documentName)
-                        dismiss()
+                        listener?.onAttachmentSelected(documentUri.toString(), "doc", documentName)
+
                     }
                 }
                 REQUEST_IMAGE_CAPTURE -> {
-                    val imageBitmap = data?.extras?.get("data") as Bitmap
-                    Log.d("AddAttachmentBSV", "save Method called" )
-                    var selectedImageUri = saveBitmapAndGetUri(imageBitmap,requireContext())
-//                    ivDocument.setImageURI(selectedImageUri)
-                    ivDocument.setImageURI(selectedImageUri)
-                    listener?.onAttachmentSelected(selectedImageUri.toString(), "imgCamera")
-                    // getting camImage uri
+                    ivDocument.setImageURI(camImage)
+                    listener?.onAttachmentSelected(camImage.toString(), "imgCamera")
+                    Log.d("fjskladjfoiasdfsdf", "camImage: ${camImage}")
 
                 }
             }
         }
+    }
+
+    private fun showConfirmationDialog() {
+        val dialog = AlertDialog.Builder(requireContext()).setTitle("Action")
+            .setMessage("Are you sure to delete all Transactions?")
+            .setPositiveButton("Yes") { _, _ ->
+                listener?.onDeleteSignal(true)
+            }
+            .setNegativeButton("No") { _, _ ->
+
+            }
+            .create()
+
+        dialog.show()
     }
 
 

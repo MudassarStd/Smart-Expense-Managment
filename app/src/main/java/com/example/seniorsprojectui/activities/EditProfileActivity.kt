@@ -54,6 +54,8 @@ class EditProfileActivity : AppCompatActivity(), AddAttachmentBSV.OnAttachmentSe
 
                Log.d("fhsjsdhfs843","Updated User: ${userData}")
                populateUserData(userData)
+
+               Toast.makeText(this, "Profile Updated successfully", Toast.LENGTH_SHORT).show()
            }
         }
 
@@ -108,5 +110,13 @@ class EditProfileActivity : AppCompatActivity(), AddAttachmentBSV.OnAttachmentSe
 
     override fun onAttachmentSelected(itemUri: String, attachmentType: String, docName: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun onDeleteSignal(flag: Boolean) {
+        if(flag)
+        {
+            binding.ivUserImage.setImageResource(R.drawable.ic_person)
+            userImage = null
+        }
     }
 }

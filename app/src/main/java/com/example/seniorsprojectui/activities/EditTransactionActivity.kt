@@ -86,7 +86,7 @@ class EditTransactionActivity : AppCompatActivity() {
 
         }
 
-        else if (attachmentType == "imgGallery" && uriAttachment != null) {
+        else if ((attachmentType == "imgGallery"  || attachmentType == "imgCamera" )&& uriAttachment != null) {
             if (checkPermission()) {
                 loadImageFromUri(uriAttachment!!)
             } else {

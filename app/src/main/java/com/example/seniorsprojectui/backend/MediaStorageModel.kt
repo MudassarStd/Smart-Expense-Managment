@@ -34,6 +34,8 @@ class MediaStorageModel {
                 }
             }
 
+
+
             fun getFileName(uri: Uri, activity: Activity): String {
             var result: String? = null
             if (uri.scheme == "content") {

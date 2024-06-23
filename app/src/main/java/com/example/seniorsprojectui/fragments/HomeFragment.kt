@@ -129,12 +129,4 @@ class HomeFragment : Fragment() {
         totalExpense.text = TransactionDataModel.totalExpenses.toString()
         totalAmount.text = TransactionDataModel.totalAmount.toString()
     }
-
-
-
-
-
-
-
-
 }

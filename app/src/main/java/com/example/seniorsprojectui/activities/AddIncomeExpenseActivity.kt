@@ -80,7 +80,7 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection , AddA
         }
 
         // setting current date
-         currentDate = binding.tvDate
+        currentDate = binding.tvDate
         currentDate.text = TransactionDataModel.getCurrentDate(0)
 
 
@@ -231,6 +231,10 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection , AddA
     override fun onAttachmentSelected(itemUri: String, type: String, docName: String) {
         attachmentSelected = itemUri
         attachmentType = docName
+    }
+
+    override fun onDeleteSignal(flag: Boolean) {
+        TODO("Not yet implemented")
     }
 
 }
