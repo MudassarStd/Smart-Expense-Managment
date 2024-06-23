@@ -88,6 +88,13 @@ class ViewModelTransaction(application: Application) : AndroidViewModel(applicat
 //            fetchTransactions()
         }
     }
+    fun updateTransaction(transaction : Transaction){
+        viewModelScope.launch(Dispatchers.IO) {
+            db.transactionsDao().updateItem(transaction)
+            fetchCurrentUserTransactions(transaction.uid) // Refresh the lis
+//            fetchTransactions()
+        }
+    }
 
     fun deleteById(id : Int)
     {

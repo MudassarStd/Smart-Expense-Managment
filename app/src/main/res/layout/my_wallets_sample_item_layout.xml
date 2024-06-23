@@ -7,7 +7,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/ivWalletIcon"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/frame"
@@ -22,9 +22,9 @@
         android:text="Wallet Name"
         android:textStyle="bold"
         android:layout_marginStart="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintBottom_toBottomOf="@+id/ivWalletIcon"
+        app:layout_constraintStart_toEndOf="@+id/ivWalletIcon"
+        app:layout_constraintTop_toTopOf="@+id/ivWalletIcon" />
 
 
     <TextView
@@ -33,9 +33,9 @@
         android:layout_height="wrap_content"
         android:text="Amount"
         android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintBottom_toBottomOf="@+id/ivWalletIcon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintTop_toTopOf="@+id/ivWalletIcon" />
 
 
 

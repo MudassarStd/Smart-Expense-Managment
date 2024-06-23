@@ -38,7 +38,6 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
     private lateinit var userVM : ViewModelUsers
     private lateinit var rvAdapter: TransactionRVAdapter
     private lateinit var rv : RecyclerView
-    private lateinit var dateTransaction : TextView
     private  var currentUserId : Int = -1
     private lateinit var tempTransactions : List<Transaction>
     private lateinit var bsvTransactionFilterBSVFragment: TransactionFilterBSVFragment
@@ -79,7 +78,6 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         val ivFilter = view.findViewById<ImageView>(R.id.ivFilterTransactions)
         val rv = view.findViewById<RecyclerView>(R.id.rvTransactionFragment)
         val btnMonth = view.findViewById<Button>(R.id.btnMonthTransacFrag)
-        dateTransaction = view.findViewById<TextView>(R.id.tvDateTransactionFrag)
         val ivDelAll = view.findViewById<ImageView>(R.id.ivDelAllTransactions)
 
 
@@ -100,15 +98,6 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
         }
 
 
-
-        // updating date wise transaction
-        dateTransaction.setOnClickListener {
-            showDatePickerDialog(requireContext()) { selectedDate ->
-                // Handle the selected date here
-                dateTransaction.text = selectedDate
-            }
-        }
-
         ivDelAll.setOnClickListener {
             showConfirmationDialog()
         }
@@ -121,11 +110,6 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
             bsvTransactionFilterBSVFragment.show(requireActivity().supportFragmentManager, bsvTransactionFilterBSVFragment.tag)
         }
 
-
-        btnMonth.setOnClickListener {
-            TransactionDataModel.showDialogList(btnMonth,requireContext(), TransactionDataModel.months)
-//            filterByMonth(btnMonth.text.toString().lowercase())
-        }
 
         // Observe LiveData from ViewModel to update the RV
             observeUpdatesInDataList()
@@ -149,8 +133,6 @@ class TransactionFragment : Fragment() , TransactionRVAdapter.onItemClickListene
 
 
     override fun onItemClick(itemPosition: Int) {
-        Toast.makeText(requireContext(), "$itemPosition", Toast.LENGTH_SHORT).show()
-
         val intent = Intent(requireContext(), EditTransactionActivity::class.java)
         intent.apply {
 

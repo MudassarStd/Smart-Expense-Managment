@@ -30,6 +30,7 @@
                 android:id="@+id/ivBackArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:padding="10dp"
                 android:layout_gravity="bottom"
                 android:src="@drawable/arrow_left"
                 app:layout_constraintBottom_toBottomOf="parent"

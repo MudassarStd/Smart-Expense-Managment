@@ -385,7 +385,7 @@
             android:id="@+id/rvHomeFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:padding="5dp"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

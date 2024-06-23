@@ -29,6 +29,12 @@ class LoginActivity : AppCompatActivity() {
         viewModelUser = ViewModelProvider(this)[ViewModelUsers::class.java]
         viewModelTransaction = ViewModelProvider(this)[ViewModelTransaction::class.java]
 
+
+        binding.tvSignUp.setOnClickListener {
+            startActivity(Intent(this, SignUp::class.java))
+        }
+
+
         binding.btnLogin.setOnClickListener {
 
             val email = binding.etUserEmailLogin.text.toString()

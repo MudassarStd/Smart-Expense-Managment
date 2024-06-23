@@ -30,6 +30,7 @@ class ProfileFragment : Fragment() {
     private lateinit var viewModel : ViewModelUsers
     private lateinit var viewModelTransactions : ViewModelTransaction
     private lateinit var ivUserprofile : ImageView
+    private lateinit var userName : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +50,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val userName = view.findViewById<TextView>(R.id.tvUserNameProfile)
+        userName = view.findViewById<TextView>(R.id.tvUserNameProfile)
         val logout = view.findViewById<CardView>(R.id.cvLogout)
         val myWallets = view.findViewById<CardView>(R.id.cvMyWalletsProfileFrag)
         val cvExportData = view.findViewById<CardView>(R.id.cvExportData)
@@ -88,6 +89,7 @@ class ProfileFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         checkForUserImage()
+        userName.text = CurrentUserSession.currentUserData?.username
     }
 
 

@@ -132,7 +132,6 @@ class EditTransactionActivity : AppCompatActivity(),
         // if del is pressed
         binding.ivDelTransactionFromTDetails.setOnClickListener {
             confirmDeleteBSV.show(supportFragmentManager, confirmDeleteBSV.tag)
-            Toast.makeText(this, "$Tid", Toast.LENGTH_SHORT).show()
         }
 
 

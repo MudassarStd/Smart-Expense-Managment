@@ -3,6 +3,7 @@ package com.example.seniorsprojectui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -34,6 +35,14 @@ class MyWalletsAdapter(var wallets : List<Wallet>) : Adapter<MyWalletsAdapter.My
     override fun onBindViewHolder(holder: MyWalletsVH, position: Int) {
         holder.name.text = wallets[position].walletName
         holder.amount.text = wallets[position].walletAmount
+
+        TransactionDataModel.walletLists.forEach {
+            if (it.categoryLabel == holder.name.text)
+            {
+                holder.icon.setImageResource(it.categoryIcon)
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -49,6 +58,7 @@ class MyWalletsAdapter(var wallets : List<Wallet>) : Adapter<MyWalletsAdapter.My
         RecyclerView.ViewHolder(view) {
         val name = view.findViewById<TextView>(R.id.tvWalletName)
         val amount = view.findViewById<TextView>(R.id.tvWalletAmount)
+        val icon = view.findViewById<ImageView>(R.id.ivWalletIcon)
 
         init {
             view.setOnClickListener {

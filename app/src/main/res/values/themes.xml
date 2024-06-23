@@ -9,8 +9,6 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
 
-<!--        changes outline color of text input layout-->
-        <item name="colorControlActivated">@color/green</item>
 
     </style>
     <style name="Theme.SeniorsProjectUI" parent="Base.Theme.SeniorsProjectUI" />

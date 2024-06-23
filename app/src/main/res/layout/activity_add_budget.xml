@@ -9,7 +9,6 @@
     tools:context=".activities.AddBudgetActivity">
 
 
-
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,10 +26,11 @@
             tools:layout_editor_absoluteY="16dp">
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/ivBackArror"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
+                android:padding="10dp"
                 android:src="@drawable/arrow_left"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

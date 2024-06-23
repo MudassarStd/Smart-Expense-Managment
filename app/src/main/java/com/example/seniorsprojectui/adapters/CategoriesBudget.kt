@@ -1,10 +1,8 @@
 package com.example.seniorsprojectui.adapters
 
 import android.Manifest
-import android.app.Notification
 import android.content.Context
 import android.content.pm.PackageManager
-import android.media.Image
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,30 +13,24 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.backend.BudgetCategory
-import com.example.seniorsprojectui.backend.CategoryData
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.NotificationInstance
 import com.example.seniorsprojectui.backend.TransactionDataModel
 
-
-
-class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>, val context : Context) : Adapter<CategoriesBudgetAdapter.BudgetVH>() {
+class CategoriesBudgetAdapter(private var listData: List<BudgetCategory>, val context: Context) : RecyclerView.Adapter<CategoriesBudgetAdapter.BudgetVH>() {
 
     private lateinit var i_listener: OnBudgetItemClick
-    private  val budgetExceeded : MutableList<Boolean> = mutableListOf()
-
-    interface OnBudgetItemClick{
-        fun onItemClick(budget : BudgetCategory)
-        fun onLongItemClick(itemPos : Int)
+    interface OnBudgetItemClick {
+        fun onItemClick(budget: BudgetCategory)
+        fun onLongItemClick(itemPos: Int)
     }
+
     fun setOnBudgetItemClickListener(listener: OnBudgetItemClick) {
         i_listener = listener
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BudgetVH {
         val inflater = LayoutInflater.from(parent.context)
@@ -47,9 +39,8 @@ class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>, val c
     }
 
     override fun onBindViewHolder(holder: BudgetVH, position: Int) {
-
         try {
-             val remainingAmount = TransactionDataModel.getRemainingAmountForBudget(listData[position].category, listData[position].totalAmount)
+            val remainingAmount = TransactionDataModel.getRemainingAmountForBudget(listData[position].category, listData[position].totalAmount)
             holder.budgetCategory.text = listData[position].category
             holder.remainingAmount.text = remainingAmount[0]
             holder.remainingAmountFromTotal.text = remainingAmount[1]
@@ -67,74 +58,64 @@ class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>, val c
                 holder.progressBar.progress = 0
             }
 
-            if (remainingAmount[0] == "0")
-            {
+            if (remainingAmount[0] == "0") {
                 holder.ivWarning.visibility = View.VISIBLE
 
+                // Check if notification for this category has already been sent
+                if (!CurrentUserSession.notifiedCategories.contains(listData[position].category)) {
+                    val notification = NotificationInstance(
+                        title = "Budget Alert",
+                        message = "${holder.budgetCategory.text} budget has exceeded the limit!",
+                        timestamp = System.currentTimeMillis(),
+                        userId = listData[position].uid
+                    )
 
-                val notification = NotificationInstance(
-                    title = "Budget Alert",
-                    message = holder.budgetCategory.text.toString() + " budget has exceeded the limit!",
-                    timestamp = System.currentTimeMillis(),
-                    userId = listData[position].uid
-                )
+                    val builder = NotificationCompat.Builder(context, "budget_channel")
+                        .setSmallIcon(R.drawable.ic_warning)
+                        .setContentTitle(notification.title)
+                        .setContentText(notification.message)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
 
-                val builder = NotificationCompat.Builder(context, "budget_channel")
-                    .setSmallIcon(R.drawable.ic_warning)
-                    .setContentTitle(notification.title)
-                    .setContentText(notification.message)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    val notificationManager = NotificationManagerCompat.from(context)
+                    if (ActivityCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.POST_NOTIFICATIONS
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        // Request permissions if not granted
+                        return
+                    }
+                    notificationManager.notify(1, builder.build())
 
-                val notificationManager = NotificationManagerCompat.from(context)
-                if (ActivityCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.POST_NOTIFICATIONS
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return
+                    // Add the category to the notified set
+                    CurrentUserSession.notifiedCategories.add(listData[position].category)
                 }
-                notificationManager.notify(1, builder.build())
             }
-
-
+        } catch (e: Exception) {
+            Log.e("CategoriesBudgetAdapter", "Error binding view holder", e)
         }
-        catch (_:Exception)
-        {
-            Log.e("remainAmount", "fslkd")
-        }
-
-
-        }
-
+    }
 
     override fun getItemCount(): Int {
         return listData.size
     }
 
-     fun updateAdapter(listData : List<BudgetCategory>){
+    fun updateAdapter(listData: List<BudgetCategory>) {
         this.listData = listData
-         notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
+    inner class BudgetVH(view: View, listener: OnBudgetItemClick) : RecyclerView.ViewHolder(view) {
+        val remainingAmount: TextView = view.findViewById(R.id.tvRemainingBudgetAmount)
+        val totalAmount: TextView = view.findViewById(R.id.tvTotalBudgetAmount)
+        val remainingAmountFromTotal: TextView = view.findViewById(R.id.tvRemainingAmountFromTotal)
+        val budgetCategory: TextView = view.findViewById(R.id.tvBudgetCategory)
+        val limitExceeded: TextView = view.findViewById(R.id.tvBudgetLimitExceeded)
+        val ivWarning: ImageView = view.findViewById(R.id.ivWarningBudgetExceeded)
+        val progressBar: ProgressBar = view.findViewById(R.id.progressBarBudgets)
+        val dot: ImageView = view.findViewById(R.id.ivCategoryDot)
 
-inner class BudgetVH(view : View, listener : OnBudgetItemClick) : RecyclerView.ViewHolder(view) {
-    val remainingAmount = view.findViewById<TextView>(R.id.tvRemainingBudgetAmount)
-    val totalAmount = view.findViewById<TextView>(R.id.tvTotalBudgetAmount)
-    val remainingAmountFromTotal = view.findViewById<TextView>(R.id.tvRemainingAmountFromTotal)
-    val budgetCategory = view.findViewById<TextView>(R.id.tvBudgetCategory)
-    val limitExceeded = view.findViewById<TextView>(R.id.tvBudgetLimitExceeded)
-    val ivWarning = view.findViewById<ImageView>(R.id.ivWarningBudgetExceeded)
-    val progressBar = view.findViewById<ProgressBar>(R.id.progressBarBudgets)
-
-    val dot = view.findViewById<ImageView>(R.id.ivCategoryDot)
-    init {
+        init {
             view.setOnClickListener {
                 listener.onItemClick(listData[adapterPosition])
             }

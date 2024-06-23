@@ -52,6 +52,10 @@ class AddBudgetActivity : AppCompatActivity(), OnCategorySelection {
             showCategoriesDialog()
         }
 
+
+        binding.ivBackArror.setOnClickListener {
+            finish()
+        }
         // getting data from user on btn click
 
         binding.btnContinueAddBudget.setOnClickListener {

@@ -92,8 +92,6 @@ class BudgetFragment : Fragment(), CategoriesBudgetAdapter.OnBudgetItemClick {
         }
 
 
-
-
         btnCreateBudget.setOnClickListener {
             startActivity(Intent(requireContext(), AddBudgetActivity::class.java))
         }
@@ -122,19 +120,7 @@ class BudgetFragment : Fragment(), CategoriesBudgetAdapter.OnBudgetItemClick {
         super.onResume()
         viewModel.fetchBudgetsByUserId(userId)
 
-//        adapter.notifyDataSetChanged()
-//        monthBudget.text = TransactionDataModel.getCurrentMonth(0)
-//
-//        if (adapter.itemCount < 1)
-//        {
-//            rvCategoryBudget.visibility = View.GONE
-//            noBudget.visibility = View.VISIBLE
-//        }
-//        else
-//        {
-//            noBudget.visibility = View.GONE
-//            rvCategoryBudget.visibility = View.VISIBLE
-//        }
+
     }
     override fun onItemClick(budget: BudgetCategory ) {
 
@@ -144,7 +130,6 @@ class BudgetFragment : Fragment(), CategoriesBudgetAdapter.OnBudgetItemClick {
         intent.putExtra("budgetCategory", budget.category)
         intent.putExtra("budgetMonth", budget.month)
         intent.putExtra("budgetAmount", budget.totalAmount)
-
         startActivity(intent)
     }
 

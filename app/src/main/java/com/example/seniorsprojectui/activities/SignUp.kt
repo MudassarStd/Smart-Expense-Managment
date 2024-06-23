@@ -69,6 +69,10 @@ class SignUp : AppCompatActivity() {
                 }
             }
         }
+
+        binding.tvLogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
     }
     private fun isValidEmail(email: String): Boolean {
         val emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"

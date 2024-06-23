@@ -22,6 +22,6 @@ class SplashOkActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, HomeActivity::class.java))
             finish() // Close the splash screen so the user can't go back to it
-        }, 4000)
+        }, 1500)
     }
 }

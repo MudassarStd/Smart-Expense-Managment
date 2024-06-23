@@ -71,6 +71,7 @@ class MyWalletsActivity : AppCompatActivity() , MyWalletsAdapter.OnWalletClickIn
 
     }
 
+
     override fun onItemClick(wallet : Wallet) {
         val intent = Intent(this, WalletDetailsActivity::class.java)
         intent.putExtra("wallet",wallet)

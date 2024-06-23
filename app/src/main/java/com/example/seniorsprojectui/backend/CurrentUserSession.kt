@@ -6,5 +6,8 @@ class CurrentUserSession {
         var currentUserId = 0
         var currentUserName = "Null"
         var currentUserData : UserData? = null
+
+
+        val notifiedCategories: MutableSet<String> = mutableSetOf()
     }
 }

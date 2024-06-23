@@ -28,6 +28,7 @@ class EditProfileActivity : AppCompatActivity(), AddAttachmentBSV.OnAttachmentSe
     private lateinit var userData : UserData
     private lateinit var addAttachmentBSV: AddAttachmentBSV
     private  var userImage : Uri? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,63 +41,65 @@ class EditProfileActivity : AppCompatActivity(), AddAttachmentBSV.OnAttachmentSe
         }
 
         addAttachmentBSV = AddAttachmentBSV(false)
-
         addAttachmentBSV.invokeOnAttachmentSelectedInterface(this)
         viewModelUsers = ViewModelProvider(this)[ViewModelUsers::class.java]
-
 
         userData = CurrentUserSession.currentUserData!!
         populateUserData(userData)
 
         binding.btnConfirmChangesToProfile.setOnClickListener {
-           if( checkUpdates(userData))
-           {
-               viewModelUsers.updateUser(userData)
-               populateUserData(userData)
-               showDoneDialog()
-           }
+            if(checkUpdates(userData)) {
+                viewModelUsers.updateUser(userData)
+                populateUserData(userData)
+                showDoneDialog()
+            } else {
+                Toast.makeText(this, "No changes detected", Toast.LENGTH_SHORT).show()
+            }
         }
-
 
         binding.ivEditProfileImage.setOnClickListener {
             addAttachmentBSV.show(supportFragmentManager, addAttachmentBSV.tag)
         }
     }
 
-    private fun populateUserData(user : UserData) {
+    private fun populateUserData(user: UserData) {
         binding.etUserEmailEditProfile.setText(user.useremail)
         binding.etUserNameEditProfile.setText(user.username)
         binding.etUserPasswordEditProfile.setText(user.userpassword)
         loadImageFromUri(user.userImage.toUri())
     }
 
-    private fun checkUpdates(user : UserData) : Boolean
-    {
+    private fun checkUpdates(user: UserData): Boolean {
         var updateStatus = false
-        val username = binding.etUserNameEditProfile.text.toString()
-        val userpass = binding.etUserPasswordEditProfile.text.toString()
 
-//        if (userImage != null)
-//        {
+        val newUsername = binding.etUserNameEditProfile.text.toString()
+        val newUserpass = binding.etUserPasswordEditProfile.text.toString()
+
+        if (userImage != null && user.userImage != userImage.toString()) {
             user.userImage = userImage.toString()
-            user.username = username
-            user.userpassword = userpass
             updateStatus = true
-//        }
+        }
+
+        if (user.username != newUsername) {
+            user.username = newUsername
+            updateStatus = true
+        }
+
+        if (user.userpassword != newUserpass) {
+            user.userpassword = newUserpass
+            updateStatus = true
+        }
 
         return updateStatus
-
     }
 
     private fun loadImageFromUri(uriAttachment: Uri) {
         try {
             val inputStream: InputStream? = contentResolver.openInputStream(uriAttachment)
             val bitmap = BitmapFactory.decodeStream(inputStream)
-
             binding.ivUserImage.setImageBitmap(bitmap)
-
         } catch (e: Exception) {
-            Log.e("EditTransactionActivity", "Error loading image", e)
+            Log.e("EditProfileActivity", "Error loading image", e)
             Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show()
         }
     }
@@ -107,25 +110,22 @@ class EditProfileActivity : AppCompatActivity(), AddAttachmentBSV.OnAttachmentSe
     }
 
     override fun onAttachmentSelected(itemUri: String, attachmentType: String, docName: String) {
-        TODO("Not yet implemented")
+        // Not implemented
     }
 
     override fun onDeleteSignal(flag: Boolean) {
-        if(flag)
-        {
+        if (flag) {
             binding.ivUserImage.setImageResource(R.drawable.ic_person)
             userImage = null
         }
     }
+
     private fun showDoneDialog() {
         val dialogView = layoutInflater.inflate(R.layout.done_dialog, null)
         val dialog = AlertDialog.Builder(this).setTitle("Profile Update")
             .setView(dialogView)
-            .setPositiveButton("OK") { _, _ ->
-
-            }
+            .setPositiveButton("OK") { _, _ -> }
             .create()
-
         dialog.show()
     }
 }

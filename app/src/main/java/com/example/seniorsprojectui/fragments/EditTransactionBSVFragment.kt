@@ -53,7 +53,7 @@ class EditTransactionBSVFragment(private val Tid: Int) : BottomSheetDialogFragme
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentEditTransactionBSVBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -76,6 +76,11 @@ class EditTransactionBSVFragment(private val Tid: Int) : BottomSheetDialogFragme
             TransactionDataModel.showDialogList(binding.etUpdateWallet, requireContext(), TransactionDataModel.transactionsWallets)
         }
 
+        binding.btnUpdateTransaction.setOnClickListener {
+            val transaction = getUpdate()
+            viewModel.updateTransaction(transaction!!)
+            dismiss()
+        }
 
     }
     private fun populateData() {
@@ -89,8 +94,6 @@ class EditTransactionBSVFragment(private val Tid: Int) : BottomSheetDialogFragme
             binding.etUpdateTransactionType.setText(it.transactionType)
         }
     }
-
-
     private fun showCategoriesDialog() {
 
         val dialogView = layoutInflater.inflate(R.layout.dialog_categories_rv_layout, null)
@@ -110,13 +113,39 @@ class EditTransactionBSVFragment(private val Tid: Int) : BottomSheetDialogFragme
         categoryDialog = builder.create()
         categoryDialog?.show()
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    private fun getUpdate() :Transaction? {
+        val date = binding.etUpdateDate.text.toString()
+        val month = binding.etUpdateMonth.text.toString()
+        val amount = binding.etUpdateAmount.text.toString()
+        val category = binding.etUpdateCategory.text.toString()
+        val wallet = binding.etUpdateWallet.text.toString()
+        val description = binding.etUpdateDescription.text.toString()
+        val transactionType = binding.etUpdateTransactionType.text.toString()
 
+
+        return transaction?.let {
+            Transaction(
+                Tid = it.Tid,
+                time = TransactionDataModel.getCurrentTime(),
+                date = date,
+                month = month,
+                amount = amount,
+                category = category,
+                wallet = wallet,
+                description = description,
+                attachment = it.attachment,
+                attachmentType = it.attachmentType,
+                transactionType = transactionType,
+                uid = it.uid
+            )
+        }
+    }
     override fun onCategorySelected(categoryPosition: Int) {
         binding.etUpdateCategory.setText(TransactionDataModel.categoriesList[categoryPosition].categoryLabel)
         categoryDialog?.dismiss()
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

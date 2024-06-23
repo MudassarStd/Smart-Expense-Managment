@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_special"
     tools:context=".activities.LoginActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -97,6 +98,7 @@
             android:id="@+id/etUserPasswordLogin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="textPassword"
             android:hint="Password" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,7 +139,7 @@
         app:layout_constraintVertical_bias="0.676" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/tvSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -147,6 +149,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="montra"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSignUp"
+        app:layout_constraintVertical_bias="0.523" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

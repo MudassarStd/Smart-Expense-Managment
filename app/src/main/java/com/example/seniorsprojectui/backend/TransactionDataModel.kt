@@ -45,19 +45,18 @@ class TransactionDataModel {
 
         // list for category dialog adapter
         val categoriesList = listOf(
-            CategoryData("Business", R.drawable.frame),
-            CategoryData("Personal", R.drawable.frame),
-            CategoryData("Health", R.drawable.frame),
-            CategoryData("Education", R.drawable.frame),
-            CategoryData("Travel", R.drawable.frame),
-            CategoryData("Food", R.drawable.frame),
+            CategoryData("Business", R.drawable.frame_money),
+            CategoryData("Travel", R.drawable.frame_car),
+            CategoryData("Food", R.drawable.frame_food),
             CategoryData("Shopping", R.drawable.frame),
-            CategoryData("Subscription", R.drawable.frame),
+            CategoryData("Subscription", R.drawable.subscription),
         )
 
         val walletLists = listOf(
-            CategoryData("Chase", R.drawable.frame),
-            CategoryData("CITI", R.drawable.frame)
+            CategoryData("Chase", R.drawable.frame_chase),
+            CategoryData("CITI", R.drawable.fram_citi),
+            CategoryData("Wallet", R.drawable.frame_wallet),
+            CategoryData("Paypal", R.drawable.frame_paypal),
         )
 
         // map: category -> color

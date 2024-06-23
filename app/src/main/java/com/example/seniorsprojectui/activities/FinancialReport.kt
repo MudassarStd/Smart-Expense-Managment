@@ -45,7 +45,10 @@ class FinancialReport : AppCompatActivity() {
         filterData(0)
 
         binding.btnMonthFReport.setOnClickListener {
-            Log.d("uthds","${TransactionDataModel.financialReportCategories}")
+
+        }
+        binding.ivBackArrow.setOnClickListener {
+            finish()
         }
 
         // handling tab Layout
