@@ -1,6 +1,5 @@
-package com.example.seniorsprojectui.maindb
+package com.example.seniorsprojectui.maindb.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Update

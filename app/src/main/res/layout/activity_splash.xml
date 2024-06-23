@@ -17,7 +17,7 @@
         android:layout_gravity="center"
         android:focusable="true"
         android:gravity="center"
-        android:text="mon"
+        android:text="montra"
         android:textColor="#FFFFFF"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -29,22 +29,7 @@
         app:layout_constraintVertical_bias="0.5"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/text_view1"
-        android:layout_width="146dp"
-        android:layout_height="90dp"
-        android:layout_gravity="center"
-        android:layout_marginEnd="64dp"
-        android:focusable="true"
-        android:gravity="center"
-        android:text="tra"
-        android:textColor="#FFFFFF"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

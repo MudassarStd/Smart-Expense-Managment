@@ -66,7 +66,8 @@ data class NotificationInstance(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
     val message: String,
-    val timestamp: Long
+    val timestamp: Long,
+    val userId : Int
 )
 
 data class TransDummy(val id: Int, val type: String, val amount: Double, val date: String)

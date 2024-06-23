@@ -57,14 +57,14 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivUserImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
         android:layout_gravity="start"
-        android:background="@drawable/round_shape"
         android:padding="2dp"
+        app:civ_circle_background_color="@color/l1Purple"
         android:src="@drawable/ic_person"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

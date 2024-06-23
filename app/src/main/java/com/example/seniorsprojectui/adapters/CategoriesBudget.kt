@@ -73,7 +73,8 @@ class CategoriesBudgetAdapter(private var listData : List<BudgetCategory>, val c
                 val notification = NotificationInstance(
                     title = "Budget Alert",
                     message = holder.budgetCategory.text.toString() + " budget has exceeded the limit!",
-                    timestamp = System.currentTimeMillis()
+                    timestamp = System.currentTimeMillis(),
+                    userId = listData[position].uid
                 )
 
                 val builder = NotificationCompat.Builder(context, "budget_channel")

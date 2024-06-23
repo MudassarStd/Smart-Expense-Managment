@@ -93,13 +93,13 @@
             android:name=".activities.AddIncomeExpenseActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".activities.OnBoardingActivity"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.OnBoardingActivity"
+            android:name=".activities.SplashActivity"
             android:exported="true"
             android:theme="@style/Base.Theme.SeniorsProjectUI">
             <intent-filter>
