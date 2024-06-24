@@ -16,10 +16,12 @@ class OnBoardingActivity : AppCompatActivity() {
 
         binding.btnSignUPOnBoarding.setOnClickListener {
             startActivity(Intent(this, SignUp::class.java))
+            finish()
         }
         
         binding.btnLoginOnBoarding.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 }

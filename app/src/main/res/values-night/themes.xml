@@ -7,10 +7,12 @@
         <item name="colorPrimaryVariant">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
 
 
         <!--        changes outline switches and control items-->
 <!--        <item name="colorControlActivated">@color/green</item>-->
+
 
     </style>
 </resources>

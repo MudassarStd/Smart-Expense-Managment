@@ -12,9 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/l3Light"
-        android:drawableLeft="@drawable/arrow_down"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/BaseLight2"
         android:drawableTint="@color/colorPrimary"
         android:text="Month"
         android:textColor="@color/black"
@@ -62,17 +61,6 @@
         app:layout_constraintTop_toBottomOf="@+id/btnMonthTransacFrag" />
 
 
-    <TextView
-        android:id="@+id/tvDateTransactionFrag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:text="25 May 2024 "
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnFinancialReport" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTransactionFragment"
         android:layout_width="match_parent"
@@ -81,8 +69,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        tools:listitem="@layout/transaction_sample_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDateTransactionFrag" />
+        app:layout_constraintTop_toBottomOf="@+id/btnFinancialReport" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

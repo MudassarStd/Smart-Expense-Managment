@@ -3,6 +3,8 @@ package com.example.seniorsprojectui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.databinding.ActivitySplashOkBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
@@ -16,14 +18,10 @@ class SplashOkActivity : AppCompatActivity() {
         binding = ActivitySplashOkBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        viewModelTransaction = ViewModelProvider(this)[ViewModelTransaction::class.java]
-//        viewModelTransaction.fetchCurrentUserTransactions(TransactionDataModel.currentUserId)
-//        Toast.makeText(this,"${viewModelTransaction.transactionsList}, ${TransactionDataModel.currentUserId}", Toast.LENGTH_SHORT).show()
-
-
-    binding.btnNextToHome.setOnClickListener {
-        startActivity(Intent(this, HomeActivity::class.java))
-    }
+// Delay for 3 seconds
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish() // Close the splash screen so the user can't go back to it
+        }, 1500)
     }
 }

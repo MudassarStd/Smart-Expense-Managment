@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
+import com.example.seniorsprojectui.fragments.HomeFragment
 
 class TransactionRVAdapter(private var transactionList : List<Transaction>) : Adapter<TransactionViewHolder>() {
 
@@ -42,6 +43,13 @@ class TransactionRVAdapter(private var transactionList : List<Transaction>) : Ad
         holder.description.text = transactionList[position].description
         holder.time.text = transactionList[position].time
         holder.amount.text = transactionList[position].amount
+        
+        TransactionDataModel.categoriesList.forEach { 
+            if (it.categoryLabel == holder.rvCategory.text)
+            {
+                holder.icon.setImageResource(it.categoryIcon)
+            }
+        }
 
         if (transactionList[position].transactionType == "expense") {
             holder.amount.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.primaryRed))
@@ -68,11 +76,11 @@ class TransactionViewHolder(view : View, listener : TransactionRVAdapter.onItemC
     val amount = view.findViewById<TextView>(R.id.rvAmount)
     val icon = view.findViewById<ImageView>(R.id.rvIcon)
     init {
-        itemView.setOnClickListener {
+        view.setOnClickListener {
             listener.onItemClick(adapterPosition)
         }
 
-        itemView.setOnLongClickListener {
+        view.setOnLongClickListener {
             listener.onItemLongClick(adapterPosition)
             true
         }

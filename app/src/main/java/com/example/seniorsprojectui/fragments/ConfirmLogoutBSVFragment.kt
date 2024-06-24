@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.seniorsprojectui.activities.LoginActivity
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.activities.OnBoardingActivity
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.dbvm.ViewModelUsers
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -39,10 +41,10 @@ class ConfirmLogoutBSVFragment : BottomSheetDialogFragment() {
         btnYes.setOnClickListener {
             lifecycleScope.launch (Dispatchers.IO){
                 viewModel.currentUserId = -1
-                TransactionDataModel.currentUserName = "null"
+                CurrentUserSession.currentUserName = "null"
             }
             dismiss()
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            startActivity(Intent(requireContext(), OnBoardingActivity::class.java))
         }
 
         btnNo.setOnClickListener {

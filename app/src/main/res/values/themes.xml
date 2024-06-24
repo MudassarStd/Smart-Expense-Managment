@@ -7,12 +7,16 @@
          <item name="colorPrimaryVariant">@color/colorPrimary</item>
          <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
 
-<!--&lt;!&ndash;        changes outline color of text input layout&ndash;&gt;-->
-<!--        <item name="colorControlActivated">@color/green</item>-->
 
     </style>
-
     <style name="Theme.SeniorsProjectUI" parent="Base.Theme.SeniorsProjectUI" />
+
+    <style name="CustomProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/custom_progressbar</item>
+        <item name="android:minHeight">10dp</item>
+        <item name="android:maxHeight">10dp</item>
+    </style>
 
 </resources>

@@ -3,6 +3,7 @@ package com.example.seniorsprojectui.backend
 import android.app.DatePickerDialog
 import android.content.Context
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
@@ -11,16 +12,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
+import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class TransactionDataModel {
     companion object {
-
-
-        var currentUserName : String = "null"
-        var currentUserId : Int = -1
 
         // textview showing total
         var totalExpenses: Double = 0.0
@@ -33,7 +31,7 @@ class TransactionDataModel {
         var financialReportCategories: List<FinancialReportCategoryData> = listOf()
 
         // budget categories
-        var budgetCategoriesList: MutableList<BudgetCategory> = mutableListOf()
+//        var budgetCategoriesList: MutableList<BudgetCategory> = mutableListOf()
 
         // category map to amounts
         val categoryBudgetMap: MutableMap<String, Double> = mutableMapOf()
@@ -47,14 +45,18 @@ class TransactionDataModel {
 
         // list for category dialog adapter
         val categoriesList = listOf(
-            CategoryData("Business", R.drawable.frame),
-            CategoryData("Personal", R.drawable.frame),
-            CategoryData("Health", R.drawable.frame),
-            CategoryData("Education", R.drawable.frame),
-            CategoryData("Travel", R.drawable.frame),
-            CategoryData("Food", R.drawable.frame),
+            CategoryData("Business", R.drawable.frame_money),
+            CategoryData("Travel", R.drawable.frame_car),
+            CategoryData("Food", R.drawable.frame_food),
             CategoryData("Shopping", R.drawable.frame),
-            CategoryData("Subscription", R.drawable.frame),
+            CategoryData("Subscription", R.drawable.subscription),
+        )
+
+        val walletLists = listOf(
+            CategoryData("Chase", R.drawable.frame_chase),
+            CategoryData("CITI", R.drawable.fram_citi),
+            CategoryData("Wallet", R.drawable.frame_wallet),
+            CategoryData("Paypal", R.drawable.frame_paypal),
         )
 
         // map: category -> color
@@ -90,7 +92,7 @@ class TransactionDataModel {
             return dateFormat.format(calendar.time)
         }
 
-        fun showDatePickerDialog(context: Context, tvSelectedDate: TextView) {
+        fun showDatePickerDialog(context: Context, tvSelectedDate: View) {
             val calendar = Calendar.getInstance()
             val datePicker = DatePickerDialog(
                 context,
@@ -100,10 +102,15 @@ class TransactionDataModel {
                     calendar.set(Calendar.MONTH, monthOfYear)
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-//                    // Format the chosen date and set it to the TextInputEditText
+                    // Format the chosen date
                     val sdf = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-                    tvSelectedDate.setText(sdf.format(calendar.time))
+                    val formattedDate = sdf.format(calendar.time)
 
+                    // Set the formatted date to the TextView or TextInputEditText
+                    when (tvSelectedDate) {
+                        is TextView -> tvSelectedDate.text = formattedDate
+                        is TextInputEditText -> tvSelectedDate.setText(formattedDate)
+                    }
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -111,6 +118,7 @@ class TransactionDataModel {
             )
             datePicker.show()
         }
+
 
         fun getCurrentTime(): String {
             val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
@@ -130,6 +138,7 @@ class TransactionDataModel {
                         is Button -> view.text = selectedCategory
                         is EditText -> view.setText(selectedCategory)
                     }
+
 
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
@@ -169,13 +178,32 @@ class TransactionDataModel {
             Log.d("mapMy", "$categoryBudgetMap")
         }
 
-        fun getRemainingAmountForBudget(category : String, totalAmount : Double) : String
+        fun getRemainingAmountForBudget(category : String, totalAmount : String) : List<String>
         {
             // update budget map
 //            getCategoryWiseAmountSpent()
 
-            val remainingAmount = totalAmount - categoryBudgetMap[category]!!
-            return remainingAmount.toInt().toString()
+            var remainingAmount : Double = 0.0
+            var amountSpent : Double = 0.0
+
+            val list : MutableList<String> = mutableListOf()
+            list.clear()
+
+            remainingAmount = totalAmount.toDouble() - categoryBudgetMap[category]!!
+            amountSpent = categoryBudgetMap[category]!!
+
+
+            if (remainingAmount <= 0)
+            {
+                remainingAmount = 0.0
+            }
+            list.add(remainingAmount.toInt().toString())
+            list.add(amountSpent.toString())
+
+            Log.d("lsitTEstre", "$list")
+
+
+            return list
         }
 
         fun amountExceededCheck(category: String,totalAmount: Double) : Boolean

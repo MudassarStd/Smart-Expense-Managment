@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.seniorsprojectui.R
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityHomeBinding
 import com.example.seniorsprojectui.dbvm.ViewModelTransaction
@@ -25,6 +26,9 @@ import com.example.seniorsprojectui.fragments.BudgetFragment
 import com.example.seniorsprojectui.fragments.HomeFragment
 import com.example.seniorsprojectui.fragments.ProfileFragment
 import com.example.seniorsprojectui.fragments.TransactionFragment
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 
 
 class HomeActivity : AppCompatActivity() {
@@ -42,6 +46,7 @@ class HomeActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        buildNotificationChannel()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -55,10 +60,12 @@ class HomeActivity : AppCompatActivity() {
         userVM = ViewModelProvider(this)[ViewModelUsers::class.java]
         viewModel.updateAllStakeHolders()
 
-        Log.d("TestingDBDatasLister", "HomeActivity ${viewModel.transactionsList}")
+        Log.d("TestingUserIdLogicToPopulateData", "Current User Id: ${CurrentUserSession.currentUserId}")
+        viewModel.fetchCurrentUserTransactions(CurrentUserSession.currentUserId)
 
-
-
+        viewModel.transactions.observe(this){
+            Log.d("TestingUserIdLogicToPopulateData", "Current User Transactions: ${it}")
+        }
 //        TransactionDataModel.transactionFromDB = viewModel.transactionsList
 
 
@@ -145,6 +152,22 @@ class HomeActivity : AppCompatActivity() {
             commit()
         }
     }
+
+    private fun buildNotificationChannel()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Budget Alerts"
+            val descriptionText = "Notifications for budget alerts"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel("budget_channel", name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+
 }
 
 

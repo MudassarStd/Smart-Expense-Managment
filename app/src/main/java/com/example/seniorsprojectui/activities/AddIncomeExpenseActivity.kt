@@ -1,7 +1,9 @@
 package com.example.seniorsprojectui.activities
 
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.seniorsprojectui.R
 import com.example.seniorsprojectui.adapters.CategoriesDialogAdapter
 import com.example.seniorsprojectui.adapters.OnCategorySelection
+import com.example.seniorsprojectui.backend.CurrentUserSession
 import com.example.seniorsprojectui.backend.Transaction
 import com.example.seniorsprojectui.backend.TransactionDataModel
 import com.example.seniorsprojectui.databinding.ActivityAddIncomeExpenseBinding
@@ -25,15 +28,20 @@ import com.example.seniorsprojectui.dbvm.ViewModelUsers
 import com.example.seniorsprojectui.fragments.AddAttachmentBSV
 
 
-class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
+class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection , AddAttachmentBSV.OnAttachmentSelected{
+
     private lateinit var binding : ActivityAddIncomeExpenseBinding
-//    lateinit var transactionObject : Transaction
     private lateinit var currentDate : TextView
+    private  var attachmentSelected : String = "null"
+    private  var attachmentType : String = "null"
+
+    private  var TAG = "fksdjoisubdffgdsf"
 
     private  var categoryDialog : AlertDialog? = null
     var transactionType : String = "null"
 
     private lateinit var categoryET : EditText
+    private lateinit var addAttachmentBSV: AddAttachmentBSV
 
     val categoriesAdapter = CategoriesDialogAdapter(TransactionDataModel.categoriesList)
 
@@ -53,25 +61,26 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
             insets
         }
 
+        addAttachmentBSV = AddAttachmentBSV(true)
+        addAttachmentBSV.invokeOnAttachmentSelectedInterface(this)
 
         categoriesAdapter.setOnCategoryClickListenerInterface(this)
 
         viewModel = ViewModelProvider(this)[ViewModelTransaction::class.java]
         viewModelUser = ViewModelProvider(this)[ViewModelUsers::class.java]
 
-
-        val currentUserId = TransactionDataModel.currentUserId
+        val currentUserId = CurrentUserSession.currentUserId
 
         // getting transaction (income/expense) type from prev activity
         transactionType = intent.getStringExtra("typeTransaction").toString()
 
         // attachment BSV
         binding.llAddAttachment.setOnClickListener {
-            AddAttachmentBSV().show(supportFragmentManager, AddAttachmentBSV().tag)
+            addAttachmentBSV.show(supportFragmentManager, addAttachmentBSV.tag)
         }
 
         // setting current date
-         currentDate = binding.tvDate
+        currentDate = binding.tvDate
         currentDate.text = TransactionDataModel.getCurrentDate(0)
 
 
@@ -128,11 +137,9 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
             TransactionDataModel.totalAmount += amount.toDouble()
             // creating transaction object
-            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,"NULL",transactionType, currentUserId)
+            val transactionObject = Transaction(0,currentTime,date,month,amount,category,wallet,description,attachmentSelected,attachmentType,transactionType, currentUserId)
             viewModel.insertTransaction(transactionObject)
             finish()
-
-
         }
         else{
 
@@ -146,7 +153,6 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
             if (wallet.isEmpty())
                 binding.etWallet.error = ""
-
         }
         }
 
@@ -184,20 +190,6 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
 
     }
 
-    // Database functions
-//    private fun insertTransaction(item : Transaction)
-//    {
-//        val db = Room.databaseBuilder(
-//            applicationContext,
-//            MainTransactionsDatabase::class.java, "Main_Transaction_db"
-//        ).build()
-//
-//        lifecycleScope.launch {
-//            db.transacactionDaoConnector().insertItem(item)
-//            TransactionDataModel.transactions = db.transacactionDaoConnector().getAllTransactions()
-//        }
-//    }
-
 
     override fun onResume() {
         super.onResume()
@@ -231,5 +223,18 @@ class AddIncomeExpenseActivity : AppCompatActivity(), OnCategorySelection {
         categoryDialog?.dismiss()
     }
 
+    override fun onAttachmentSelected(itemUri: String, type : String) {
+        attachmentSelected = itemUri
+        attachmentType = type
+    }
+
+    override fun onAttachmentSelected(itemUri: String, type: String, docName: String) {
+        attachmentSelected = itemUri
+        attachmentType = docName
+    }
+
+    override fun onDeleteSignal(flag: Boolean) {
+        attachmentSelected = null.toString()
+    }
 
 }

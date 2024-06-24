@@ -16,6 +16,16 @@ class ConfirmDeleteTransactionBSVFragment(val Tid : Int) : BottomSheetDialogFrag
 
     private lateinit var viewModel : ViewModelTransaction
 
+    interface OnConfirmBSVDeleteInterface {
+        fun onDeleteSignal(flag :Boolean)
+    }
+
+    private var listener: ConfirmDeleteTransactionBSVFragment.OnConfirmBSVDeleteInterface? = null
+
+    fun invokeOnConfirmDeleteInterface(listener: ConfirmDeleteTransactionBSVFragment.OnConfirmBSVDeleteInterface) {
+        this.listener = listener
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +52,7 @@ class ConfirmDeleteTransactionBSVFragment(val Tid : Int) : BottomSheetDialogFrag
 
         btnYes.setOnClickListener {
             viewModel.deleteById(Tid)
+            listener?.onDeleteSignal(true)
             dismiss()
         }
 

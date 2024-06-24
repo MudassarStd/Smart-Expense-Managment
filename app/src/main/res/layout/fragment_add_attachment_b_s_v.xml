@@ -7,11 +7,33 @@
     tools:context=".fragments.AddAttachmentBSV">
 
 
+    <TextView
+        android:id="@+id/tvAttachmentTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivDelAttachment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAttachmentTitle"
+        app:tint="@color/colorPrimary" />
+
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="40dp"
+        android:layout_marginVertical="30dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingHorizontal="20dp"
@@ -20,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAttachmentTitle"
         app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.card.MaterialCardView
@@ -123,27 +145,6 @@
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/tvShowSelectedDocument"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:text="jfkls"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
-
-    <ImageView
-        android:id="@+id/ivShowImageSelected"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvShowSelectedDocument" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
